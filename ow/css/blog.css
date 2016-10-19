@@ -27,14 +27,14 @@ h6, .h6 {
     .container {
         width: 970px;
     }
-}
 
-@media (min-width: 1200px) {
     .container2 {
         width: 100%;
         margin-top:-40px;
     }
 }
+
+
 .col-sm-offset-1 {
     padding-top:20px;
 }
@@ -45,16 +45,13 @@ h6, .h6 {
 
 .blog-masthead {
     display:inline-block;
-    background-color: rgba(0,0,0,0.3);
     width:100%;
-    -webkit-box-shadow: inset 0 -2px 5px rgba(0, 0, 0, .1);
-    box-shadow: inset 0 -2px 5px rgba(0, 0, 0, .1);
 }
 
 .blog-header {
     padding-top: 20px;
     padding-bottom: 20px;
-    background-image: url("../imgs/123.jpg");
+    background-image: url("../imgs/321.jpg");
     height:400px;
 }
 
@@ -154,13 +151,76 @@ table.tiimid td:hover {
     min-height:401px;
 }
 
-.reaper:hover {
-    background-image: url("../imgs/reaperhover.png");
+
+
+
+#cf {
+    position:relative;
+    height:281px;
+    width:450px;
+    margin-top:38px;
+    margin-left:50%;
+
+}
+
+.top {
+    opacity:0;
+}
+
+#cf img {
+    position:absolute;
+    left:0;
+    -webkit-transition: opacity 0.5s ease-in-out;
+    -moz-transition: opacity 0.5s ease-in-out;
+    -o-transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#cf img.top:hover {
+    opacity:1;
+    cursor: pointer;
+}
+
+.sidebox2 {
+    margin-top:10px;
+}
+
+.sidebox3 {
+    margin-top:10px;
+}
+
+.btn {
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    border-radius:0px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 17px;
+    padding: 15px 20px 15px 20px;
+    text-decoration: none;
+    width:100%;
+}
+
+.btn:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+    color:white;
 }
 
 .logo:hover {
     background-image: url("../imgs/logoa.png");
 }
+
+
 
 .blog-nav-item:hover,
 .blog-nav-item:focus {
@@ -301,6 +361,8 @@ table.tiimid td:hover {
 
 .blog-nav li a:hover {
     color: white;
+    text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.9);
+    transition: all 500ms ease;
 }
 
 .blog-sidebar a {

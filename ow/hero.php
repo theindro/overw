@@ -10,28 +10,44 @@ Template Name: Heroes list
         <div class="row">
 
             <div class="col-sm-12">
-                <div class="lisa"><input class="lisakasutaja" placeholder="BattleTag#2413" type="text">
-                    <button class="nupplisa">Lisa</button>
-                </div>
+
                 <?php
+                if (isset($_POST['submit'])) {
+                    global $wpdb;
+                    $tablename = $wpdb->prefix . 'battletag';
+                    $data = array(
+                        'battletag' => $_POST['battletag'],
+                    );
+                    $wpdb->insert($tablename, $data);
+                }
+                ?>
+                <div class="lisa">
+                    <form action="" method="post">
+                        <input class="lisakasutaja" placeholder="BattleTag#2413" name="battletag" type="text">
+                        <input type="submit" name="submit" class="nupplisa">
+                    </form>
+                </div>
 
-                $url = "https://api.lootbox.eu/pc/eu/indro-2407/profile";
-                $json_string = file_get_contents($url);
-                $parsed_json = json_decode($json_string);
-
-                //var_dump($parsed_json->data;
+                <?php
                 echo '<br>';
-                echo '<table class="rank">';
-                echo '<tr><th></th><th>Avatar</th><th>Nimi</th><th>Level</th><th>Rank</th><th></th></tr>';
-                echo '<tr><td>1</td>';
-                echo ' <td><img class="avatar" src="' . $parsed_json->data->avatar . '" alt=""></td>';
-                echo '<td class="tabl">' . $parsed_json->data->username . '</td>';
-                echo ' <td class="tabl">' . $parsed_json->data->level . '</td>';
-                echo '<td class="tabl";>' . $parsed_json->data->competitive->rank . '</td>';
-                echo '<td><img class="avatar" src="' . $parsed_json->data->competitive->rank_img . '" alt=""></td></tr>';
+                echo '<table id="rank" class="rank">';
+                echo '<tr><th>Avatar</th><th>Nimi</th><th>Level</th><th>Rank</th><th></th></tr>';
+                global $wpdb;
+                $result = $wpdb->get_results("SELECT * FROM wp_ranking ORDER BY rank DESC;");
+                foreach ($result as $print) {
+
+                    echo ' <td><img class="avatar" src="' . $print->avatar . '" alt=""></td>';
+                    echo '<td class="tabl">' . $print->nimi . '</td>';
+                    echo ' <td class="tabl">' . $print->lvl . '</td>';
+                    echo '<td class="tabl";>' . $print->rank . '</td>';
+                    echo '<td><img class="avatar" src="' . $print->pilt . '" alt=""></td></tr>';
+                }
                 echo '</table>';
                 ?>
 
+                <br>
+                <br>
+                <br>
             </div> <!-- /.col -->
 
         </div> <!-- /.row -->
