@@ -30,13 +30,12 @@ h6, .h6 {
 
     .container2 {
         width: 100%;
-        margin-top:-40px;
+        margin-top: -40px;
     }
 }
 
-
 .col-sm-offset-1 {
-    padding-top:20px;
+    padding-top: 20px;
 }
 
 /*
@@ -44,15 +43,15 @@ h6, .h6 {
  */
 
 .blog-masthead {
-    display:inline-block;
-    width:100%;
+    display: inline-block;
+    width: 100%;
 }
 
 .blog-header {
     padding-top: 20px;
     padding-bottom: 20px;
     background-image: url("../imgs/321.jpg");
-    height:400px;
+    height: 400px;
 }
 
 /* Nav links */
@@ -62,64 +61,137 @@ h6, .h6 {
     padding: 10px;
     font-weight: 500;
     color: white;
-    font-family:"Century Gothic";
-}
-.logo {
-    margin-top:85px;
-    position:absolute;
+    font-family: "Century Gothic";
 }
 
+.logo {
+    margin-top: 85px;
+    position: absolute;
+}
 
 .lisa {
-    text-align:center;
-    padding-top:20px;
+    text-align: center;
+    padding-top: 20px;
 }
+
 .nupplisa {
     color: #fff;
-    width:130px;
-    height:26px;
-    border-radius:0px 4px 4px 0px;
-    background-color: #ff9e00;
-    border:solid 1px #ffbd00;
-    font-family:arial;
+    width: 130px;
+    height: 26px;
+    border-radius: 0px 4px 4px 0px;
+    background: linear-gradient(#ffbd00, #ff9700);
+    border: solid 1px #ffbd00;
+    font-family: arial;
 }
+
 .nupplisa:hover {
-    background-color: #ffbd00;
+    background: linear-gradient(#ffe800, #ffbd00);
+}
+
+#inputform {
+    padding-top: 30px;
+    display: block;
+    height: 150px;
+    background-image: url("../imgs/test.jpg");
+    margin-bottom: -20px;
+}
+
+#userhead {
+    width: 100%;
+    display: block;
+    margin-top: 10px;
+    height: 128px;
+    background-image: url("../imgs/profilebanner.jpg");
+
+}
+
+#userhead img {
+    float: left;
+}
+
+#userhead .pilt{
+    height:128px;
+    float:right;
+}
+
+#userhead p {
+    margin-top:40px;
+    float:left;
+    font-size: 30px;
+    font-family: "Open Sans", serif;
+    font-weight:bold;
+    margin-left:10px;
+}
+
+#userhead p:nth-child(3) {
+    margin-top:50px;
+    margin-left:5px;
+    font-size:20px;
+    color: #b0b0b0;
+    font-weight: normal;
+}
+
+
+
+#userhead div {
+    color:white;
+    padding-top:40px;
+    font-family: "Open Sans", serif;
+    text-align:center;
+    height:128px;
+    width:128px;
+    float:right;
+    display:inline-block;
+}
+
+
+
+#userhead a {
+    color: white
+}
+#userhead a:hover{
+    color: white;
+    text-decoration:none;
+}
+
+#inputform p {
+    color: #cecece;
+    font-size: 10px;
+    font-family: "Open Sans", serif;
 }
 
 .reaper {
-    margin-top:38px;
-    margin-left:900px;
-}
-table.rank td, th {
-    font-size:16px;
-    border: 1px solid #ddd;
-    padding:10px;
+    margin-top: 38px;
+    margin-left: 900px;
 }
 
+table.rank td, th {
+    font-size: 16px;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
 
 table.tiimid {
-    margin-top:40px;
-    width:100%;
-    padding:0;
-    border:solid 1px black;
+    margin-top: 40px;
+    width: 100%;
+    padding: 0;
+    border: solid 1px black;
 }
 
 table.tiimid td {
     border: solid 1px #2b292b;
-    background-color:#171617;
-    font-family:arial;
+    background-color: #171617;
+    font-family: arial;
     font-size: 14px;
     color: #ccc;
     text-align: center;
 }
 
-
 table.tiimid th {
     background-image: url(http://localhost/overwatch.ee/wp-content/themes/ow/imgs/tiim.jpg);
     border: solid 1px #2b292b;
-    background-color:#171617;
-    font-family:arial;
+    background-color: #171617;
+    font-family: arial;
     font-size: 34px;
     color: white;
     text-transform: uppercase;
@@ -131,16 +203,17 @@ table.tiimid td:hover {
 }
 
 .avatar {
-    width:60px;
-    height:60px;
+    width: 60px;
+    height: 60px;
 }
 
 .rank tr {
-    width:100%;
+    width: 100%;
     background-color: #fbfbfb;
 }
+
 .tabl {
-    width:100%;
+    width: 100%;
 }
 
 .rank tr:hover {
@@ -148,28 +221,25 @@ table.tiimid td:hover {
 }
 
 .row {
-    min-height:401px;
+    min-height: 401px;
 }
 
-
-
-
 #cf {
-    position:relative;
-    height:281px;
-    width:450px;
-    margin-top:38px;
-    margin-left:50%;
+    position: relative;
+    height: 281px;
+    width: 450px;
+    margin-top: 38px;
+    margin-left: 50%;
 
 }
 
 .top {
-    opacity:0;
+    opacity: 0;
 }
 
 #cf img {
-    position:absolute;
-    left:0;
+    position: absolute;
+    left: 0;
     -webkit-transition: opacity 0.5s ease-in-out;
     -moz-transition: opacity 0.5s ease-in-out;
     -o-transition: opacity 0.5s ease-in-out;
@@ -177,16 +247,16 @@ table.tiimid td:hover {
 }
 
 #cf img.top:hover {
-    opacity:1;
+    opacity: 1;
     cursor: pointer;
 }
 
 .sidebox2 {
-    margin-top:10px;
+    margin-top: 10px;
 }
 
 .sidebox3 {
-    margin-top:10px;
+    margin-top: 10px;
 }
 
 .btn {
@@ -196,13 +266,13 @@ table.tiimid td:hover {
     background-image: -ms-linear-gradient(top, #3498db, #2980b9);
     background-image: -o-linear-gradient(top, #3498db, #2980b9);
     background-image: linear-gradient(to bottom, #3498db, #2980b9);
-    border-radius:0px;
+    border-radius: 0px;
     font-family: Arial;
     color: #ffffff;
     font-size: 17px;
     padding: 15px 20px 15px 20px;
     text-decoration: none;
-    width:100%;
+    width: 100%;
 }
 
 .btn:hover {
@@ -213,14 +283,12 @@ table.tiimid td:hover {
     background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
     background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
     text-decoration: none;
-    color:white;
+    color: white;
 }
 
 .logo:hover {
     background-image: url("../imgs/logoa.png");
 }
-
-
 
 .blog-nav-item:hover,
 .blog-nav-item:focus {
@@ -250,8 +318,6 @@ table.tiimid td:hover {
 /*
  * Blog name and description
  */
-
-
 
 .blog-title {
     margin-top: 30px;
@@ -312,7 +378,7 @@ table.tiimid td:hover {
 
 .blog-post {
     margin-bottom: 60px;
-    padding-top:25px;
+    padding-top: 25px;
 }
 
 .blog-post-title {
@@ -330,7 +396,7 @@ table.tiimid td:hover {
  */
 
 .blog-footer {
-    padding: 40px 0;
+    padding: 45px 0;
     color: #999;
     text-align: center;
     background-color: #333;
@@ -350,12 +416,12 @@ table.tiimid td:hover {
 }
 
 .blog-nav li a {
-    font-family:arial;
+    font-family: arial;
     padding: 0;
     color: #e4e4e4;
     font-size: 0.875em;
     font-weight: 500;
-    text-decoration:none;
+    text-decoration: none;
     text-transform: uppercase;
 }
 
@@ -366,13 +432,122 @@ table.tiimid td:hover {
 }
 
 .blog-sidebar a {
-    font-family:arial;
+    font-family: arial;
 }
 
 .blog-footer p {
-    font-family:arial;
+    font-family: arial;
 }
 
 p {
     font-family: Roboto, sans-serif;
+}
+
+
+/*FRONT PAGE SEARCH*/
+
+@import url(http://fonts.googleapis.com/css?family=Cabin:400);
+
+.webdesigntuts-workshop input {
+    background: #222;
+    background: linear-gradient(#333, #222);
+    border: 1px solid #444;
+    border-radius: 5px 0 0 5px;
+    box-shadow: 0 2px 0 #000;
+    color: #888;
+
+    font-family: 'Cabin', helvetica, arial, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    height: 40px;
+    margin: 0;
+    padding: 0 10px;
+    text-shadow: 0 -1px 0 #000;
+    width: 200px;
+}
+
+.ie .webdesigntuts-workshop input {
+    line-height: 40px;
+}
+
+.webdesigntuts-workshop input::-webkit-input-placeholder {
+    color: #888;
+}
+
+.webdesigntuts-workshop input:-moz-placeholder {
+    color: #888;
+}
+
+.webdesigntuts-workshop input:focus {
+    animation: glow 800ms ease-out infinite alternate;
+    background: #222922;
+    background: linear-gradient(#39362d, #292220);
+    border-color: #997622;
+    box-shadow: 0 0 5px rgba(255, 173, 38, 0.2), inset 0 0 5px rgba(255, 162, 50, 0.1), 0 2px 0 #000;
+    color: #fff;
+    outline: none;
+}
+
+.webdesigntuts-workshop input:focus::-webkit-input-placeholder {
+    color: grey;
+}
+
+.webdesigntuts-workshop input:focus:-moz-placeholder {
+    color: grey;
+}
+
+.webdesigntuts-workshop input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-transition-delay: 9999s;
+    -webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
+}
+
+.webdesigntuts-workshop .button {
+    background: #222;
+    background: linear-gradient(#333, #222);
+    box-sizing: content-box;
+    border: 1px solid #444;
+    border-left-color: #000;
+    border-radius: 0 5px 5px 0;
+    box-shadow: 0 2px 0 #000;
+    color: #fff;
+    font-family: 'Cabin', helvetica, arial, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    height: 39px;
+    line-height: 39px;
+    margin-top:20px;
+    padding: 0;
+    position: relative;
+    text-shadow: 0 -1px 0 #000;
+    width: 80px;
+    margin-left:-3px;
+}
+
+.webdesigntuts-workshop .button:hover,
+.webdesigntuts-workshop .button:focus {
+    background: #292929;
+    background: linear-gradient(#393939, #292929);
+    color: #ffac41;
+    outline: none;
+}
+
+.webdesigntuts-workshop .button:active {
+    background: #292929;
+    background: linear-gradient(#393939, #292929);
+    box-shadow: 0 1px 0 #000, inset 1px 0 1px #222;
+    top: 1px;
+}
+
+@keyframes glow {
+    0% {
+        border-color: #997a2d;
+        box-shadow: 0 0 5px rgba(255, 157, 12, 0.2), inset 0 0 5px rgba(255, 136, 29, 0.1), 0 2px 0 #000;
+    }
+    100% {
+        border-color: #ffa139;
+        box-shadow: 0 0 20px rgba(255, 173, 0, 0.6), inset 0 0 10px rgba(255, 134, 33, 0.4), 0 2px 0 #000;
+    }
 }
