@@ -55,10 +55,9 @@ Tags: bootstrap
 
 .webdesigntuts-workshop input {
     background: #222;
-    background: linear-gradient(#333, #222);
-    border: 1px solid #444;
+    background: linear-gradient(#fff, #e6e6e6);
+    border: 1px solid #fff;
     border-radius: 5px 0 0 5px;
-    box-shadow: 0 2px 0 #000;
     color: #888;
     display: block;
     float: left;
@@ -68,7 +67,6 @@ Tags: bootstrap
     height: 40px;
     margin: 0;
     padding: 0 10px;
-    text-shadow: 0 -1px 0 #000;
     width: 200px;
 }
 

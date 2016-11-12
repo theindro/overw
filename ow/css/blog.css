@@ -50,7 +50,7 @@ h6, .h6 {
 .blog-header {
     padding-top: 20px;
     padding-bottom: 20px;
-    background-image: url("../imgs/321.jpg");
+    background-image: url("../imgs/banneruus2.jpg");
     height: 400px;
 }
 
@@ -94,6 +94,7 @@ h6, .h6 {
     height: 150px;
     background-image: url("../imgs/test.jpg");
     margin-bottom: -20px;
+    border-radius: 6px;
 }
 
 #userhead {
@@ -109,49 +110,46 @@ h6, .h6 {
     float: left;
 }
 
-#userhead .pilt{
-    height:128px;
-    float:right;
+#userhead .pilt {
+    height: 128px;
+    float: right;
 }
 
 #userhead p {
-    margin-top:40px;
-    float:left;
+    margin-top: 40px;
+    float: left;
     font-size: 30px;
     font-family: "Open Sans", serif;
-    font-weight:bold;
-    margin-left:10px;
+    font-weight: bold;
+    margin-left: 10px;
 }
 
 #userhead p:nth-child(3) {
-    margin-top:50px;
-    margin-left:5px;
-    font-size:20px;
+    margin-top: 50px;
+    margin-left: 5px;
+    font-size: 20px;
     color: #b0b0b0;
     font-weight: normal;
 }
 
-
-
 #userhead div {
-    color:white;
-    padding-top:40px;
+    color: white;
+    padding-top: 40px;
     font-family: "Open Sans", serif;
-    text-align:center;
-    height:128px;
-    width:128px;
-    float:right;
-    display:inline-block;
+    text-align: center;
+    height: 128px;
+    width: 128px;
+    float: right;
+    display: inline-block;
 }
-
-
 
 #userhead a {
     color: white
 }
-#userhead a:hover{
+
+#userhead a:hover {
     color: white;
-    text-decoration:none;
+    text-decoration: none;
 }
 
 #inputform p {
@@ -260,12 +258,8 @@ table.tiimid td:hover {
 }
 
 .btn {
-    background: #3498db;
-    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-    background-image: -o-linear-gradient(top, #3498db, #2980b9);
-    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+
+    background-color:#ffb300;
     border-radius: 0px;
     font-family: Arial;
     color: #ffffff;
@@ -273,17 +267,38 @@ table.tiimid td:hover {
     padding: 15px 20px 15px 20px;
     text-decoration: none;
     width: 100%;
+    border-radius: 6px;
+}
+
+#top3size {
+    height: 30px;
+    width: 30px;
+}
+
+#top3 table {
+    width: 100%;
+    font-family: 'Open Sans', serif
+}
+
+#top3 table th {
+    font-family: 'Open Sans', serif;
+    font-size: 16px;
+    border: 0px;
+    padding: 0px;
+    text-align: center;
+
 }
 
 .btn:hover {
-    background: #3cb0fd;
-    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    transition: background-color 0.3s ease;
+    background-color: #ffcb06;
     text-decoration: none;
     color: white;
+}
+
+.col-md-4 img{
+    width:100%;
+    height:auto!important;
 }
 
 .logo:hover {
@@ -443,17 +458,15 @@ p {
     font-family: Roboto, sans-serif;
 }
 
-
 /*FRONT PAGE SEARCH*/
 
 @import url(http://fonts.googleapis.com/css?family=Cabin:400);
 
 .webdesigntuts-workshop input {
     background: #222;
-    background: linear-gradient(#333, #222);
-    border: 1px solid #444;
+    background: linear-gradient(#fff, #e6e6e6);
+    border: 1px solid #fff;
     border-radius: 5px 0 0 5px;
-    box-shadow: 0 2px 0 #000;
     color: #888;
 
     font-family: 'Cabin', helvetica, arial, sans-serif;
@@ -462,7 +475,6 @@ p {
     height: 40px;
     margin: 0;
     padding: 0 10px;
-    text-shadow: 0 -1px 0 #000;
     width: 200px;
 }
 
@@ -480,11 +492,11 @@ p {
 
 .webdesigntuts-workshop input:focus {
     animation: glow 800ms ease-out infinite alternate;
-    background: #222922;
-    background: linear-gradient(#39362d, #292220);
-    border-color: #997622;
+    background: linear-gradient(#fff, #e6e6e6);
+    border: 1px solid #fff;
+    border-radius: 5px 0 0 5px;
     box-shadow: 0 0 5px rgba(255, 173, 38, 0.2), inset 0 0 5px rgba(255, 162, 50, 0.1), 0 2px 0 #000;
-    color: #fff;
+    color: black;
     outline: none;
 }
 
@@ -518,12 +530,12 @@ input:-webkit-autofill:active {
     font-weight: 400;
     height: 39px;
     line-height: 39px;
-    margin-top:20px;
+    margin-top: 20px;
     padding: 0;
     position: relative;
     text-shadow: 0 -1px 0 #000;
     width: 80px;
-    margin-left:-3px;
+    margin-left: -3px;
 }
 
 .webdesigntuts-workshop .button:hover,
@@ -532,6 +544,7 @@ input:-webkit-autofill:active {
     background: linear-gradient(#393939, #292929);
     color: #ffac41;
     outline: none;
+    border-radius: 0 5px 5px 0;
 }
 
 .webdesigntuts-workshop .button:active {
@@ -539,6 +552,75 @@ input:-webkit-autofill:active {
     background: linear-gradient(#393939, #292929);
     box-shadow: 0 1px 0 #000, inset 1px 0 1px #222;
     top: 1px;
+}
+
+
+
+hr {
+    max-width: 190rem;
+    height: 0;
+    border-right: 0;
+    border-top: 0;
+    border-bottom: 5px solid #183f78;
+    border-left: 0;
+    margin: 2rem auto;
+    clear: both;
+}
+hr {
+    box-sizing: content-box;
+    height: 0;
+}
+
+#profileline p {
+    padding-top:20px;
+    font-family:"Open Sans", serif;
+    font-size:24px;
+    text-transform: uppercase;
+    color:#183f78;
+    text-align:center;
+    font-weight:bold;
+}
+
+#cards {
+    display:inline-block;
+    width:100%;
+    height:500px;
+}
+
+.card {
+    display:inline-block;
+    height:200px;
+    width:25%;
+    background-color:#183f78;
+    text-align:center;
+    color:white;
+    float:left;
+    font-size:40px;
+    font-family:"Open Sans", serif
+}
+
+.card2 {
+    display:inline-block;
+    height:200px;
+    width:25%;
+    margin:0 auto;
+    background-color:#183f78;
+    color:white;
+    text-align:center;
+    font-size:40px;
+    font-family:"Open Sans", serif
+}
+
+.card3 {
+    display:inline-block;
+    float:right;
+    height:200px;
+    text-align:center;
+    width:25%;
+    background-color:#183f78;
+    color:white;
+    font-size:40px;
+    font-family:"Open Sans", serif
 }
 
 @keyframes glow {

@@ -1,11 +1,15 @@
 <?php get_header(); ?>
+<head>
+	<link rel="stylesheet" href="style.css">
+</head>
 <div class="container">
 
 	<div class="lisa">
 		<section class="webdesigntuts-workshop">
-			<form action="http://localhost/overwatch.ee/profiil/" method="get" id="inputform">
-				<input type="search"  placeholder="BattleTag-2413" name="nimi" >
+			<form action="http://localhost/overwatch.ee/profiil/" method="GET" id="inputform">
+				<input type="search"  placeholder="BattleTag-2413" name="battletag" >
 				<input type="submit" name="submit" class="button"></button>
+				<p>Loevad ka suured ja väiksed tähed ning kasutage '#' asemel '-'</p>
 			</form>
 		</section>
 	</div>

@@ -30,9 +30,6 @@
 <div class="container2">
 		<div class="blog-header">
 			<a href="http://localhost/overwatch.ee"><img class="logo" src="http://i.imgur.com/lOVLXAT.png" alt=""></a>
-			<div id="cf">
-				<img class="bottom" src="http://i.imgur.com/87F0CE0.png" />
-				<img class="top" src="http://i.imgur.com/zHaTSqE.png" />
-			</div>
+
 		</div>
 </div>
