@@ -63,6 +63,55 @@ function setting_github() { ?>
 			<input type="text" name="github" id="github" value="<?php echo get_option('github'); ?>" />
 			<?php }
 
+
+//widgetizing
+
+function arphabet_widgets_init() {
+
+	register_sidebar( array(
+		'name'          => 'Home right sidebar',
+		'id'            => 'home_right_1',
+		'before_widget' => '<div>',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h2 class="rounded">',
+		'after_title'   => '</h2>',
+	) );
+
+}
+add_action( 'widgets_init', 'arphabet_widgets_init' );
+
+
+
+
+
+
+//battletag profiil
+add_filter( 'query_vars', 'init_custom_rewrite_query_vars' );
+function init_custom_rewrite_query_vars( $query_vars )
+{
+	$query_vars[] = 'battletag';
+	return $query_vars;
+}
+
+
+add_action( 'init', 'init_custom_rewrite' );
+
+
+function init_custom_rewrite() {
+	// Remember to flush the rules once manually after you added this code!
+	add_rewrite_rule(
+	// The regex to match the incoming URL
+		'profiil/([^/]+)/?',
+		// The resulting internal URL: `index.php` because we still use WordPress
+		// `pagename` because we use this WordPress page
+		// `designer_slug` because we assign the first captured regex part to this variable
+		'index.php/profiil?battletag=$1&submit=Esita',
+		// This is a rather specific URL, so we add it to the top of the list
+		// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
+		'top' );
+}
+
+
 function custom_settings_page_setup() {
   add_settings_section('section', 'All Settings', null, 'theme-options');
   add_settings_field('twitter', 'Twitter URL', 'setting_twitter', 'theme-options', 'section');

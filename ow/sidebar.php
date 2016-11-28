@@ -4,9 +4,11 @@
         <div id="top3">
             <?php global $wpdb;
             $result = $wpdb->get_results("SELECT * FROM wp_ranking ORDER BY rank DESC LIMIT 3");
-            echo '<table><th colspan="2">Eesti top 3</th>';
+            echo '<table><th colspan="3">Eesti top 3</th>';
+            $i = 0;
             foreach ($result as $print) {
-                echo '<tr><td>' . $print->nimi . ' </td><td style="text-align:right;"> ' . $print->rank . ' <img id="top3size" src="' . $print->pilt . '" alt=""></td></tr>';
+                $i++;
+                echo '<tr><td>'.$i.'.</td><td><a href="http://localhost/overwatch.ee/profiil/'.$print->battletag.'">' . $print->nimi . '</a> </td><td style="text-align:right;"> ' . $print->rank . ' <img id="top3size" src="' . $print->pilt . '" alt=""></td></tr>';
             }
             echo '</table>'?>
             </p>
@@ -16,6 +18,13 @@
             <li class="sidebox2"><a class="btn" href="">Tiimid</a></li>
             <li class="sidebox3"><a class="btn" href="">Heroes</a></li>
         </ol>
+
+        <?php if ( is_active_sidebar( 'home_right_1' ) ) : ?>
+            <div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
+                <?php dynamic_sidebar( 'home_right_1' ); ?>
+            </div><!-- #primary-sidebar -->
+        <?php endif; ?>
+
     </div>
 </div><!-- /.blog-sidebar -->
 
