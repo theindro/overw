@@ -1,0 +1,140 @@
+[
+  {
+    "name": "Genji",
+    "playtime": "75 hours",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000029.png",
+    "percentage": 1
+  },
+  {
+    "name": "Ana",
+    "playtime": "40 hours",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E000000000013B.png",
+    "percentage": 0.5129406278436778
+  },
+  {
+    "name": "McCree",
+    "playtime": "15 hours",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000042.png",
+    "percentage": 0.20683619896830507
+  },
+  {
+    "name": "Zarya",
+    "playtime": "13 hours",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000068.png",
+    "percentage": 0.17594757257645757
+  },
+  {
+    "name": "Mei",
+    "playtime": "6 hours",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E00000000000DD.png",
+    "percentage": 0.07971451154129315
+  },
+  {
+    "name": "Tracer",
+    "playtime": "5 hours",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000003.png",
+    "percentage": 0.06860276578896063
+  },
+  {
+    "name": "Lúcio",
+    "playtime": "3 hours",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000079.png",
+    "percentage": 0.052314559422540506
+  },
+  {
+    "name": "Zenyatta",
+    "playtime": "3 hours",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000020.png",
+    "percentage": 0.051655055253057476
+  },
+  {
+    "name": "Reinhardt",
+    "playtime": "3 hours",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000007.png",
+    "percentage": 0.04928349988314048
+  },
+  {
+    "name": "Pharah",
+    "playtime": "3 hours",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000008.png",
+    "percentage": 0.0476673398793732
+  },
+  {
+    "name": "Reaper",
+    "playtime": "3 hours",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000002.png",
+    "percentage": 0.04682281270815468
+  },
+  {
+    "name": "Hanzo",
+    "playtime": "2 hours",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000005.png",
+    "percentage": 0.03532989758824293
+  },
+  {
+    "name": "Roadhog",
+    "playtime": "2 hours",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000040.png",
+    "percentage": 0.03354331221814514
+  },
+  {
+    "name": "Soldier: 76",
+    "playtime": "1 hour",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E000000000006E.png",
+    "percentage": 0.025694765192001125
+  },
+  {
+    "name": "D.Va",
+    "playtime": "1 hour",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E000000000007A.png",
+    "percentage": 0.020566374073524133
+  },
+  {
+    "name": "Widowmaker",
+    "playtime": "1 hour",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E000000000000A.png",
+    "percentage": 0.01853037424967068
+  },
+  {
+    "name": "Mercy",
+    "playtime": "1 hour",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000004.png",
+    "percentage": 0.01588973899001825
+  },
+  {
+    "name": "Winston",
+    "playtime": "59 minutes",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000009.png",
+    "percentage": 0.013059699313476456
+  },
+  {
+    "name": "Bastion",
+    "playtime": "40 minutes",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000015.png",
+    "percentage": 0.009021658968870515
+  },
+  {
+    "name": "Symmetra",
+    "playtime": "31 minutes",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000016.png",
+    "percentage": 0.007030249892128031
+  },
+  {
+    "name": "Junkrat",
+    "playtime": "27 minutes",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000065.png",
+    "percentage": 0.006173772436610087
+  },
+  {
+    "name": "Sombra",
+    "playtime": "15 minutes",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E000000000012E.png",
+    "percentage": 0.0033129822780601226
+  },
+  {
+    "name": "Torbjörn",
+    "playtime": "11 minutes",
+    "image": "https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000006.png",
+    "percentage": 0.002556148613387157
+  }
+]

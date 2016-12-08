@@ -5,12 +5,11 @@
     font-family: overwatch;
     src: url(../fonts/big_noodle_titling_oblique.ttf);
 }
+
 @font-face {
     font-family: overwatch2;
     src: url(../fonts/big_noodle_titling.ttf);
 }
-
-
 
 body {
     font-family: Georgia, "Times New Roman", Times, serif;
@@ -70,7 +69,7 @@ html, body {
     display: block;
     position: relative;
     overflow: hidden;
-    border-radius:6px;
+    border-radius: 6px;
 }
 
 .rig-cell h3 {
@@ -189,17 +188,98 @@ html, body {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
+#filterrank {
+    margin-top: 20px;
+    font-family: overwatch2;
+    font-size: 46px;
+    text-transform: uppercase;
+    color: #1f1f1f;
+    /* font-weight: bold; */
+    /* margin-bottom: -20px; */
+    border-radius: 4px;
+}
+
+.heropic {
+    display: block;
+    width: 12%;
+    height: 100px;
+    float: left;
+    position: relative;
+}
+
+.pbar {
+    background-color: #f3f3f3;
+    border: 0;
+    height: 8px;
+    border-radius: 9px;
+}
+
+.pbar::-webkit-progress-bar {
+    /* style rules */
+    background-color: #f3f3f3;
+    border: 0;
+    height: 8px;
+    border-radius: 9px;
+}
+
+.pbar::-webkit-progress-value {
+    /* style rules */
+    background-color: rgb(0, 176, 255);
+    border: 0;
+    height: 8px;
+    border-radius: 9px;
+}
+
+.pbar::-moz-progress-bar {
+    /* style rules */
+    background-color: #f3f3f3;
+    border: 0;
+    height: 8px;
+    border-radius: 9px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+.row1 {
+    width: 88%;
+    height: 50px;
+    color: white;
+    position: relative;
+    float: right;
+}
+
+.mainstat {
+    font-size: 10px;
+    text-transform: uppercase;
+    padding-top: 2px;
+    padding-left: 10px;
+    width: 23%;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+}
+
+.herostats {
+    display: block;
+    background-color: #2d2d2d;
+    border-radius: 6px;
+    height: 100px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#filter {
+    margin-top: 10px;
+}
+
 #uuenda {
     margin-top: 85px;
     margin-left: 140px;
     position: absolute;
     display: block;
-    background: #222;
-    background: linear-gradient(#333, #222);
+    background: #0090e6;
     box-sizing: content-box;
     border: 1px solid #444;
     border-radius: 3px;
-    box-shadow: 0 2px 0 #000;
     color: #fff;
     font-family: 'Cabin', helvetica, arial, sans-serif;
     font-size: 13px;
@@ -213,15 +293,127 @@ html, body {
 
 #uuenda:hover,
 #uuenda:focus {
-    background: #292929;
-    background: linear-gradient(#393939, #292929);
+    background: #36b0ed;
+    background: linear-gradient(rgb(27, 211, 255), #36b0ed);
     outline: none;
     text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.9)
 }
 
 #uuenda:active {
-    background: #292929;
-    background: linear-gradient(#393939, #292929);
+    background: #0090e6;
+}
+
+#season {
+    float: right;
+    display: inline-block;
+    color: #ffffff;
+    margin-top: 10px;
+    height: 40px;
+    font-size: 20px;
+    border: none;
+    /* font-family: arial; */
+    background-color: rgba(128, 128, 128, 0);
+}
+
+#season:focus {
+    outline: none;
+}
+
+.season {
+    background-color: grey;
+}
+
+#mainblock {
+    display: block;
+    width: 100%;
+    /* color: #ffffff; */
+    height: 480px;
+    text-align: left;
+    /* background-color: #2d2d2d; */
+    /* background-image: url(http://i.imgur.com/EfBz5Ra.jpg); */
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+#avatars {
+    display: inline-block;
+    width: 6%;
+    float: left;
+    position: relative;
+    border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
+}
+
+#name {
+    display: inline-block;
+    width: 10%;
+    height: 480px;
+    position: relative;
+}
+
+
+
+#percentage {
+    display: inline-block;
+    width: 70%;
+    height: 480px;
+    /* background-color: #f3f3f3; */
+    padding-top: -100px;
+    /* border-bottom-right-radius: 6px; */
+    border-top-right-radius: 6px;
+}
+
+#hours {
+    display: inline-block;
+    width: 9%;
+    height: 480px;
+    position: relative;
+}
+.roww {
+    height: 48px;
+    padding-left: 10px;
+}
+
+.avs {
+    padding-top: 3px;
+    width: 50px;
+    border-radius: 4px;
+}
+
+.heronames {
+    padding-top: 15px;
+}
+
+.bar {
+    padding-top: 4px;
+    border: 0;
+    height: 20px;
+    width: 100%;
+    border-radius: 15px;
+}
+
+.bar::-webkit-progress-bar {
+    /* style rules */
+    background-color: #e8e8e8;
+    border: 0;
+    height: 20px;
+    width: 100%;
+    border-radius: 15px;
+
+}
+
+.bar::-webkit-progress-value {
+    /* style rules */
+    background-color: rgb(0, 176, 255);
+    border: 0;
+    height: 20px;
+    border-radius: 15px;
+}
+
+#myChart {
+    width: 90%;
+    float: right;
+
 }
 
 .blog-header {
@@ -308,6 +500,7 @@ html, body {
     margin-top: 10px;
     height: 128px;
     background-image: url("../imgs/profilebanner.jpg");
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
 
 }
 
@@ -315,7 +508,7 @@ html, body {
     float: left;
     border-radius: 6px 0 0 6px;
     max-width: 128px;
-    max-height:128px;
+    max-height: 128px;
 }
 
 #userhead .pilt {
@@ -334,29 +527,27 @@ html, body {
 }
 
 #first {
-    width:33%;
-    display:inline-block;
+    width: 33%;
+    display: inline-block;
 }
 
 .compstats {
-    padding-left:10px;
+    padding-left: 10px;
     font-family: "Open Sans", serif;
     font-size: 18px;
     font-weight: normal;
     color: #1f1f1f;
-    text-transform: uppercase;
 }
 
 #second {
-    width:33%;
-    display:inline-block;
+    width: 33%;
+    display: inline-block;
 }
+
 #third {
-    width:33%;
-    display:inline-block;
+    width: 33%;
+    display: inline-block;
 }
-
-
 
 #userhead p:nth-child(3) {
     margin-top: 50px;
@@ -364,6 +555,22 @@ html, body {
     font-size: 20px;
     color: #b0b0b0;
     font-weight: normal;
+}
+
+#statistika td {
+    padding: 10px;
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
+#statistika th {
+    font-family: overwatch;
+    font-size: 26px;
+    font-weight: normal;
+}
+
+#statistika th {
+    border: none;
 }
 
 #userhead div {
@@ -375,6 +582,7 @@ html, body {
     width: 128px;
     float: right;
     display: inline-block;
+
 }
 
 #userhead a {
@@ -392,6 +600,31 @@ html, body {
     font-family: "Open Sans", serif;
 }
 
+ul#herolist {
+    text-align: center;
+}
+
+ul#herolist li {
+    display: inline-block;
+    padding: 6px;
+    text-align: center;
+}
+
+.listt {
+    display: inline-block;
+}
+
+#defense {
+    display: inline-block;
+
+}
+
+.avatar2 {
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 6px;
+}
+
 .reaper {
     margin-top: 38px;
     margin-left: 900px;
@@ -401,6 +634,18 @@ table.rank td, th {
     font-size: 16px;
     border: 1px solid #ddd;
     padding: 10px;
+}
+
+#rank tr:nth-child(2) {
+    background-color: rgba(45, 163, 255, 0.09);
+}
+
+#rank tr:nth-child(3) {
+    background-color: rgba(45, 163, 255, 0.09);
+}
+
+#rank tr:nth-child(4) {
+    background-color: rgba(45, 163, 255, 0.09);
 }
 
 table.tiimid {
@@ -639,7 +884,6 @@ table.tiimid td:hover {
     margin-bottom: 20px;
     color: #999;
 }
-
 
 .rounded {
     font-weight: bold;
@@ -909,7 +1153,7 @@ hr {
     color: white;
     /* font-weight: bold; */
     /* margin-bottom: -20px; */
-    background-color: rgb(0, 79, 107);
+    background: linear-gradient(#353535, #1f1f1f);
     border-radius: 4px;
 }
 
@@ -922,7 +1166,7 @@ hr {
     color: white;
     /* font-weight: bold; */
     /* margin-bottom: -20px; */
-    background-color: rgb(228, 158, 10);
+    background: linear-gradient(#353535, #1f1f1f);
     border-radius: 6px;
 }
 
@@ -972,15 +1216,15 @@ hr {
     font-family: "Open Sans", serif
 }
 
-
 /*ajaxload*/
 #loader {
-    margin-left:auto;
-    margin-right:auto;
-    text-align:center;
-    display:block;
-    margin-top:50px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: block;
+    margin-top: 50px;
 }
+
 @keyframes glow {
     0% {
         border-color: #997a2d;

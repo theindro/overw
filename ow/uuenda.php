@@ -60,9 +60,36 @@ Template Name: uuenda profiili
             $played = $parsed_json->data->games->competitive->played;
             $playtime = $parsed_json->data->playtime->competitive;
 
+            $pages2 = array("https://api.lootbox.eu/pc/eu/$tag/competitive/allHeroes/");
 
-            $sql = "INSERT INTO `wp_ranking` (battletag, nimi, lvl, rank, avatar, pilt, wins, lost, played, playtime)
- VALUES ('$tag','$nimi', '$lvl', '$rank', '$avatar', '$pilt', '$wins', '$lost', '$played', '$playtime')
+            foreach ($pages2 as $page2) {
+                ini_set('max_execution_time', 300);
+                $html = @file_get_contents($page2);
+                $parsed_json = json_decode($html);
+
+
+                $gmedals = 'Medals-Gold';
+                $smedals = 'Medals-Silver';
+                $bmedals = 'Medals-Bronze';
+                $elimavg = 'Eliminations-Average';
+                $damageavg = 'DamageDone-Average';
+                $objavg = 'ObjectiveTime-Average';
+                $deathavg = 'Deaths-Average';
+
+
+                $gold = $parsed_json->$gmedals;
+                $silver = $parsed_json->$smedals;
+                $bronze = $parsed_json->$bmedals;
+                $elims = $parsed_json->$elimavg;
+                $deaths = $parsed_json->$deathavg;
+                $objtime = $parsed_json->$objavg;
+                $damage = $parsed_json->$damageavg;
+            }
+
+
+
+            $sql = "INSERT INTO `wp_ranking` (battletag, nimi, lvl, rank, avatar, pilt, wins, lost, played, playtime, goldmedal, silvermedal, bronzemedal, elims, deaths, objtime, damage)
+ VALUES ('$tag','$nimi', '$lvl', '$rank', '$avatar', '$pilt', '$wins', '$lost', '$played', '$playtime', '$gold', '$silver', '$bronze', '$elims', '$deaths', '$objtime', '$damage')
  ON DUPLICATE KEY UPDATE
  nimi = '$nimi',
  lvl = '$lvl',
@@ -72,7 +99,15 @@ Template Name: uuenda profiili
  wins = '$wins',
  lost = '$lost',
  played = '$played',
- playtime = '$playtime'";
+ playtime = '$playtime',
+ goldmedal = '$gold',
+   silvermedal = '$silver',
+    bronzemedal = '$bronze',
+    elims = '$elims',
+     deaths = '$deaths',
+     objtime = '$objtime',
+     damage = '$damage'";
+
 
 
             if (mysqli_query($conn, $sql)) {
@@ -82,7 +117,37 @@ Template Name: uuenda profiili
             }
         }
     }
+$json_string = "https://api.lootbox.eu/pc/eu/$tag/competitive/heroes";
+$jsondata = file_get_contents($json_string);
+$obj = json_decode($jsondata, true);
 
+$del = "DELETE FROM wp_heroes WHERE tag = '$tag'";
+if (mysqli_query($conn, $del)) {
+    echo "";
+} else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+}
+//print_r($obj);
+foreach ($obj as $value => $data) {
+    $tag = $_GET['battletag'];
+    $name = $data['name'];
+    $playtime = $data['playtime'];
+    $image = $data['image'];
+    $pct = $data['percentage'];
+    $sql = "INSERT INTO wp_heroes (tag, name, playtime, image, percentage) VALUES ('$tag', '$name', '$playtime', '$image', '$pct') ON DUPLICATE KEY UPDATE
+ tag = '$tag',
+ name = '$name',
+ playtime = '$playtime',
+ image = '$image',
+ percentage = '$pct'";
+
+    if (mysqli_query($conn, $sql)) {
+        echo "";
+    } else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+}
 ?>
 
 <div class="container">
@@ -103,6 +168,14 @@ Template Name: uuenda profiili
                 $lost = $print->lost;
                 $played = $print->played;
                 $playtime = $print->playtime;
+                $gold = $print->goldmedal;
+                $silver = $print->silvermedal;
+                $bronze = $print->bronzemedal;
+
+                $elims = $print->elims;
+                $deaths = $print->deaths;
+                $objtime = $print->objtime;
+                $damage = $print->damage;
             }
 
             ?>
@@ -126,7 +199,7 @@ Template Name: uuenda profiili
 
                 <form action="" method="GET">
                     <input type="hidden" name="battletag" value="<?php echo $tag ?>">
-                    <input type="submit" name="submit" id="uuenda" value="Uuenda">
+                    <input type="submit" name="submit" id="uuenda" value="Uuendatud" disabled>
                 </form>
             </div>
 
@@ -135,27 +208,36 @@ Template Name: uuenda profiili
             <div id="profileline">
                 <p id="esimene">Competitive Stats</p>
             </div>
-            <div id="first">
-                <p class="compstats"><?php echo $winrate; ?>% Winrate <br></p>
-                <p class="compstats"><?php echo $wins ?> Võitu <br></p>
-                <p class="compstats"><?php echo $played ?> Mängu kokku <br></p>
-                <p class="compstats"> <?php echo $playtime ?> tundi</p>
-            </div>
-            <div id="second">
-                <p class="compstats"><?php echo $winrate; ?>% Winrate <br></p>
-                <p class="compstats"><?php echo $wins ?> Võitu <br></p>
-                <p class="compstats"><?php echo $played ?> Mängu kokku <br></p>
-                <p class="compstats"> <?php echo $playtime ?> tundi</p>
-            </div>
-            <div id="third">
-                <p class="compstats">150 Kuld medalit<br></p>
-                <p class="compstats">131 Hõbe medalit<br></p>
-                <p class="compstats">142 Pronks medalit<br></p>
-                <p class="compstats">.</p>
-            </div>
+
+            <table style="width:100%;" id="statistika">
+                <tr>
+                    <th style="width:33%;">Overall</th>
+                    <th style="width:33%;">Average</th>
+                    <th style="width:33%;">Medals</th>
+                </tr>
+                <tr>
+                    <td>Winrate: <?php echo $winrate; ?>%</td>
+                    <td>Eliminations: <?php echo $elims; ?></td>
+                    <td>Gold: <?php echo $gold; ?></td>
+                </tr>
+                <tr>
+                    <td>Wins: <?php echo $wins ?></td>
+                    <td>Deaths: <?php echo $deaths; ?></td>
+                    <td>Silver: <?php echo $silver; ?></td>
+                </tr>
+                <tr>
+                    <td>Total: <?php echo $played ?> </td>
+                    <td>Objectime time: <?php echo $objtime; ?></td>
+                    <td>Bronze: <?php echo $bronze; ?></td>
+                </tr>
+                <tr>
+                    <td>Playtime: <?php echo $playtime ?></td>
+                    <td>Damage done: <?php echo $damage; ?></td>
+                </tr>
+            </table>
 
             <div id="profileline">
-                <p id="teine">Kõige rohkem mängitud kangelased</p>
+                <p id="teine">Most played heroes</p>
             </div>
 
 

@@ -1,7 +1,6 @@
 <?php get_header(); ?>
 
 <div class="container">
-
 	<div class="lisa">
 		<section class="webdesigntuts-workshop">
 			<form action="http://localhost/overwatch.ee/profiil/" method="GET" id="inputform">
