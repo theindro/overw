@@ -7,30 +7,8 @@ Template Name: UserProfile
 
 <?php get_header(); ?>
 
-<script>
-
-    $(function () {
-        // don't cache ajax or content won't be fresh
-        $.ajaxSetup({
-            cache: false
-        });
-        var ajax_load = "<img id='loader' src='http://i.imgur.com/7OhVFhy.gif' alt='loading...' /> ";
-        var tag = '?battletag=<?php echo $_GET['battletag']; ?>';
-        // load() functions
-        var loadUrl = "http://localhost/overwatch.ee/uuenda/" + tag;
-        $("#uuenda").click(function () {
-            $('#hide').hide();
-            $("#message2").html(ajax_load).load(loadUrl);
-        });
-// end
-    });
-
-
-</script>
-
 <?php
 if (isset($_GET['submit'])) {
-
 
     $servername = "localhost";
     $username = "root";
@@ -126,14 +104,14 @@ if (isset($_GET['submit'])) {
                     $damage = $parsed_json->$damageavg;
                 }
 
-                $sql = "INSERT INTO `wp_ranking` (battletag, nimi, lvl, rank, avatar, pilt, wins, lost, played, playtime, goldmedal, silvermedal, bronzemedal, elims, deaths, objtime, damage)
+                $sql = "INSERT INTO `wp_ranking` (battletag, nimi, lvl, rank, avatar, rank_image, wins, lost, played, playtime, goldmedal, silvermedal, bronzemedal, elims, deaths, objtime, damage)
  VALUES ('$tag','$nimi', '$lvl', '$rank', '$avatar', '$pilt', '$wins', '$lost', '$played', '$playtime', '$gold', '$silver', '$bronze', '$elims', '$deaths', '$objtime', '$damage')
  ON DUPLICATE KEY UPDATE
  nimi = '$nimi',
  lvl = '$lvl',
  rank = '$rank',
  avatar = '$avatar',
- pilt = '$pilt',
+ rank_image = '$pilt',
  wins = '$wins',
  lost = '$lost',
  played = '$played',
@@ -192,7 +170,10 @@ if (($winrate >= 1) && ($winrate <= 49.99))
     $color = "#FF0000";
 else if (($winrate >= 50) && ($winrate <= 100))
     $color = "#00d610";
+
 ?>
+
+
 <div id="hide">
     <div class="container">
         <div class="row">
@@ -231,245 +212,120 @@ else if (($winrate >= 50) && ($winrate <= 100))
                     </tr>
                     <tr>
                         <td>Winrate: <?php echo "<span style=\"color: $color\">$winrate%</span>" ?></td>
-                        <td>Eliminations: <?php echo $elims; ?></td>
+                        <td>Eliminations: <?php echo $elims; ?><br>
+                            <progress class="avgbar"
+                                      max="<?php $maxelims = $wpdb->get_var("SELECT elims FROM wp_ranking ORDER BY elims DESC LIMIT 1");
+                                      echo $maxelims; ?>" value="<?php echo $elims; ?>"></progress>
+                        </td>
                         <td>Gold: <?php echo $gold; ?></td>
                     </tr>
                     <tr>
                         <td>Wins: <?php echo $wins ?> games</td>
-                        <td>Deaths: <?php echo $deaths; ?></td>
+                        <td>Deaths: <?php echo $deaths; ?><br>
+                            <progress class="avgbar"
+                                      max="<?php $maxdeaths = $wpdb->get_var("SELECT deaths FROM wp_ranking ORDER BY deaths DESC LIMIT 1");
+                                      echo $maxdeaths; ?>"
+                                      value="<?php echo $deaths; ?>"></progress>
+                        </td>
                         <td>Silver: <?php echo $silver; ?></td>
                     </tr>
                     <tr>
                         <td>Total: <?php echo $played ?> games</td>
-                        <td>Objectime time: <?php echo $objtime; ?></td>
+                        <td>Objective time: <?php echo $objtime; ?><br>
+                            <progress class="avgbar" max="02:00" value="<?php echo $objtime; ?>"></progress>
+                        </td>
                         <td>Bronze: <?php echo $bronze; ?></td>
                     </tr>
                     <tr>
                         <td>Playtime: <?php echo $playtime ?> hours</td>
-                        <td>Damage done: <?php echo $damage; ?></td>
+                        <td>Damage done: <?php echo $damage; ?><br>
+                            <progress class="avgbar"
+                                      max="<?php $maxdmg = $wpdb->get_var("SELECT damage FROM wp_ranking ORDER BY damage DESC LIMIT 1");
+                                      echo $maxdmg ?>" value="<?php echo $damage; ?>"></progress>
+                        </td>
                     </tr>
                 </table>
 
                 <div id="profileline">
                     <p id="teine">hero stats</p>
                 </div>
-
-                <div class="herostats">
-                    <div class="heropic">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000029.png" alt="">
-                    </div>
-                    <div class="row1">
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">20%</div>
-                            <div>
-                                <progress class="pbar" max="100" value="20"></progress>
-                            </div>
-                            <div>Accuracy</div>
+                <?php global $wpdb;
+                $heroes = $wpdb->get_results("SELECT * FROM wp_heroes where tag = '$uus' ORDER BY percentage DESC LIMIT 3;"); ?>
+                <?php foreach ($heroes as $hero) : ?>
+                    <?php var_dump($hero);
+                    ?>
+                    <div class="herostats">
+                        <div class="heropic">
+                            <img src="<?php echo $hero->image; ?>" alt="">
                         </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">1.4 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="7"></progress>
+                        <div class="row1">
+                            <div class="mainstat">
+                                <div style="font-weight:bold;">20%</div>
+                                <div>
+                                    <progress class="pbar" max="100" value="20"></progress>
+                                </div>
+                                <div>Accuracy</div>
                             </div>
-                            <div>K/d ratio</div>
+                            <div class="mainstat">
+                                <div style="font-weight:bold;">1.4 <label style="color:grey; text-transform: none;">per
+                                        min</label></div>
+                                <div>
+                                    <progress class="pbar" max="100" value="7"></progress>
+                                </div>
+                                <div>K/d ratio</div>
+                            </div>
+                            <div class="mainstat">
+                                <div style="font-weight:bold;">1745 <label style="color:grey; text-transform: none;">per
+                                        min</label></div>
+                                <div>
+                                    <progress class="pbar" max="100" value="62"></progress>
+                                </div>
+                                <div>Damage</div>
+                            </div>
+                            <div class="mainstat">
+                                <div style="font-weight:bold;">2.01 <label style="color:grey; text-transform: none;">per
+                                        min</label></div>
+                                <div>
+                                    <progress class="pbar" max="100" value="80"></progress>
+                                </div>
+                                <div>Crits</div>
+                            </div>
                         </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">1745 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="62"></progress>
+                        <div class="row1">
+                            <div class="mainstat">
+                                <div style="font-weight:bold;">2.2 <label style="color:grey; text-transform: none;">per
+                                        min</label></div>
+                                <div>
+                                    <progress class="pbar" max="100" value="86"></progress>
+                                </div>
+                                <div>final blows</div>
                             </div>
-                            <div>Damage</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">2.01 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="80"></progress>
+                            <div class="mainstat">
+                                <div style="font-weight:bold;">0 <label style="color:grey; text-transform: none;">per
+                                        min</label></div>
+                                <div>
+                                    <progress class="pbar" max="100" value="0"></progress>
+                                </div>
+                                <div>Healing</div>
                             </div>
-                            <div>Crits</div>
-                        </div>
-                    </div>
-                    <div class="row1">
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">2.2 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="86"></progress>
+                            <div class="mainstat">
+                                <div style="font-weight:bold;">0.5 <label style="color:grey; text-transform: none;">per
+                                        min</label></div>
+                                <div>
+                                    <progress class="pbar" max="100" value="85"></progress>
+                                </div>
+                                <div>obj. kills</div>
                             </div>
-                            <div>final blows</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">0 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="0"></progress>
+                            <div class="mainstat">
+                                <div style="font-weight:bold;">6.25 seconds</div>
+                                <div>
+                                    <progress class="pbar" max="100" value="73"></progress>
+                                </div>
+                                <div>obj. time</div>
                             </div>
-                            <div>Healing</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">0.5 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="85"></progress>
-                            </div>
-                            <div>obj. kills</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">6.25 seconds</div>
-                            <div>
-                                <progress class="pbar" max="100" value="73"></progress>
-                            </div>
-                            <div>obj. time</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="herostats">
-                    <div class="heropic">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000042.png" alt="">
-                    </div>
-                    <div class="row1">
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">20%</div>
-                            <div>
-                                <progress class="pbar" max="100" value="20"></progress>
-                            </div>
-                            <div>Accuracy</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">1.4 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="7"></progress>
-                            </div>
-                            <div>K/d ratio</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">1745 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="62"></progress>
-                            </div>
-                            <div>Damage</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">2.01 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="80"></progress>
-                            </div>
-                            <div>Crits</div>
                         </div>
                     </div>
-                    <div class="row1">
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">2.2 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="86"></progress>
-                            </div>
-                            <div>final blows</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">0 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="0"></progress>
-                            </div>
-                            <div>Healing</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">0.5 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="85"></progress>
-                            </div>
-                            <div>obj. kills</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">6.25 seconds</div>
-                            <div>
-                                <progress class="pbar" max="100" value="73"></progress>
-                            </div>
-                            <div>obj. time</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="herostats">
-                    <div class="heropic">
-                        <img src="https://blzgdapipro-a.akamaihd.net/game/heroes/small/0x02E0000000000004.png" alt="">
-                    </div>
-                    <div class="row1">
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">20%</div>
-                            <div>
-                                <progress class="pbar" max="100" value="20"></progress>
-                            </div>
-                            <div>Accuracy</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">1.4 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="7"></progress>
-                            </div>
-                            <div>K/d ratio</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">1745 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="62"></progress>
-                            </div>
-                            <div>Damage</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">2.01 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="80"></progress>
-                            </div>
-                            <div>Crits</div>
-                        </div>
-                    </div>
-                    <div class="row1">
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">2.2 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="86"></progress>
-                            </div>
-                            <div>final blows</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">0 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="0"></progress>
-                            </div>
-                            <div>Healing</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">0.5 <label style="color:grey; text-transform: none;">per
-                                    min</label></div>
-                            <div>
-                                <progress class="pbar" max="100" value="85"></progress>
-                            </div>
-                            <div>obj. kills</div>
-                        </div>
-                        <div class="mainstat">
-                            <div style="font-weight:bold;">6.25 seconds</div>
-                            <div>
-                                <progress class="pbar" max="100" value="73"></progress>
-                            </div>
-                            <div>obj. time</div>
-                        </div>
-                    </div>
-                </div>
-
+                <?php endforeach; ?>
                 <br>
                 <a href="" style="color:black; float:right;">Kuva rohkem...</a>
                 <br>
@@ -514,7 +370,28 @@ else if (($winrate >= 50) && ($winrate <= 100))
     </div>
     <div id="message2"></div>
 
+    <script>
 
+        $(function () {
+            // don't cache ajax or content won't be fresh
+            $.ajaxSetup({
+                cache: false
+            });
+            var ajax_load = "<img id='loader' src='http://i.imgur.com/7OhVFhy.gif' alt='loading...' /> ";
+            var tag = '?battletag=<?php echo $_GET['battletag']; ?>';
+            // load() functions
+            var loadUrl = "http://localhost/overwatch.ee/uuenda/" + tag;
+            $("#uuenda").click(function () {
+                $('#hide').hide();
+                $("#message2").html(ajax_load).load(loadUrl);
+                location.reload();
+            });
+        });
+
+        $(document).ajaxStop(function(){
+            window.location.reload();
+        });
+    </script>
 
 
 

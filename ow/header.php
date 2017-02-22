@@ -7,14 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
+
     <title>
         <?php wp_title('|', true, 'right'); ?>
     </title>
 
     <?php wp_head(); ?>
 </head>
-
 <body>
 
 <div class="blog-masthead">
@@ -27,9 +33,12 @@
                                                               src="http://localhost/overwatch.ee/wp-content/themes/ow/imgs/logotryout.png"
                                                               alt=""></a>
                 -->
-                <a href="https://www.facebook.com/eestiow/"><img id="navfb"
-                                                                 src="http://localhost/overwatch.ee/wp-content/themes/ow/imgs/fb.png"
-                                                                 alt=""></a>
+                <a href="http://discord.gg/cfhqKbc">
+                    <img id="navdiscord" src="<?= get_site_url() ?>/wp-content/themes/ow/imgs/discord.png" alt="">
+                </a>
+                <a href="https://www.facebook.com/eestiow/">
+                    <img id="navfb" src="<?= get_site_url() ?>/wp-content/themes/ow/imgs/fb.png" alt="">
+                </a>
                 <?php wp_list_pages('&title_li='); ?>
                 <li class="icon">
                     <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>

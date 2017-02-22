@@ -43,14 +43,14 @@ Template Name: savetodbscript
                     echo "Rankimg: " .$pilt . '<br>';
 
 
-                    $sql = "INSERT INTO `wp_ranking` (battletag, nimi, lvl, rank, avatar, pilt)
+                    $sql = "INSERT INTO `wp_ranking` (battletag, nimi, lvl, rank, avatar, rank_image)
   VALUES ('$tag','$nimi', '$level', '$rank', '$avatar', '$pilt')
   ON DUPLICATE KEY UPDATE
   nimi = '$nimi',
   lvl = '$level',
   rank = '$rank',
   avatar = '$avatar',
-  pilt = '$pilt'";
+  rank_image = '$pilt'";
 
                     if (mysqli_query($conn, $sql)) {
                         echo "New record have been created or updated successfully" . "<br><br>";

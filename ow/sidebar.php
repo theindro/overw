@@ -8,15 +8,14 @@
             $i = 0;
             foreach ($result as $print) {
                 $i++;
-                echo '<tr><td>'.$i.'.</td><td><a href="http://localhost/overwatch.ee/profiil/'.$print->battletag.'">' . $print->nimi . '</a> </td><td style="text-align:right;"> ' . $print->rank . ' <img id="top3size" src="' . $print->pilt . '" alt=""></td></tr>';
+                echo '<tr><td>'.$i.'.</td><td><a href="profiil/'.$print->battletag.'">' . $print->nimi . '</a> </td><td style="text-align:right;"> ' . $print->rank . ' <img id="top3size" src="' . $print->rank_image . '" alt=""></td></tr>';
             }
             echo '</table>'?>
             </p>
         </div>
         <ol class="list-unstyled">
-            <li class="sidebox"><a class="btn" href="">Eesti ranking</a></li>
-            <li class="sidebox2"><a class="btn" href="">Tiimid</a></li>
-            <li class="sidebox3"><a class="btn" href="">Heroes</a></li>
+            <li class="sidebox"><a class="btn btn-front-page" href="<?= get_site_url()?>/eesti-ranking/">Eesti ranking</a></li>
+            <li class="sidebox3"><a class="btn btn-front-page" href="<?= get_site_url()?>/heroes/">Heroes</a></li>
         </ol>
 
         <?php if ( is_active_sidebar( 'home_right_1' ) ) : ?>

@@ -5,7 +5,7 @@
 		<section class="webdesigntuts-workshop">
 			<form action="http://localhost/overwatch.ee/profiil/" method="GET" id="inputform">
 				<input type="search"  placeholder="BattleTag-2413" name="battletag" >
-				<input type="submit" name="submit" class="button">
+				<input type="submit" name="submit" class="button" value="Esita">
 				<p>Loevad ka suured ja väiksed tähed ning kasutage '#' asemel '-'</p>
 			</form>
 		</section>

@@ -5,97 +5,96 @@ Template Name: uuenda profiili
 ?>
 
 <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "overwatch";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "overwatch";
 
 
-    // Create connection
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
 
 
-    global $wpdb;
-    $uus = $_GET['battletag'];
+global $wpdb;
+$uus = $_GET['battletag'];
 
 
-    $tablename = $wpdb->prefix . 'ranking';
-    $data = array(
-        'battletag' => $_GET['battletag'],
-    );
-    $wpdb->insert($tablename, $data);
-    $uus = $_GET['battletag'];
-    $result = $wpdb->get_results("SELECT * FROM wp_ranking where battletag = '$uus'");
+$tablename = $wpdb->prefix . 'ranking';
+$data = array(
+    'battletag' => $_GET['battletag'],
+);
+$wpdb->insert($tablename, $data);
+$uus = $_GET['battletag'];
+$result = $wpdb->get_results("SELECT * FROM wp_ranking where battletag = '$uus'");
 
 
-    foreach ($result as $print) {
-        $tag = $print->battletag;
+foreach ($result as $print) {
+    $tag = $print->battletag;
 
 
-        $pages = array("https://api.lootbox.eu/pc/eu/$tag/profile");
+    $pages = array("https://api.lootbox.eu/pc/eu/$tag/profile");
 
 
-        foreach ($pages as $page) {
+    foreach ($pages as $page) {
+        ini_set('max_execution_time', 300);
+        $html = @file_get_contents($page);
+        $parsed_json = json_decode($html);
+
+
+        $nimi = $parsed_json->data->username;
+        if (empty($nimi)) {
+            $delete = "DELETE FROM `wp_ranking` WHERE `wp_ranking`.`battletag` = '$uus'";
+            if (mysqli_query($conn, $delete)) {
+                echo "<p class='viga'>Error: 404, Sellist battletag-i ei eksisteeri: $uus <br><a href='http://localhost/overwatch.ee/'>Tagasi</a></p>";
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            }
+            exit();
+        }
+        $lvl = $parsed_json->data->level;
+        $rank = $parsed_json->data->competitive->rank;
+        $avatar = $parsed_json->data->avatar;
+        $pilt = $parsed_json->data->competitive->rank_img;
+        $wins = $parsed_json->data->games->competitive->wins;
+        $lost = $parsed_json->data->games->competitive->lost;
+        $played = $parsed_json->data->games->competitive->played;
+        $playtime = $parsed_json->data->playtime->competitive;
+
+        $pages2 = array("https://api.lootbox.eu/pc/eu/$tag/competitive/allHeroes/");
+
+        foreach ($pages2 as $page2) {
             ini_set('max_execution_time', 300);
-            $html = @file_get_contents($page);
+            $html = @file_get_contents($page2);
             $parsed_json = json_decode($html);
 
 
-            $nimi = $parsed_json->data->username;
-            if (empty($nimi)) {
-                $delete = "DELETE FROM `wp_ranking` WHERE `wp_ranking`.`battletag` = '$uus'";
-                if (mysqli_query($conn, $delete)) {
-                    echo "<p class='viga'>Error: 404, Sellist battletag-i ei eksisteeri: $uus <br><a href='http://localhost/overwatch.ee/'>Tagasi</a></p>";
-                } else {
-                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                }
-                exit();
-            }
-            $lvl = $parsed_json->data->level;
-            $rank = $parsed_json->data->competitive->rank;
-            $avatar = $parsed_json->data->avatar;
-            $pilt = $parsed_json->data->competitive->rank_img;
-            $wins = $parsed_json->data->games->competitive->wins;
-            $lost = $parsed_json->data->games->competitive->lost;
-            $played = $parsed_json->data->games->competitive->played;
-            $playtime = $parsed_json->data->playtime->competitive;
-
-            $pages2 = array("https://api.lootbox.eu/pc/eu/$tag/competitive/allHeroes/");
-
-            foreach ($pages2 as $page2) {
-                ini_set('max_execution_time', 300);
-                $html = @file_get_contents($page2);
-                $parsed_json = json_decode($html);
+            $gmedals = 'Medals-Gold';
+            $smedals = 'Medals-Silver';
+            $bmedals = 'Medals-Bronze';
+            $elimavg = 'Eliminations-Average';
+            $damageavg = 'DamageDone-Average';
+            $objavg = 'ObjectiveTime-Average';
+            $deathavg = 'Deaths-Average';
 
 
-                $gmedals = 'Medals-Gold';
-                $smedals = 'Medals-Silver';
-                $bmedals = 'Medals-Bronze';
-                $elimavg = 'Eliminations-Average';
-                $damageavg = 'DamageDone-Average';
-                $objavg = 'ObjectiveTime-Average';
-                $deathavg = 'Deaths-Average';
+            $gold = $parsed_json->$gmedals;
+            $silver = $parsed_json->$smedals;
+            $bronze = $parsed_json->$bmedals;
+            $elims = $parsed_json->$elimavg;
+            $deaths = $parsed_json->$deathavg;
+            $objtime = $parsed_json->$objavg;
+            $damage = $parsed_json->$damageavg;
+        }
 
 
-                $gold = $parsed_json->$gmedals;
-                $silver = $parsed_json->$smedals;
-                $bronze = $parsed_json->$bmedals;
-                $elims = $parsed_json->$elimavg;
-                $deaths = $parsed_json->$deathavg;
-                $objtime = $parsed_json->$objavg;
-                $damage = $parsed_json->$damageavg;
-            }
-
-
-
-            $sql = "INSERT INTO `wp_ranking` (battletag, nimi, lvl, rank, avatar, pilt, wins, lost, played, playtime, goldmedal, silvermedal, bronzemedal, elims, deaths, objtime, damage)
+        $sql = "INSERT INTO `wp_ranking` (battletag, nimi, lvl, rank, avatar, rank_image, wins, lost, played, playtime, goldmedal, silvermedal, bronzemedal, elims, deaths, objtime, damage)
  VALUES ('$tag','$nimi', '$lvl', '$rank', '$avatar', '$pilt', '$wins', '$lost', '$played', '$playtime', '$gold', '$silver', '$bronze', '$elims', '$deaths', '$objtime', '$damage')
  ON DUPLICATE KEY UPDATE
  nimi = '$nimi',
  lvl = '$lvl',
  rank = '$rank',
  avatar = '$avatar',
- pilt = '$pilt',
+ rank_image = '$pilt',
  wins = '$wins',
  lost = '$lost',
  played = '$played',
@@ -109,14 +108,13 @@ Template Name: uuenda profiili
      damage = '$damage'";
 
 
-
-            if (mysqli_query($conn, $sql)) {
-                echo "";
-            } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-            }
+        if (mysqli_query($conn, $sql)) {
+            echo "";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
         }
     }
+}
 $json_string = "https://api.lootbox.eu/pc/eu/$tag/competitive/heroes";
 $jsondata = file_get_contents($json_string);
 $obj = json_decode($jsondata, true);
@@ -204,7 +202,6 @@ foreach ($obj as $value => $data) {
             </div>
 
 
-
             <div id="profileline">
                 <p id="esimene">Competitive Stats</p>
             </div>
@@ -241,12 +238,9 @@ foreach ($obj as $value => $data) {
             </div>
 
 
-
-
-
         </div> <!-- /.col -->
-</div> <!-- /.row -->
-<?php get_footer(); ?>
+    </div> <!-- /.row -->
+    <?php get_footer(); ?>
 
 
 
