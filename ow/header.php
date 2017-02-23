@@ -36,7 +36,7 @@
                 <a href="http://discord.gg/cfhqKbc">
                     <img id="navdiscord" src="<?= get_site_url() ?>/wp-content/themes/ow/imgs/discord.png" alt="">
                 </a>
-                <a href="https://www.facebook.com/eestiow/">
+                <a href="https://www.facebook.com/groups/947381852026808/">
                     <img id="navfb" src="<?= get_site_url() ?>/wp-content/themes/ow/imgs/fb.png" alt="">
                 </a>
                 <?php wp_list_pages('&title_li='); ?>

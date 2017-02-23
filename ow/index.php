@@ -1,5 +1,4 @@
 <?php get_header(); ?>
-
 <div class="container">
 	<div class="lisa">
 		<section class="webdesigntuts-workshop">

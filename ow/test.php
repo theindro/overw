@@ -19,7 +19,7 @@ $json_string = "https://api.lootbox.eu/pc/eu/$tag/competitive/heroes";
 $jsondata = file_get_contents($json_string);
 $obj = json_decode($jsondata, true);
 
-$del = "DELETE FROM wp_heroes WHERE tag = '$tag'";
+$del = "DELETE FROM wp_heroes WHERE battle_tag_id = '$tag'";
 if (mysqli_query($conn, $del)) {
     echo "";
 } else {
@@ -32,9 +32,9 @@ foreach ($obj as $value => $data) {
     $playtime = $data['playtime'];
     $image = $data['image'];
     $pct = $data['percentage'];
-    $sql = "INSERT INTO wp_heroes (tag, name, playtime, image, percentage) VALUES ('$tag', '$name', '$playtime', '$image', '$pct') ON DUPLICATE KEY UPDATE
- tag = '$tag',
- name = '$name',
+    $sql = "INSERT INTO wp_heroes (battle_tag_id, hero_id, playtime, image, percentage) VALUES ('$tag', '$name', '$playtime', '$image', '$pct') ON DUPLICATE KEY UPDATE
+ battle_tag_id = '$tag',
+ hero_id = '$name',
  playtime = '$playtime',
  image = '$image',
  percentage = '$pct'";

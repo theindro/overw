@@ -4,167 +4,126 @@ Template Name: UserProfile
 */
 ?>
 
-
 <?php get_header(); ?>
 
 <?php
-if (isset($_GET['submit'])) {
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "overwatch";
+global $wpdb;
+$input_battle_tag = $_GET['battletag'];
 
+// Check if input isnt empty
+if (empty($input_battle_tag)) {
+    echo "<p class='viga'>Error: 404, Palun sisesta battletag! 
+            <br>
+            <a href='http://localhost/overwatch.ee/'>Tagasi</a>
+          </p>";
+    exit();
+}
 
-    // Create connection
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
+$battle_tag = $wpdb->get_results("SELECT * FROM wp_ranking where battle_tag = '$input_battle_tag'");
 
+// Get data for battle tag from API
+if (empty($battle_tag)) {
+    $options = array('http' => array('user_agent' => 'custom user agent string'));
+    $context = stream_context_create($options);
+    $response = @file_get_contents("https://owapi.net/api/v3/u/$input_battle_tag/blob", false, $context);
+    $parsed_json = json_decode($response);
 
-    global $wpdb;
-    $uus = $_GET['battletag'];
-    if (empty($uus)) {
-        echo "<p class='viga'>Error: 404, Palun sisesta battletag! <br><a href='http://localhost/overwatch.ee/'>Tagasi</a></p>";
+    $overall_stats = $parsed_json->eu->stats->competitive->overall_stats;
+    $average_stats = $parsed_json->eu->stats->competitive->average_stats;
+    $game_stats = $parsed_json->eu->stats->competitive->game_stats;
+
+    $parsed_to_array = json_decode($response, true);
+
+    //$all_heroes_stats = $parsed_to_array['eu']['heroes']['stats']['competitive'];
+    //var_dump($all_heroes_stats);
+
+    // Check if battletag exists in API
+    $check = $parsed_json->eu;
+    if (empty($check)) {
+        echo "<div class=\"container\">
+            <header class=\"page-header\">
+            <h1 class=\"page-title\">Error 404 - Sellist battletagi ei eksisteeri: $input_battle_tag</h1>
+            </header>
+            <a href='http://localhost/overwatch.ee/''>Tagasi</a>
+            </div>
+            ";
         exit();
     }
 
+    preg_match("/(.*?)(?=[-])/", $input_battle_tag, $name);
 
-    $query = mysqli_query($conn, "SELECT battletag FROM wp_ranking WHERE battletag='" . $uus . "'");
-    // Kui andmebaasis ei ole siis lisab uue ja v6tab api-st info andmebaasi.
-    if (mysqli_num_rows($query) == 0) {
-        $tablename = $wpdb->prefix . 'ranking';
-        $data = array(
-            'battletag' => $_GET['battletag'],
-        );
-        $wpdb->insert($tablename, $data);
-        $uus = $_GET['battletag'];
-        $result = $wpdb->get_results("SELECT * FROM wp_ranking where battletag = '$uus'");
+    // Insert API data to db.
+    $overall = array(
+        'battle_tag' => $input_battle_tag,
+        'name' => $name['0'],
+        'lvl' => ($overall_stats->prestige * 100 + $overall_stats->level),
+        'avatar' => $overall_stats->avatar,
+        'rank' => $overall_stats->comprank,
+        'tier' => $overall_stats->tier,
+        'wins' => $overall_stats->wins,
+        'lost' => $overall_stats->losses,
+        'ties' => $overall_stats->ties,
+        'played' => $overall_stats->games
+    );
 
+    $insert_overall = $wpdb->insert('wp_ranking', $overall);
+    $battle_tag_id = $wpdb->insert_id;
 
-        foreach ($result as $print) {
-            $tag = $print->battletag;
+    $obj_time = gmdate('H:i:s', floor($average_stats->objective_time_avg * 3600));
+    $timeonfire = gmdate('H:i:s', floor($average_stats->time_spent_on_fire_avg * 3600));
 
+    // Insert API user stats to db.
+    $player_stats = array(
+        'battle_tag_id' => $battle_tag_id,
+        'melee_final_blows' => $average_stats->melee_final_blows_avg,
+        'time_spent_on_fire' => $timeonfire,
+        'solo_kills' => $average_stats->solo_kills_avg,
+        'objective_time' => $obj_time,
+        'objective_kills' => $average_stats->objective_kills_avg,
+        'healing_done' => $average_stats->healing_done_avg,
+        'final_blows' => $average_stats->final_blows_avg,
+        'deaths' => $average_stats->deaths_avg,
+        'damage_done' => $average_stats->damage_done_avg,
+        'eliminations' => $average_stats->eliminations_avg
+    );
 
-            $pages = array("https://api.lootbox.eu/pc/eu/$tag/profile");
+    $insert_average_stats = $wpdb->insert('wp_average_stats', $player_stats);
 
+    $player_medals = array(
+        'battle_tag_id' => $battle_tag_id,
+        'gold' => $game_stats->medals_gold,
+        'silver' => $game_stats->medals_silver,
+        'bronze' => $game_stats->medals_bronze,
+    );
 
-            foreach ($pages as $page) {
-                ini_set('max_execution_time', 300);
-                $html = @file_get_contents($page);
-                $parsed_json = json_decode($html);
+    $insert_medals = $wpdb->insert('wp_medals', $player_medals);
 
-                $nimi = $parsed_json->data->username;
-                if (empty($nimi)) {
-                    $delete = "DELETE FROM `wp_ranking` WHERE `wp_ranking`.`battletag` = '$uus'";
-                    if (mysqli_query($conn, $delete)) {
-                        echo "<div class=\"container\">
-                                           <header class=\"page-header\">
-                <h1 class=\"page-title\">Error 404 - Sellist battletagi ei eksisteeri: $uus</h1>
-            </header><a href='http://localhost/overwatch.ee/''>Tagasi</a>
-            </div>
-            ";
-                    } else {
-                        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                    }
-                    exit();
-                }
+    // Add heroes playtime to database
+    $all_heroes_playtime = $parsed_to_array['eu']['heroes']['playtime']['competitive'];
 
-
-                $lvl = $parsed_json->data->level;
-                $rank = $parsed_json->data->competitive->rank;
-                $avatar = $parsed_json->data->avatar;
-                $pilt = $parsed_json->data->competitive->rank_img;
-                $wins = $parsed_json->data->games->competitive->wins;
-                $lost = $parsed_json->data->games->competitive->lost;
-                $played = $parsed_json->data->games->competitive->played;
-                $playtime = $parsed_json->data->playtime->competitive;
-
-                $pages2 = array("https://api.lootbox.eu/pc/eu/$tag/competitive/allHeroes/");
-
-                foreach ($pages2 as $page2) {
-                    ini_set('max_execution_time', 300);
-                    $html = @file_get_contents($page2);
-                    $parsed_json = json_decode($html);
-
-
-                    $gmedals = 'Medals-Gold';
-                    $smedals = 'Medals-Silver';
-                    $bmedals = 'Medals-Bronze';
-                    $elimavg = 'Eliminations-Average';
-                    $damageavg = 'DamageDone-Average';
-                    $objavg = 'ObjectiveTime-Average';
-                    $deathavg = 'Deaths-Average';
-
-
-                    $gold = $parsed_json->$gmedals;
-                    $silver = $parsed_json->$smedals;
-                    $bronze = $parsed_json->$bmedals;
-                    $elims = $parsed_json->$elimavg;
-                    $deaths = $parsed_json->$deathavg;
-                    $objtime = $parsed_json->$objavg;
-                    $damage = $parsed_json->$damageavg;
-                }
-
-                $sql = "INSERT INTO `wp_ranking` (battletag, nimi, lvl, rank, avatar, rank_image, wins, lost, played, playtime, goldmedal, silvermedal, bronzemedal, elims, deaths, objtime, damage)
- VALUES ('$tag','$nimi', '$lvl', '$rank', '$avatar', '$pilt', '$wins', '$lost', '$played', '$playtime', '$gold', '$silver', '$bronze', '$elims', '$deaths', '$objtime', '$damage')
- ON DUPLICATE KEY UPDATE
- nimi = '$nimi',
- lvl = '$lvl',
- rank = '$rank',
- avatar = '$avatar',
- rank_image = '$pilt',
- wins = '$wins',
- lost = '$lost',
- played = '$played',
- playtime = '$playtime',
- goldmedal = '$gold',
-   silvermedal = '$silver',
-    bronzemedal = '$bronze',
-    elims = '$elims',
-     deaths = '$deaths',
-     objtime = '$objtime',
-     damage = '$damage'";
-
-
-                if (mysqli_query($conn, $sql)) {
-                    echo "";
-                } else {
-                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                }
-            }
-        }
-    } else {
-        // kuva andmebaasist profiili andmed
-        global $wpdb;
-        $result = $wpdb->get_results("SELECT * FROM wp_ranking where battletag = '$uus';");
-        foreach ($result as $print) {
-            $tag = $print->battletag;
-            $nimi = $print->nimi;
-            $avatar = $print->avatar;
-            $pilt = $print->pilt;
-            $lvl = $print->lvl;
-            $rank = $print->rank;
-            $wins = $print->wins;
-            $lost = $print->lost;
-            $played = $print->played;
-            $playtime = $print->playtime;
-
-            $gold = $print->goldmedal;
-            $silver = $print->silvermedal;
-            $bronze = $print->bronzemedal;
-
-            $elims = $print->elims;
-            $deaths = $print->deaths;
-            $objtime = $print->objtime;
-            $damage = $print->damage;
-
-        }
+    foreach ($all_heroes_playtime as $hero_name => $playtime) {
+        $insert_heroes = $wpdb->insert('wp_heroes', ['hero_name' => $hero_name, 'playtime' => $playtime, 'battle_tag_id' => $battle_tag_id]);
     }
-}
-?>
-<?php
-$color = "#000000";
 
-$winrate = number_format(($wins / $played) * 100, 1);
+    // Add heroes stats to database
+    //$all_heroes_stats = $parsed_to_array['eu']['heroes']['stats']['competitive'];
+    //var_dump($all_heroes_stats);
+}
+// Get current user id
+$battle_tag_id = $wpdb->get_var("SELECT battle_tag_id FROM wp_ranking WHERE battle_tag = '$input_battle_tag'");
+
+// Show data from database to given battle tag.
+$battle_tag_info = $wpdb->get_results("SELECT * FROM wp_ranking 
+                                              LEFT JOIN wp_average_stats USING (battle_tag_id)
+                                              LEFT JOIN wp_medals USING (battle_tag_id)
+                                              LEFT JOIN wp_ranks USING (tier)
+                                              where battle_tag = '$input_battle_tag'");
+$user = json_decode(json_encode($battle_tag_info), true);
+
+// Show red color for under 50% winrate and green for higher than 50%
+$color = "#000000";
+$winrate = number_format(($user[0]['wins'] / $user[0]['played']) * 100, 1);
 
 if (($winrate >= 1) && ($winrate <= 49.99))
     $color = "#FF0000";
@@ -179,81 +138,120 @@ else if (($winrate >= 50) && ($winrate <= 100))
         <div class="row">
             <div class="col-sm-12">
                 <div id="userhead">
-                    <img src="<?php echo $avatar ?>" alt="">
+                    <img src="<?= $user[0]['avatar'] ?>" alt="">
 
+                    <p><a href=""><?= $user[0]['battle_tag'] ?></a></p>
 
-                    <p><a href=""><?php echo $tag ?></a></p>
-
-
-                    <p>(<?php echo $lvl ?>)</p>
-                    <img class="pilt" src="<?php echo $pilt ?>" alt="">
+                    <p>(<?= $user[0]['lvl'] ?>)</p>
+                    <img class="pilt" src="<?= $user[0]['rank_image'] ?>" alt="">
                     <div id="div1">
-                        <?php echo $rank ?> <br>SKILL RATING
+                        <?= $user[0]['rank'] ?> <br>SKILL RATING
                     </div>
-
 
                     <input type='submit' id="uuenda" value="Uuenda"/>
                 </div>
 
+                <table class="overall_stats">
+                    <tr>
+                        <th colspan="5">Overall games</th>
+                    </tr>
+                    <tr style="background">
+                        <td>Winrate: <?php echo "<span style=\"color: $color\">$winrate%</span>" ?></td>
+                        <td>Total: <?= $user[0]['played'] ?> </td>
+                        <td>Wins: <span style="color:#009c06"><?= $user[0]['wins'] ?> </span></td>
+                        <td>Lost: <span style="color:#c60000"><?= $user[0]['lost'] ?> </span></td>
+                        <td>Ties: <span style="color:#ff9a3c"><?= $user[0]['ties'] ?> </span></td>
+                    </tr>
+                    <tr>
+                        <th colspan="5">Average stats</th>
+                    </tr>
+                    <tr>
+                        <td>Eliminations: <?= $user[0]['eliminations']; ?><br>
+                            <progress title="Your average Eliminations compared to other players" class="avgbar"
+                                      max="<?= $wpdb->get_var("SELECT MAX(eliminations) FROM wp_average_stats"); ?>"
+                                      value="<?= $user[0]['eliminations']; ?>"></progress>
+                        </td>
+                        <td>Deaths: <?= $user[0]['deaths'] ?><br>
+                            <progress title="Your average Deaths compared to other players" class="avgbar"
+                                      max="<?= $wpdb->get_var("SELECT MAX(deaths) FROM wp_average_stats"); ?>"
+                                      value="<?= $user[0]['deaths'] ?>"></progress>
+                        <td>Damage done: <?= $user[0]['damage_done'] ?>
+                            <br>
+                            <progress title="Your average Damage compared to other players" class="avgbar"
+                                      max="<?= $wpdb->get_var("SELECT MAX(damage_done) FROM wp_average_stats"); ?>"
+                                      value="<?= $user[0]['damage_done'] ?>"></progress>
+                        </td>
+                        <td>Healing done: <?= $user[0]['healing_done'] ?>
+                            <br>
+                            <progress title="Your average Healing compared to other players" class="avgbar"
+                                      max="<?= $wpdb->get_var("SELECT MAX(healing_done) FROM wp_average_stats"); ?>"
+                                      value="<?= $user[0]['healing_done'] ?>"></progress>
+                        </td>
+                        <td>Solo kills: <?= $user[0]['solo_kills'] ?>
+                            <br>
+                            <progress title="Your average Solo kills compared to other players" class="avgbar"
+                                      max="<?= $wpdb->get_var("SELECT MAX(solo_kills) FROM wp_average_stats"); ?>"
+                                      value="<?= $user[0]['solo_kills'] ?>"></progress>
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td>Objective kills: <?= $user[0]['objective_kills'] ?>
+                            <br>
+                            <progress title="Your average Objective kills compared to other players" class="avgbar"
+                                      max="<?= $wpdb->get_var("SELECT MAX(objective_kills) FROM wp_average_stats"); ?>"
+                                      value="<?= $user[0]['objective_kills'] ?>"></progress>
+                        </td>
+                        <td>Objective time: <br><?= $user[0]['objective_time'] ?></td>
+                        <td>Time on fire: <br><?= $user[0]['time_spent_on_fire'] ?></td>
+                    </tr>
+                    <tr>
+                        <th colspan="5">Medals</th>
+                    </tr>
+                    <tr>
+                        <td>Gold: <?= $user[0]['gold']; ?></td>
+                        <td>Silver: <?= $user[0]['silver']; ?></td>
+                        <td>Bronze: <?= $user[0]['bronze']; ?></td>
+                        <td></td>
+                    </tr>
+                </table>
 
                 <div id="profileline">
-                    <p id="esimene">Competitive Stats <select id="season">
-                            <option value="Season3" class="seasons">Season 3</option>
-                            <option value="Season2" class="seasons">Season 2</option>
-                            <option value="Season1" class="seasons">Season 1</option>
-                        </select></p>
+                    <p id="teine">Most played Heroes</p>
                 </div>
 
-                <table style="width:100%;" id="statistika">
+                <?php
+                $herolist = $wpdb->get_results("SELECT * FROM wp_heroes LEFT JOIN wp_heroesall USING (hero_name) where battle_tag_id = $battle_tag_id ORDER BY playtime DESC limit 10");
+                $herolist = json_decode(json_encode($herolist), true);
+                ?>
+                <table id="hero_playtime" cellspacing="0" width="100%">
                     <tr>
-                        <th style="width:33%;">Overall</th>
-                        <th style="width:33%;">Average</th>
-                        <th style="width:33%;">Medals</th>
+                        <th style="width:7%"></th>
+                        <th style="width:10%"></th>
+                        <th style="width:73%"></th>
+                        <th style="width:10%"></th>
                     </tr>
-                    <tr>
-                        <td>Winrate: <?php echo "<span style=\"color: $color\">$winrate%</span>" ?></td>
-                        <td>Eliminations: <?php echo $elims; ?><br>
-                            <progress class="avgbar"
-                                      max="<?php $maxelims = $wpdb->get_var("SELECT elims FROM wp_ranking ORDER BY elims DESC LIMIT 1");
-                                      echo $maxelims; ?>" value="<?php echo $elims; ?>"></progress>
-                        </td>
-                        <td>Gold: <?php echo $gold; ?></td>
-                    </tr>
-                    <tr>
-                        <td>Wins: <?php echo $wins ?> games</td>
-                        <td>Deaths: <?php echo $deaths; ?><br>
-                            <progress class="avgbar"
-                                      max="<?php $maxdeaths = $wpdb->get_var("SELECT deaths FROM wp_ranking ORDER BY deaths DESC LIMIT 1");
-                                      echo $maxdeaths; ?>"
-                                      value="<?php echo $deaths; ?>"></progress>
-                        </td>
-                        <td>Silver: <?php echo $silver; ?></td>
-                    </tr>
-                    <tr>
-                        <td>Total: <?php echo $played ?> games</td>
-                        <td>Objective time: <?php echo $objtime; ?><br>
-                            <progress class="avgbar" max="02:00" value="<?php echo $objtime; ?>"></progress>
-                        </td>
-                        <td>Bronze: <?php echo $bronze; ?></td>
-                    </tr>
-                    <tr>
-                        <td>Playtime: <?php echo $playtime ?> hours</td>
-                        <td>Damage done: <?php echo $damage; ?><br>
-                            <progress class="avgbar"
-                                      max="<?php $maxdmg = $wpdb->get_var("SELECT damage FROM wp_ranking ORDER BY damage DESC LIMIT 1");
-                                      echo $maxdmg ?>" value="<?php echo $damage; ?>"></progress>
-                        </td>
-                    </tr>
+                    <?php foreach ($herolist as $hero): ?>
+                        <tr>
+                            <td><img class="avs" src="<?= $hero['image'] ?>"></td>
+                            <td><p class="heronames"><?= $hero['hero_name'] ?></p></td>
+                            <td>
+                                <progress class="bar"
+                                          max="<?= $wpdb->get_var("SELECT MAX(playtime) FROM wp_heroes 
+                                                                    where battle_tag_id = $battle_tag_id"); ?>"
+                                          value="<?= $hero['playtime'] ?>"></progress>
+                            </td>
+                            <td><p class="heronames"><?= $hero['playtime'] ?> Hours</p></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </table>
 
                 <div id="profileline">
                     <p id="teine">hero stats</p>
                 </div>
-                <?php global $wpdb;
-                $heroes = $wpdb->get_results("SELECT * FROM wp_heroes where tag = '$uus' ORDER BY percentage DESC LIMIT 3;"); ?>
+
+                <?php $heroes = $wpdb->get_results("SELECT * FROM wp_heroes where battle_tag_id = '$input_battle_tag' ORDER BY percentage DESC LIMIT 3;"); ?>
                 <?php foreach ($heroes as $hero) : ?>
-                    <?php var_dump($hero);
-                    ?>
                     <div class="herostats">
                         <div class="heropic">
                             <img src="<?php echo $hero->image; ?>" alt="">
@@ -329,41 +327,6 @@ else if (($winrate >= 50) && ($winrate <= 100))
                 <br>
                 <a href="" style="color:black; float:right;">Kuva rohkem...</a>
                 <br>
-
-                <div id="profileline">
-                    <p id="teine">Most played Heroes</p>
-                </div>
-
-                <div id="mainblock">
-                    <div id="avatars">
-                        <?php
-                        $data = mysqli_query($conn, "SELECT * FROM wp_heroes where tag = '$tag' ORDER BY percentage DESC limit 10 ");
-                        while ($info = mysqli_fetch_array($data))
-                            echo '<img class="avs" src="' . $info['image'] . '"> <br>';
-                        ?>
-                    </div>
-                    <div id="name">
-                        <?php
-                        $data = mysqli_query($conn, "SELECT * FROM wp_heroes where tag = '$tag' ORDER BY percentage DESC limit 10 ");
-                        while ($info = mysqli_fetch_array($data))
-                            echo '<div class="roww"><p class="heronames">' . $info['name'] . '</p> </div>';
-                        ?>
-                    </div>
-                    <div id="percentage">
-                        <?php
-                        $data = mysqli_query($conn, "SELECT * FROM wp_heroes where tag = '$tag' ORDER BY percentage DESC limit 10 ");
-                        while ($info = mysqli_fetch_array($data))
-                            echo '<div class="roww"><progress class="bar" max="1" value="' . $info['percentage'] . '"></progress></div> ';
-                        ?>
-                    </div>
-                    <div id="hours">
-                        <?php
-                        $data = mysqli_query($conn, "SELECT * FROM wp_heroes where tag = '$tag' ORDER BY percentage DESC limit 10 ");
-                        while ($info = mysqli_fetch_array($data))
-                            echo '<div class="roww"><p class="heronames">' . $info['playtime'] . '</p> </div>';
-                        ?>
-                    </div>
-                </div>
             </div> <!-- /.col -->
         </div> <!-- /.row -->
         <?php get_footer(); ?>
@@ -371,6 +334,10 @@ else if (($winrate >= 50) && ($winrate <= 100))
     <div id="message2"></div>
 
     <script>
+
+        $(document).ready(function () {
+
+        });
 
         $(function () {
             // don't cache ajax or content won't be fresh
@@ -384,11 +351,10 @@ else if (($winrate >= 50) && ($winrate <= 100))
             $("#uuenda").click(function () {
                 $('#hide').hide();
                 $("#message2").html(ajax_load).load(loadUrl);
-                location.reload();
             });
         });
 
-        $(document).ajaxStop(function(){
+        $(document).ajaxStop(function () {
             window.location.reload();
         });
     </script>
