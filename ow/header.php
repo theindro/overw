@@ -51,9 +51,9 @@
 
 <div class="container2">
     <div class="blog-header">
-        <a href="http://localhost/overwatch.ee">
+        <a href="<?= get_site_url() ?>">
             <div class="logo"><img id="peidetud"
-                                   src="http://localhost/overwatch.ee/wp-content/themes/ow/imgs/sininelogohover.png"
+                                   src="<?= get_site_url() ?>/wp-content/themes/ow/imgs/sininelogohover.png"
                                    alt=""></div>
         </a>
     </div>

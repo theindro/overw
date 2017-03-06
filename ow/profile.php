@@ -15,7 +15,7 @@ $input_battle_tag = $_GET['battletag'];
 if (empty($input_battle_tag)) {
     echo "<p class='viga'>Error: 404, Palun sisesta battletag! 
             <br>
-            <a href='http://localhost/overwatch.ee/'>Tagasi</a>
+            <a href='www.overwatch.ee'>Tagasi</a>
           </p>";
     exit();
 }
@@ -42,7 +42,7 @@ if (empty($battle_tag)) {
             <header class=\"page-header\">
             <h1 class=\"page-title\">Error 404 - Sellist battletagi ei eksisteeri: $input_battle_tag</h1>
             </header>
-            <a href='http://localhost/overwatch.ee/''>Tagasi</a>
+            <a href='http://www.overwatch.ee/'>Tagasi</a>
             </div>
             ";
         exit();
@@ -149,7 +149,8 @@ if (($winrate >= 1) && ($winrate <= 49.99))
 else if (($winrate >= 50) && ($winrate <= 100))
     $color = "#00d610";
 
-function decimal_to_time($decimal) {
+function decimal_to_time($decimal)
+{
     $hours = floor((int)$decimal / 60);
     $minutes = floor((int)$decimal % 60);
     $seconds = $decimal - (int)$decimal;
@@ -177,6 +178,7 @@ function decimal_to_time($decimal) {
                     </div>
 
                     <input type='submit' id="uuenda" value="Uuenda"/>
+                    <div id="message2"></div>
                 </div>
 
                 <table class="overall_stats">
@@ -195,29 +197,34 @@ function decimal_to_time($decimal) {
                     </tr>
                     <tr>
                         <td>Eliminations: <?= $user[0]['eliminations']; ?><br>
-                            <progress title="Your average Eliminations compared to other players on overwatch.ee" class="avgbar"
+                            <progress title="Your average Eliminations compared to other players on overwatch.ee"
+                                      class="avgbar"
                                       max="<?= $wpdb->get_var("SELECT MAX(eliminations) FROM wp_average_stats"); ?>"
                                       value="<?= $user[0]['eliminations']; ?>"></progress>
                         </td>
                         <td>Deaths: <?= $user[0]['deaths'] ?><br>
-                            <progress title="Your average Deaths compared to other players on overwatch.ee" class="avgbar"
+                            <progress title="Your average Deaths compared to other players on overwatch.ee"
+                                      class="avgbar"
                                       max="<?= $wpdb->get_var("SELECT MAX(deaths) FROM wp_average_stats"); ?>"
                                       value="<?= $user[0]['deaths'] ?>"></progress>
                         <td>Damage done: <?= $user[0]['damage_done'] ?>
                             <br>
-                            <progress title="Your average Damage compared to other players on overwatch.ee" class="avgbar"
+                            <progress title="Your average Damage compared to other players on overwatch.ee"
+                                      class="avgbar"
                                       max="<?= $wpdb->get_var("SELECT MAX(damage_done) FROM wp_average_stats"); ?>"
                                       value="<?= $user[0]['damage_done'] ?>"></progress>
                         </td>
                         <td>Healing done: <?= $user[0]['healing_done'] ?>
                             <br>
-                            <progress title="Your average Healing compared to other players on overwatch.ee" class="avgbar"
+                            <progress title="Your average Healing compared to other players on overwatch.ee"
+                                      class="avgbar"
                                       max="<?= $wpdb->get_var("SELECT MAX(healing_done) FROM wp_average_stats"); ?>"
                                       value="<?= $user[0]['healing_done'] ?>"></progress>
                         </td>
                         <td>Solo kills: <?= $user[0]['solo_kills'] ?>
                             <br>
-                            <progress title="Your average Solo kills compared to other players on overwatch.ee" class="avgbar"
+                            <progress title="Your average Solo kills compared to other players on overwatch.ee"
+                                      class="avgbar"
                                       max="<?= $wpdb->get_var("SELECT MAX(solo_kills) FROM wp_average_stats"); ?>"
                                       value="<?= $user[0]['solo_kills'] ?>"></progress>
                         </td>
@@ -226,7 +233,8 @@ function decimal_to_time($decimal) {
 
                         <td>Objective kills: <?= $user[0]['objective_kills'] ?>
                             <br>
-                            <progress title="Your average Objective kills compared to other players on overwatch.ee" class="avgbar"
+                            <progress title="Your average Objective kills compared to other players on overwatch.ee"
+                                      class="avgbar"
                                       max="<?= $wpdb->get_var("SELECT MAX(objective_kills) FROM wp_average_stats"); ?>"
                                       value="<?= $user[0]['objective_kills'] ?>"></progress>
                         </td>
@@ -287,7 +295,7 @@ function decimal_to_time($decimal) {
                                                                 ORDER BY playtime DESC LIMIT 5");
                 $heroes = json_decode(json_encode($all_hero_stats), true); ?>
                 <?php foreach ($heroes as $hero) :
-                    $name = $hero['hero_name'];?>
+                    $name = $hero['hero_name']; ?>
 
 
                     <div class="herostats">
@@ -298,7 +306,8 @@ function decimal_to_time($decimal) {
                             <div class="mainstat">
                                 <div style="font-weight:bold;"><?= $hero['weapon_accuracy'] * 100 ?>%</div>
                                 <div>
-                                    <progress class="pbar" title="Your accuracy compared to other players on Overwatch.ee"
+                                    <progress class="pbar"
+                                              title="Your accuracy compared to other players on Overwatch.ee"
                                               max="<?= $wpdb->get_var("SELECT MAX(weapon_accuracy) FROM wp_hero_avg_stats WHERE hero_name = '$name'"); ?>"
                                               value="<?= $hero['weapon_accuracy'] ?>"></progress>
                                 </div>
@@ -307,7 +316,8 @@ function decimal_to_time($decimal) {
                             <div class="mainstat">
                                 <div style="font-weight:bold;"><?= $hero['eliminations_per_life'] ?> </div>
                                 <div>
-                                    <progress class="pbar" title="Your K/d ratio compared to other players on Overwatch.ee"
+                                    <progress class="pbar"
+                                              title="Your K/d ratio compared to other players on Overwatch.ee"
                                               max="<?= $wpdb->get_var("SELECT MAX(eliminations_per_life) FROM wp_hero_avg_stats WHERE hero_name ='$name'"); ?>"
                                               value="<?= $hero['eliminations_per_life'] ?>"></progress>
                                 </div>
@@ -316,7 +326,8 @@ function decimal_to_time($decimal) {
                             <div class="mainstat">
                                 <div style="font-weight:bold;"><?= $hero['damage_done_average'] ?> </div>
                                 <div>
-                                    <progress class="pbar" title="Your Damage done compared to other players on Overwatch.ee"
+                                    <progress class="pbar"
+                                              title="Your Damage done compared to other players on Overwatch.ee"
                                               max="<?= $wpdb->get_var("SELECT MAX(damage_done_average) FROM wp_hero_avg_stats WHERE hero_name ='$name'"); ?>"
                                               value="<?= $hero['damage_done_average'] ?>"></progress>
                                 </div>
@@ -328,12 +339,13 @@ function decimal_to_time($decimal) {
                                         echo number_format(($hero['games_won'] / ($hero['games_played'])) * 100, 1);
                                     } else {
                                         echo 'No info';
-                                    }?>
+                                    } ?>
                                     %
                                 </div>
                                 <div>
                                     <progress class="pbar" title="Your Winrate on scale of 100%"
-                                              max="<?= $hero['games_played']?>" value="<?= $hero['games_won']?>"></progress>
+                                              max="<?= $hero['games_played'] ?>"
+                                              value="<?= $hero['games_won'] ?>"></progress>
                                 </div>
                                 <div>Winrate</div>
                             </div>
@@ -342,32 +354,40 @@ function decimal_to_time($decimal) {
                             <div class="mainstat">
                                 <div style="font-weight:bold;"><?= $hero['final_blows_average'] ?></div>
                                 <div>
-                                    <progress class="pbar" title="Your final blows compared to other players on Overwatch.ee"
-                                              max="<?= $wpdb->get_var("SELECT MAX(final_blows_average) FROM wp_hero_avg_stats WHERE hero_name ='$name'"); ?>" value="<?= $hero['final_blows_average'] ?>"></progress>
+                                    <progress class="pbar"
+                                              title="Your final blows compared to other players on Overwatch.ee"
+                                              max="<?= $wpdb->get_var("SELECT MAX(final_blows_average) FROM wp_hero_avg_stats WHERE hero_name ='$name'"); ?>"
+                                              value="<?= $hero['final_blows_average'] ?>"></progress>
                                 </div>
                                 <div>final blows</div>
                             </div>
                             <div class="mainstat">
                                 <div style="font-weight:bold;"><?= $hero['healing_done_average'] ?></div>
                                 <div>
-                                    <progress class="pbar" title="Your healing done compared to other players on Overwatch.ee"
-                                              max="<?= $wpdb->get_var("SELECT MAX(healing_done_average) FROM wp_hero_avg_stats WHERE hero_name ='$name'"); ?>" value="<?= $hero['healing_done_average'] ?>"></progress>
+                                    <progress class="pbar"
+                                              title="Your healing done compared to other players on Overwatch.ee"
+                                              max="<?= $wpdb->get_var("SELECT MAX(healing_done_average) FROM wp_hero_avg_stats WHERE hero_name ='$name'"); ?>"
+                                              value="<?= $hero['healing_done_average'] ?>"></progress>
                                 </div>
                                 <div>Healing</div>
                             </div>
                             <div class="mainstat">
                                 <div style="font-weight:bold;"><?= $hero['objective_kills_average'] ?></div>
                                 <div>
-                                    <progress class="pbar" title="Your objective kills compared to other players on Overwatch.ee"
-                                              max="<?= $wpdb->get_var("SELECT MAX(objective_kills_average) FROM wp_hero_avg_stats WHERE hero_name ='$name'"); ?>" value="<?= $hero['objective_kills_average'] ?>"></progress>
+                                    <progress class="pbar"
+                                              title="Your objective kills compared to other players on Overwatch.ee"
+                                              max="<?= $wpdb->get_var("SELECT MAX(objective_kills_average) FROM wp_hero_avg_stats WHERE hero_name ='$name'"); ?>"
+                                              value="<?= $hero['objective_kills_average'] ?>"></progress>
                                 </div>
                                 <div>obj. kills</div>
                             </div>
                             <div class="mainstat">
                                 <div style="font-weight:bold;"><?= $hero['objective_kills_average'] ?></div>
                                 <div>
-                                    <progress class="pbar" title="Your solo kills compared to other players on Overwatch.ee"
-                                              max="<?= $wpdb->get_var("SELECT MAX(solo_kills_average) FROM wp_hero_avg_stats WHERE hero_name ='$name'"); ?>" value="<?= $hero['objective_kills_average'] ?>"></progress>
+                                    <progress class="pbar"
+                                              title="Your solo kills compared to other players on Overwatch.ee"
+                                              max="<?= $wpdb->get_var("SELECT MAX(solo_kills_average) FROM wp_hero_avg_stats WHERE hero_name ='$name'"); ?>"
+                                              value="<?= $hero['objective_kills_average'] ?>"></progress>
                                 </div>
                                 <div>Solo kills</div>
                             </div>
@@ -378,33 +398,29 @@ function decimal_to_time($decimal) {
         </div> <!-- /.row -->
         <?php get_footer(); ?>
     </div>
-    <div id="message2"></div>
+</div>
 
-    <script>
 
-        $(document).ready(function () {
+<script>
 
-        });
-
-        $(function () {
-            // don't cache ajax or content won't be fresh
-            $.ajaxSetup({
-                cache: false
+    $(document).ready(function () {
+        $('#uuenda').on('click', function () {
+            $.post("<?= get_site_url()?>/update/ ", {
+                battle_tag: '<?= $input_battle_tag ?>',
+                battle_tag_id: <?= $battle_tag_id ?>
+            }, function (res) {
+                if (res == 'Ok') {
+                    location.reload();
+                }
+                else {
+                    alert("Uuendamine ebaõnnestus!");
+                }
             });
-            var ajax_load = "<img id='loader' src='http://i.imgur.com/7OhVFhy.gif' alt='loading...' /> ";
-            var tag = '?battletag=<?php echo $_GET['battletag']; ?>';
-            // load() functions
-            var loadUrl = "http://localhost/overwatch.ee/uuenda/" + tag;
-            $("#uuenda").click(function () {
-                $('#hide').hide();
-                $("#message2").html(ajax_load).load(loadUrl);
-            });
-        });
+        })
+    });
 
-        $(document).ajaxStop(function () {
-            window.location.reload();
-        });
-    </script>
+
+</script>
 
 
 

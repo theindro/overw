@@ -165,7 +165,7 @@ html, body {
     transition: 500ms filter ease;
     height: 55px;
     float: right;
-    filter: opacity(15%);
+    filter: opacity(50%);
 }
 
 #navfb:hover {
@@ -178,7 +178,7 @@ html, body {
     height: 50px;
     margin-top: 5px;
     float: right;
-    filter: opacity(15%);
+    filter: opacity(50%);
 }
 
 #navdiscord:hover {
@@ -245,7 +245,7 @@ html, body {
 
 .pbar::-moz-progress-bar {
     /* style rules */
-    background-color: #f3f3f3;
+    background-color:rgb(0, 176, 255);
     border: 0;
     height: 8px;
     border-radius: 9px;
@@ -276,9 +276,10 @@ html, body {
     border-radius: 9px;
 }
 
+
 .avgbar::-moz-progress-bar {
     /* style rules */
-    background-color: white;
+    background-color: rgb(0, 176, 255);
     border: 0;
     height: 8px;
     border-radius: 9px;
@@ -437,6 +438,14 @@ html, body {
     border-radius: 15px;
 }
 
+.bar::-moz-progress-bar {
+    /* style rules */
+    background-color:rgb(0, 176, 255);
+    border: 0;
+    height: 20px;
+    border-radius: 15px;
+}
+
 #myChart {
     width: 90%;
     float: right;
@@ -540,6 +549,14 @@ position:relative;
     max-height: 128px;
 }
 
+#last_updated {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.49);
+    margin-top: 85px;
+    position: absolute;
+    margin-left: -135px;
+}
+
 #userhead .pilt {
     max-height: 128px;
     float: right;
@@ -553,6 +570,10 @@ position:relative;
     color: white;
     font-family: overwatch;
     font-weight: normal;
+}
+
+.col-md-6 p {
+    font-size:16px;
 }
 
 #first {
@@ -990,6 +1011,10 @@ ul.topnav li.icon {
     }
 
     #navfb {
+        visibility: hidden;
+    }
+
+    #navdiscord {
         visibility: hidden;
     }
 
