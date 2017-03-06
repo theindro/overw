@@ -449,7 +449,12 @@ html, body {
 #myChart {
     width: 90%;
     float: right;
+}
 
+.AdminBox {
+    display:block;
+    width:100%;
+    height:100px;
 }
 
 .blog-header {
