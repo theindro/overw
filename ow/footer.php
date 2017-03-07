@@ -1,7 +1,7 @@
 </div> <!-- /.container -->
 
 <footer class="blog-footer">
-    <p>© overwatch.ee 2016. All rights reserved.</p>
+    <p>© overwatch.ee 2017. All rights reserved.</p>
     <p style="color:#575757;">Kontakt: info@overwatch.ee</p>
     <p>
         <a href="#" id="return-to-top">Tagasi üles!</a>

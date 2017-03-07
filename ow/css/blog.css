@@ -137,7 +137,7 @@ html, body {
 
 @media (min-width: 1200px) {
     .container {
-        width: 970px;
+        width: 1080px !important;
     }
 
     .container2 {
@@ -173,18 +173,6 @@ html, body {
     filter: opacity(100%);
 }
 
-#navdiscord {
-    transition: 500ms filter ease;
-    height: 50px;
-    margin-top: 5px;
-    float: right;
-    filter: opacity(50%);
-}
-
-#navdiscord:hover {
-    transition: 500ms filter ease;
-    filter: opacity(100%);
-}
 
 .blog-masthead {
     /* top: 0; */
@@ -245,13 +233,12 @@ html, body {
 
 .pbar::-moz-progress-bar {
     /* style rules */
-    background-color:rgb(0, 176, 255);
+    background-color: rgb(0, 176, 255);
     border: 0;
     height: 8px;
     border-radius: 9px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
-
 
 .avgbar {
     background-color: white;
@@ -275,7 +262,6 @@ html, body {
     height: 8px;
     border-radius: 9px;
 }
-
 
 .avgbar::-moz-progress-bar {
     /* style rules */
@@ -372,7 +358,7 @@ html, body {
 }
 
 #hero_playtime {
-    margin-top:-10px;
+    margin-top: -10px;
     background: linear-gradient(#eaeaea, #ffffff);
     color: #1f1f1f;
     width: 95%;
@@ -388,6 +374,7 @@ html, body {
     border-bottom-left-radius: 6px;
     border-top-left-radius: 6px;
 }
+
 #percentage {
     display: inline-block;
     width: 70%;
@@ -398,7 +385,6 @@ html, body {
     border-top-right-radius: 6px;
 }
 
-
 .avs {
     padding-top: 3px;
     width: 50px;
@@ -407,9 +393,9 @@ html, body {
 
 .heronames {
     padding-top: 15px;
-    font-size:12px;
-    font-weight:bold;
-    padding-left:5px;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 5px;
 }
 
 .bar {
@@ -440,7 +426,7 @@ html, body {
 
 .bar::-moz-progress-bar {
     /* style rules */
-    background-color:rgb(0, 176, 255);
+    background-color: rgb(0, 176, 255);
     border: 0;
     height: 20px;
     border-radius: 15px;
@@ -452,9 +438,9 @@ html, body {
 }
 
 .AdminBox {
-    display:block;
-    width:100%;
-    height:100px;
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 .blog-header {
@@ -473,6 +459,60 @@ html, body {
     color: white;
     font-family: Futura, century gothic, arial, sans-serif;
     text-transform: uppercase;
+}
+
+#sidebar-top3-image {
+    cursor: pointer;
+    height: 56px;
+    width: 330px;
+    border-radius: 6px;
+    background-image: url(../imgs/eestitop3.jpg);
+    transition: background-image 0.2s ease-in-out;
+}
+
+#sidebar-top3-image:hover {
+    background-image: url(../imgs/eestitop3hover.jpg);
+}
+
+#sidebar-reddit {
+    margin-top:15px;
+    cursor: pointer;
+    height: 56px;
+    width: 330px;
+    border-radius: 6px;
+    background-image: url(../imgs/reddit.jpg);
+    transition: background-image 0.2s ease-in-out;
+}
+
+#sidebar-reddit:hover {
+    background-image: url(../imgs/reddithover.jpg);
+}
+
+#sidebar-heroes {
+    cursor: pointer;
+    height: 56px;
+    width: 330px;
+    border-radius: 6px;
+    background-image: url(../imgs/heroes.jpg);
+    transition: background-image 0.2s ease-in-out;
+}
+
+#sidebar-heroes:hover {
+    background-image: url(../imgs/heroeshover.jpg);
+}
+
+#sidebar-discord {
+    margin-top:15px;
+    cursor: pointer;
+    height: 56px;
+    width: 330px;
+    border-radius: 6px;
+    background-image: url(../imgs/discord.jpg);
+    transition: background-image 0.2s ease-in-out;
+}
+
+#sidebar-discord:hover {
+    background-image: url(../imgs/discordhover.jpg);
 }
 
 .logo {
@@ -543,7 +583,7 @@ html, body {
     background-image: url("../imgs/profilebanner.jpg");
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
     z-index: 2;
-position:relative;
+    position: relative;
 
 }
 
@@ -578,7 +618,7 @@ position:relative;
 }
 
 .col-md-6 p {
-    font-size:16px;
+    font-size: 16px;
 }
 
 #first {
@@ -621,9 +661,9 @@ position:relative;
 }
 
 .overall_stats td {
-    padding-left:20px;
-    padding-top:8px;
-    padding-bottom:8px;
+    padding-left: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     font-size: 12px;
     font-weight: bold;
     font-family: sans-serif;
@@ -697,7 +737,6 @@ ul#herolist li {
     margin-top: 38px;
     margin-left: 900px;
 }
-
 
 .avatar {
     max-width: 60px;
@@ -1019,9 +1058,6 @@ ul.topnav li.icon {
         visibility: hidden;
     }
 
-    #navdiscord {
-        visibility: hidden;
-    }
 
     ul.topnav li {
         padding-top: 0px;

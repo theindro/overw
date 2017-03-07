@@ -33,9 +33,6 @@
                                                               src="http://localhost/overwatch.ee/wp-content/themes/ow/imgs/logotryout.png"
                                                               alt=""></a>
                 -->
-                <a href="http://discord.gg/cfhqKbc">
-                    <img id="navdiscord" src="<?= get_site_url() ?>/wp-content/themes/ow/imgs/discord.png" alt="">
-                </a>
                 <a href="https://www.facebook.com/groups/947381852026808/">
                     <img id="navfb" src="<?= get_site_url() ?>/wp-content/themes/ow/imgs/fb.png" alt="">
                 </a>
