@@ -173,7 +173,6 @@ html, body {
     filter: opacity(100%);
 }
 
-
 .blog-masthead {
     /* top: 0; */
     position: fixed;
@@ -195,9 +194,24 @@ html, body {
     font-size: 46px;
     text-transform: uppercase;
     color: #1f1f1f;
-    /* font-weight: bold; */
-    /* margin-bottom: -20px; */
     border-radius: 4px;
+}
+
+.hero-page-header-text {
+    margin-left: 20px;
+    margin-top: 25px;
+    font-family: overwatch2;
+    font-size: 46px;
+    text-transform: uppercase;
+    color: #ffffff;
+    border-radius: 4px;
+}
+
+.hero-header-text {
+    text-align: center;
+    font-family: overwatch;
+    font-size: 30px;
+    text-transform: uppercase;
 }
 
 .heropic {
@@ -206,6 +220,10 @@ html, body {
     height: 100px;
     float: left;
     position: relative;
+}
+
+.heropic img {
+    border-radius: 6px;
 }
 
 .pbar {
@@ -241,6 +259,7 @@ html, body {
 }
 
 .avgbar {
+    display:block;
     background-color: white;
     border: 0;
     height: 8px;
@@ -248,7 +267,7 @@ html, body {
 }
 
 .avgbar::-webkit-progress-bar {
-    /* style rules */
+    display:block;
     background-color: white;
     border: 0;
     height: 8px;
@@ -256,7 +275,7 @@ html, body {
 }
 
 .avgbar::-webkit-progress-value {
-    /* style rules */
+    display:block;
     background-color: rgb(0, 176, 255);
     border: 0;
     height: 8px;
@@ -264,7 +283,7 @@ html, body {
 }
 
 .avgbar::-moz-progress-bar {
-    /* style rules */
+    display:block;
     background-color: rgb(0, 176, 255);
     border: 0;
     height: 8px;
@@ -323,12 +342,12 @@ html, body {
     padding: 0;
     text-shadow: 0 -1px 0 #000;
     width: 80px;
+    transition: background-color 0.3s ease;
 }
 
 #uuenda:hover,
 #uuenda:focus {
-    background: #36b0ed;
-    background: linear-gradient(rgb(27, 211, 255), #36b0ed);
+    background-color: #36b0ed;
     outline: none;
     text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.9)
 }
@@ -393,9 +412,17 @@ html, body {
 
 .heronames {
     padding-top: 15px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     padding-left: 5px;
+    text-transform: capitalize;
+}
+
+.heroplaytime {
+    padding-top: 15px;
+    font-size: 14px;
+    padding-left: 5px;
+    text-transform: capitalize;
 }
 
 .bar {
@@ -475,7 +502,7 @@ html, body {
 }
 
 #sidebar-reddit {
-    margin-top:15px;
+    margin-top: 15px;
     cursor: pointer;
     height: 56px;
     width: 330px;
@@ -502,7 +529,7 @@ html, body {
 }
 
 #sidebar-discord {
-    margin-top:15px;
+    margin-top: 15px;
     cursor: pointer;
     height: 56px;
     width: 330px;
@@ -529,6 +556,23 @@ html, body {
 }
 
 @media (max-width: 768px) {
+
+    #message2 {
+        display: none !important;
+    }
+
+    #div1 {
+        display: none !important;
+    }
+
+    #userhead .pilt {
+        display: none;
+    }
+
+    .avgbar {
+        display:none;
+    }
+
     .logo {
         visibility: hidden;
     }
@@ -541,6 +585,27 @@ html, body {
 
     .blog-header {
         height: 320px;
+    }
+
+    .post-text-container {
+        position: inherit !important;
+        background-color: #1f1f1f !important;
+        border-radius: 6px;
+    }
+
+    .post-text-container:hover {
+        background-color: #1f1f1f !important;
+    }
+
+    #sidebar-reddit,
+    #sidebar-heroes,
+    #sidebar-top3-image {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .herostats {
+        display: none;
     }
 
 }
@@ -581,10 +646,28 @@ html, body {
     margin-top: 10px;
     height: 128px;
     background-image: url("../imgs/profilebanner.jpg");
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     z-index: 2;
     position: relative;
+}
 
+#hero_header {
+    cursor: pointer;
+    border-radius: 6px;
+    width: 100%;
+    display: block;
+    margin-top: 10px;
+    height: 100px;
+    background-color: #252525;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    position: relative;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+#hero_header:hover {
+    background-color: #323232;
 }
 
 #userhead img {
@@ -708,11 +791,20 @@ html, body {
     font-family: "Open Sans", serif;
 }
 
-ul#herolist {
+#hero_list_container {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border-radius: 6px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+ul.herolist {
     text-align: center;
 }
 
-ul#herolist li {
+ul.herolist li {
     display: inline-block;
     padding: 6px;
     text-align: center;
@@ -728,9 +820,18 @@ ul#herolist li {
 }
 
 .avatar2 {
-    max-width: 80px;
-    max-height: 80px;
+    max-width: 100px;
+    max-height: 100px;
     border-radius: 6px;
+    filter: opacity(50%);
+    -webkit-transition: filter 0.3s ease-in-out;
+    -moz-transition: filter 0.3s ease-in-out;
+    -o-transition: filter 0.3s ease-in-out;
+    transition: filter 0.3s ease-in-out;
+}
+
+.avatar2:hover {
+    filter: opacity(100%);
 }
 
 .reaper {
@@ -886,6 +987,7 @@ ul#herolist li {
  */
 
 .blog-main {
+    margin-top: 25px;
     font-size: 18px;
     line-height: 1.5;
 }
@@ -927,7 +1029,7 @@ ul#herolist li {
  */
 
 .blog-post {
-    padding-top: 25px;
+    padding-top: 10px;
 }
 
 .blog-post-title {
@@ -935,9 +1037,68 @@ ul#herolist li {
     font-size: 40px;
 }
 
+.post-info {
+    position: absolute;
+    background-color: #1f1f1f;
+    border-radius: 6px 6px 0 0;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.post-info-text {
+    color: #929292;
+    padding-left: 10px;
+    margin-top: 5px;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.blog-post-title-main-page {
+    color: white !important;
+    text-shadow: 0.5px 0.9px 1px rgba(0, 0, 0, .42);
+    font-size: 2em;
+    font-weight: 500;
+    margin-left: 20px;
+    padding-right: 20px;
+    padding-left: 5px;
+    font-family: overwatch2;
+}
+
+.read-more p {
+    padding-left: 28px;
+    font-size: 12px;
+    color: #d8d8d8;
+    /* float: right; */
+    padding-right: 20px;
+}
+
+.post-text-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 .blog-post-meta {
     margin-bottom: 20px;
     color: #999;
+}
+
+.dark-overlay {
+    background-color: rgba(0, 0, 0, 0.30);
+    border-radius: 6px;
+    position: relative;
+    transition: background-color 0.5s ease;
+}
+
+.dark-overlay:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.dark-overlay img {
+    position: relative;
+    z-index: -1;
 }
 
 .rounded {
@@ -959,7 +1120,6 @@ ul#herolist li {
     text-align: center;
     background-color: #1f1f1f;
     border-top: 1px solid #e5e5e5;
-
 }
 
 .blog-footer p:last-child {
@@ -1022,6 +1182,10 @@ ul.topnav li.icon {
         float: right;
         display: inline-block;
     }
+
+    #wpadminbar {
+        position:fixed;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -1057,7 +1221,6 @@ ul.topnav li.icon {
     #navfb {
         visibility: hidden;
     }
-
 
     ul.topnav li {
         padding-top: 0px;

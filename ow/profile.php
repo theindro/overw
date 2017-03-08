@@ -9,7 +9,7 @@ Template Name: UserProfile
 <?php
 
 global $wpdb;
-$input_battle_tag = $_GET['battletag'];
+$input_battle_tag = trim($_GET['battletag']);
 
 // Check if input isnt empty
 if (empty($input_battle_tag)) {
@@ -68,65 +68,71 @@ if (empty($battle_tag)) {
     $insert_overall = $wpdb->insert('wp_ranking', $overall);
     $battle_tag_id = $wpdb->insert_id;
 
-    $obj_time = gmdate('H:i:s', floor($average_stats->objective_time_avg * 3600));
-    $timeonfire = gmdate('H:i:s', floor($average_stats->time_spent_on_fire_avg * 3600));
+    if (!empty($battle_tag_id)) {
 
-    // Insert API user stats to db.
-    $player_stats = array(
-        'battle_tag_id' => $battle_tag_id,
-        'melee_final_blows' => $average_stats->melee_final_blows_avg,
-        'time_spent_on_fire' => $timeonfire,
-        'solo_kills' => $average_stats->solo_kills_avg,
-        'objective_time' => $obj_time,
-        'objective_kills' => $average_stats->objective_kills_avg,
-        'healing_done' => $average_stats->healing_done_avg,
-        'final_blows' => $average_stats->final_blows_avg,
-        'deaths' => $average_stats->deaths_avg,
-        'damage_done' => $average_stats->damage_done_avg,
-        'eliminations' => $average_stats->eliminations_avg
-    );
+        $obj_time = gmdate('H:i:s', floor($average_stats->objective_time_avg * 3600));
+        $timeonfire = gmdate('H:i:s', floor($average_stats->time_spent_on_fire_avg * 3600));
 
-    $insert_average_stats = $wpdb->insert('wp_average_stats', $player_stats);
 
-    $player_medals = array(
-        'battle_tag_id' => $battle_tag_id,
-        'gold' => $game_stats->medals_gold,
-        'silver' => $game_stats->medals_silver,
-        'bronze' => $game_stats->medals_bronze,
-    );
-
-    $insert_medals = $wpdb->insert('wp_medals', $player_medals);
-
-    // Add heroes playtime to database
-    $all_heroes_playtime = $parsed_to_array['eu']['heroes']['playtime']['competitive'];
-
-    foreach ($all_heroes_playtime as $hero_name => $playtime) {
-        $insert_heroes = $wpdb->insert('wp_heroes', ['hero_name' => $hero_name, 'playtime' => $playtime, 'battle_tag_id' => $battle_tag_id]);
-    }
-
-    // Add heroes stats to database
-    $all_heroes_stats = $parsed_to_array['eu']['heroes']['stats']['competitive'];
-
-    foreach ($all_heroes_stats as $hero_name => $hero_stats) {
-        $data = array(
+        // Insert API user stats to db.
+        $player_stats = array(
             'battle_tag_id' => $battle_tag_id,
-            'hero_name' => $hero_name,
-            'objective_time_average' => $hero_stats['average_stats']['objective_time_average'],
-            'objective_kills_average' => $hero_stats['average_stats']['objective_kills_average'],
-            'deaths_average' => $hero_stats['average_stats']['deaths_average'],
-            'eliminations_average' => $hero_stats['average_stats']['eliminations_average'],
-            'final_blows_average' => $hero_stats['average_stats']['final_blows_average'],
-            'damage_done_average' => $hero_stats['average_stats']['damage_done_average'],
-            'healing_done_average' => $hero_stats['average_stats']['healing_done_average'],
-            'solo_kills_average' => $hero_stats['average_stats']['solo_kills_average'],
-            'weapon_accuracy' => $hero_stats['general_stats']['weapon_accuracy'],
-            'eliminations_per_life' => $hero_stats['general_stats']['eliminations_per_life'],
-            'games_played' => $hero_stats['general_stats']['games_played'],
-            'games_won' => $hero_stats['general_stats']['games_won'],
-            'games_lost' => $hero_stats['general_stats']['games_lost'],
+            'melee_final_blows' => $average_stats->melee_final_blows_avg,
+            'time_spent_on_fire' => $timeonfire,
+            'solo_kills' => $average_stats->solo_kills_avg,
+            'objective_time' => $obj_time,
+            'objective_kills' => $average_stats->objective_kills_avg,
+            'healing_done' => $average_stats->healing_done_avg,
+            'final_blows' => $average_stats->final_blows_avg,
+            'deaths' => $average_stats->deaths_avg,
+            'damage_done' => $average_stats->damage_done_avg,
+            'eliminations' => $average_stats->eliminations_avg
         );
-        $insert_heroes = $wpdb->insert('wp_hero_avg_stats', $data);
+
+        $insert_average_stats = $wpdb->insert('wp_average_stats', $player_stats);
+
+        $player_medals = array(
+            'battle_tag_id' => $battle_tag_id,
+            'gold' => $game_stats->medals_gold,
+            'silver' => $game_stats->medals_silver,
+            'bronze' => $game_stats->medals_bronze,
+        );
+
+        $insert_medals = $wpdb->insert('wp_medals', $player_medals);
+
+        // Add heroes playtime to database
+        $all_heroes_playtime = $parsed_to_array['eu']['heroes']['playtime']['competitive'];
+
+        foreach ($all_heroes_playtime as $hero_name => $playtime) {
+            $insert_heroes = $wpdb->insert('wp_heroes', ['hero_name' => $hero_name, 'playtime' => $playtime, 'battle_tag_id' => $battle_tag_id]);
+        }
+
+        // Add heroes stats to database
+        $all_heroes_stats = $parsed_to_array['eu']['heroes']['stats']['competitive'];
+        foreach ($all_heroes_stats as $hero_name => $hero_stats) {
+            $data = array(
+                'battle_tag_id' => $battle_tag_id,
+                'hero_name' => $hero_name,
+                'objective_time_average' => $hero_stats['average_stats']['objective_time_average'],
+                'objective_kills_average' => $hero_stats['average_stats']['objective_kills_average'],
+                'deaths_average' => $hero_stats['average_stats']['deaths_average'],
+                'eliminations_average' => $hero_stats['average_stats']['eliminations_average'],
+                'final_blows_average' => $hero_stats['average_stats']['final_blows_average'],
+                'damage_done_average' => $hero_stats['average_stats']['damage_done_average'],
+                'healing_done_average' => $hero_stats['average_stats']['healing_done_average'],
+                'solo_kills_average' => $hero_stats['average_stats']['solo_kills_average'],
+                'weapon_accuracy' => $hero_stats['general_stats']['weapon_accuracy'],
+                'eliminations_per_life' => $hero_stats['general_stats']['eliminations_per_life'],
+                'games_played' => $hero_stats['general_stats']['games_played'],
+                'games_won' => $hero_stats['general_stats']['games_won'],
+                'games_lost' => $hero_stats['general_stats']['games_lost'],
+            );
+            $insert_heroes = $wpdb->insert('wp_hero_avg_stats', $data);
+        }
+    } else {
+        echo 'Andmeid ei saa sisestada';
     }
+
 }
 
 // Get current user id
@@ -145,9 +151,9 @@ $color = "#000000";
 $winrate = number_format(($user[0]['wins'] / ($user[0]['played'] - $user[0]['ties'])) * 100, 1);
 
 if (($winrate >= 1) && ($winrate <= 49.99))
-    $color = "#FF0000";
+    $color = "#c60000";
 else if (($winrate >= 50) && ($winrate <= 100))
-    $color = "#00d610";
+    $color = "#009c06";
 
 function decimal_to_time($decimal)
 {
@@ -270,7 +276,9 @@ function decimal_to_time($decimal)
                     <?php foreach ($herolist as $hero): ?>
                         <tr>
                             <td><img class="avs" src="<?= $hero['image'] ?>"></td>
-                            <td><p class="heronames"><?= $hero['hero_name'] ?></p></td>
+                            <td><p class="heronames"><a
+                                        href="../../heroes/hero/?id=<?= $hero['hero_id'] ?>"><?= $hero['hero_name'] ?></a>
+                                </p></td>
                             <td>
                                 <progress class="bar"
                                           title="You have played <?= $hero['playtime'] ?> hours with <?= $hero['hero_name'] ?>"
@@ -278,7 +286,7 @@ function decimal_to_time($decimal)
                                                                     where battle_tag_id = $battle_tag_id"); ?>"
                                           value="<?= $hero['playtime'] ?>"></progress>
                             </td>
-                            <td><p class="heronames"><?= round($hero['playtime'], 1) ?> Hours</p></td>
+                            <td><p class="heroplaytime"><?= round($hero['playtime'], 1) ?> Hours</p></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>

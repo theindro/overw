@@ -119,6 +119,10 @@ function init_custom_rewrite()
         'top');
 }
 
+function custom_excerpt_length( $length ) {
+    return 20;
+}
+add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 
 function custom_settings_page_setup()
 {
