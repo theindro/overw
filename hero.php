@@ -17,7 +17,7 @@ if (empty($_GET['id'])) {
 
 $hero = $wpdb->get_results("SELECT * FROM wp_heroesall where hero_id = $hero_id");
 $hero = json_decode(json_encode($hero), true);
-$players = $wpdb->get_results("SELECT *,round(wp_heroes.playtime, 2) as hero_time_played FROM wp_heroesall
+$players = $wpdb->get_results("SELECT *,wp_heroes.playtime as hero_time_played FROM wp_heroesall
                                 LEFT JOIN wp_heroes using(hero_name)
                                 LEFT JOIN wp_ranking using(battle_tag_id)
                                 LEFT JOIN wp_hero_avg_stats using(battle_tag_id, hero_name)
@@ -50,6 +50,7 @@ $players = json_decode(json_encode($players), true);
     <table id="single_hero_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
         <tr style="font-size:12px;">
+            <th class="hidden">Avatar</th>
             <th style="width:10px;">Avatar</th>
             <th>Nimi</th>
             <th style="width:10px;">Rank</th>
@@ -93,11 +94,12 @@ $players = json_decode(json_encode($players), true);
                 $color = "grey";
             ?>
             <tr>
+                <td class="hidden"><?= round($player_hero['hero_time_played'],1) ?></td>
                 <td style="padding:0!important"><img class="avatar" src="<?= $player_hero['avatar'] ?>" alt=""></td>
                 <td style="padding-top:20px;"><a
                         href="../../profiil/<?= $player_hero['battle_tag'] ?>"><?= $player_hero['name'] ?></a></td>
                 <td style="padding-top:20px;"><?= $player_hero['rank'] ?></td>
-                <td style="padding-top:20px;"><?= $player_hero['hero_time_played'] ?> hours</td>
+                <td style="padding-top:20px;"><?= round($player_hero['hero_time_played'],1) ?> hours</td>
                 <td style="padding-top:20px;"><?= $player_hero['weapon_accuracy'] * 100 ?>%</td>
                 <td style="padding-top:20px;"><?= $player_hero['eliminations_average'] ?></td>
                 <td style="padding-top:20px;"><?= $player_hero['deaths_average'] ?></td>
@@ -125,9 +127,9 @@ $players = json_decode(json_encode($players), true);
         $('#single_hero_table').dataTable({
             responsive: true,
             "bPaginate": false,
-            "order": [[3, "desc"]],
+            "order": [[0, "desc"]],
             "columnDefs": [
-                {"orderable": false, "targets": [0]}
+                {"orderable": false, "targets": [1]}
             ]
         });
     });

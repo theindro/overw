@@ -50,6 +50,8 @@ if (empty($battle_tag)) {
 
     preg_match("/(.*?)(?=[-])/", $input_battle_tag, $name);
 
+    $ip_address = $_SERVER['REMOTE_ADDR'];
+
     // Insert API data to db.
     $overall = array(
         'battle_tag' => $input_battle_tag,
@@ -62,7 +64,8 @@ if (empty($battle_tag)) {
         'lost' => $overall_stats->losses,
         'ties' => $overall_stats->ties,
         'played' => $overall_stats->games,
-        'last_updated' => date("Y-m-d H:i:s")
+        'last_updated' => date("Y-m-d H:i:s"),
+        'ip_address' => $ip_address
     );
 
     $insert_overall = $wpdb->insert('wp_ranking', $overall);
