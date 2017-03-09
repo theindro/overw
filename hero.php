@@ -43,6 +43,7 @@ $players = json_decode(json_encode($players), true);
             </div>
             <h3 class="hero-page-header-text"
                 style="display:inline-block;"> <?= $hero[0]['hero_name'] ?>
+                <span style="font-size:20px; color:grey;"> <?= $hero[0]['Role'] ?> </span>
             </h3>
         </div>
     </a>
@@ -56,6 +57,7 @@ $players = json_decode(json_encode($players), true);
             <th style="width:10px;">Accuracy</th>
             <th style="width:10px;">Average eliminations</th>
             <th style="width:10px;">Average deaths</th>
+            <th style="width:10px;">Average damage done</th>
             <?php if ($hero[0]['Role'] == 'Support'): ?>
                 <th style="width:10px;">Healing done</th>
             <?php else: ?>
@@ -99,6 +101,7 @@ $players = json_decode(json_encode($players), true);
                 <td style="padding-top:20px;"><?= $player_hero['weapon_accuracy'] * 100 ?>%</td>
                 <td style="padding-top:20px;"><?= $player_hero['eliminations_average'] ?></td>
                 <td style="padding-top:20px;"><?= $player_hero['deaths_average'] ?></td>
+                <td style="padding-top:20px;"><?= $player_hero['damage_done_average'] ?></td>
                 <?php if ($player_hero['Role'] == 'Support') : ?>
                     <td style="padding-top:20px;"><?= $player_hero['healing_done_average'] ?></td>
                 <?php else: ?>
@@ -120,6 +123,7 @@ $players = json_decode(json_encode($players), true);
 <script>
     $(document).ready(function () {
         $('#single_hero_table').dataTable({
+            responsive: true,
             "bPaginate": false,
             "order": [[3, "desc"]],
             "columnDefs": [

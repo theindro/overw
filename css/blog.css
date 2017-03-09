@@ -561,6 +561,11 @@ html, body {
         display: none !important;
     }
 
+    td::before {
+        margin-top:-7px;
+        margin-left:-3px;
+    }
+
     #div1 {
         display: none !important;
     }
