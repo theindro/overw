@@ -16,6 +16,7 @@ if (empty($result)) {
 
 $delete_user = $wpdb->query("DELETE FROM wp_ranking where battle_tag_id = $battle_tag_id");
 $delete_hero = $wpdb->query("DELETE FROM wp_heroes where battle_tag_id = $battle_tag_id");
+$delete_medals = $wpdb->query("DELETE FROM wp_medals where battle_tag_id = $battle_tag_id");
 $delete_hero_data = $wpdb->query("DELETE FROM wp_hero_avg_stats where battle_tag_id = $battle_tag_id");
 
 $options = array('http' => array('user_agent' => 'custom user agent string'));
