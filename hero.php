@@ -21,7 +21,11 @@ $players = $wpdb->get_results("SELECT *,wp_heroes.playtime as hero_time_played F
                                 LEFT JOIN wp_heroes using(hero_name)
                                 LEFT JOIN wp_ranking using(battle_tag_id)
                                 LEFT JOIN wp_hero_avg_stats using(battle_tag_id, hero_name)
-                                where hero_id = $hero_id and battle_tag_id != 0 and damage_done_average != 0 ORDER BY hero_time_played DESC");
+                                where hero_id = $hero_id 
+                                AND battle_tag_id != 0 
+                                AND damage_done_average != 0
+                                AND wp_heroes.playtime > 0.2
+                                 ORDER BY hero_time_played DESC");
 
 $players = json_decode(json_encode($players), true);
 ?>

@@ -38,7 +38,16 @@ if (empty($check)) {
 
 preg_match("/(.*?)(?=[-])/", $battle_tag, $name);
 
-$ip_address = $_SERVER['REMOTE_ADDR'];
+if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+//check ip from share internet
+    $ip = $_SERVER['HTTP_CLIENT_IP'];
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+//to check ip is pass from proxy
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+} else {
+    $ip = $_SERVER['REMOTE_ADDR'];
+}
+
 
 // Insert API data to db.
 $overall = array(
@@ -52,8 +61,8 @@ $overall = array(
     'lost' => $overall_stats->losses,
     'ties' => $overall_stats->ties,
     'played' => $overall_stats->games,
-    'last_updated' => date("Y-m-d H:i:s"),
-    'ip_address' => $ip_address
+    'last_updated' => date('Y-m-d H:i:s', current_time('timestamp', 0)),
+    'ip_address' => $ip
 );
 
 $insert_overall = $wpdb->insert('wp_ranking', $overall);
