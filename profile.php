@@ -189,13 +189,18 @@ $max_avg = json_decode(json_encode($max_avg), true);
                         <?= $user[0]['rank'] ?> <br>SKILL RATING
                     </div>
 
-                    <input type='submit'
-                           id="uuenda" <?php if ($updated_time > date('Y-m-d H:i:s', current_time('timestamp', 0))) : ?>
-                        value="Uuendatud" title="Profiil on uuendatud vähem kui 15 minutit tagasi." disabled="disabled"
-                        style="cursor: not-allowed;"
-                    <?php else: ?>
-                        value="Uuenda"
-                    <?php endif; ?>/>
+
+                    <button id="uuenda"
+                        <?php if ($updated_time > date('Y-m-d H:i:s', current_time('timestamp', 0))) : ?>
+                             title="Profiil on uuendatud vähem kui 15 minutit tagasi." disabled="disabled"
+                            style="cursor: not-allowed;">Uuendatud
+                        <?php else: ?>
+                            >Uuenda
+                        <?php endif; ?>
+
+                    <div id="uuenda-loading" style="display:none;" ></div>
+                    </button>
+
                 </div>
 
                 <table class="overall_stats">
@@ -339,16 +344,18 @@ $max_avg = json_decode(json_encode($max_avg), true);
                                 <img src="<?= $hero['image'] ?>" alt="">
                             </div>
                             <div class="row1">
-                                <div class="mainstat">
-                                    <div style="font-weight:bold;"><?= $hero['weapon_accuracy'] * 100 ?>%</div>
-                                    <div>
-                                        <progress class="pbar"
-                                                  title="Your accuracy compared to other players on Overwatch.ee"
-                                                  max="<?= $max[0]['weapon_accuracy'] ?>"
-                                                  value="<?= $hero['weapon_accuracy'] ?>"></progress>
+                                <?php if (!empty($hero['weapon_accuracy'])): ?>
+                                    <div class="mainstat">
+                                        <div style="font-weight:bold;"><?= $hero['weapon_accuracy'] * 100 ?>%</div>
+                                        <div>
+                                            <progress class="pbar"
+                                                      title="Your accuracy compared to other players on Overwatch.ee"
+                                                      max="<?= $max[0]['weapon_accuracy'] ?>"
+                                                      value="<?= $hero['weapon_accuracy'] ?>"></progress>
+                                        </div>
+                                        <div>Accuracy</div>
                                     </div>
-                                    <div>Accuracy</div>
-                                </div>
+                                <?php endif; ?>
                                 <div class="mainstat">
                                     <div style="font-weight:bold;"><?= $hero['eliminations_per_life'] ?> </div>
                                     <div>
@@ -455,8 +462,9 @@ $max_avg = json_decode(json_encode($max_avg), true);
 <script>
 
     $(document).ready(function () {
-
         $('#uuenda').on('click', function () {
+            console.log('wat');
+            $('#uuenda-loading').css("display", "inline-block");
             $("#uuenda").attr("disabled", true);
             $.post("<?= get_site_url()?>/update/ ", {
                 battle_tag: '<?= $input_battle_tag ?>',
@@ -477,7 +485,7 @@ $max_avg = json_decode(json_encode($max_avg), true);
 
 <?php if ($last_updated_day < date('Y-m-d H:i:s', current_time('timestamp', 0))): ?>
     <script>
-        $(function() {
+        $(function () {
             $("#uuenda").trigger("click");
         });
     </script>

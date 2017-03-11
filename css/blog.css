@@ -339,9 +339,8 @@ html, body {
     font-weight: 400;
     height: 30px;
     line-height: 30px;
-    padding: 0;
     text-shadow: 0 -1px 0 #000;
-    width: 80px;
+    width: auto;
     transition: background-color 0.3s ease;
 }
 
@@ -383,6 +382,21 @@ html, body {
     width: 95%;
     margin-left: auto;
     margin-right: auto;
+}
+
+#uuenda-loading {
+    border: 3px solid #f3f3f3; /* Light grey */
+    border-top: 3px solid rgba(0, 0, 0, 0); /* Blue */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+    margin-bottom: -5px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
 }
 
 #avatars {
@@ -769,7 +783,7 @@ html, body {
     padding-top: 10px;
 }
 
-#userhead div {
+#userhead #div1 {
     color: white;
     padding-top: 40px;
     font-family: "Open Sans", serif;
