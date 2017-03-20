@@ -53,7 +53,9 @@ $players = json_decode(json_encode($players), true);
         </thead>
         <tbody>
         <?php foreach ($players as $player): ?>
+            <?php if(!empty($player['eliminations'] || $player['deaths'])) : ?>
             <?php $kda = round($player['eliminations'] / $player['deaths'], 1) ?>
+            <?php endif; ?>
             <tr>
                 <td style="padding-top:20px;"><?= $i++; ?></td>
                 <td style="padding:0!important"><img class="avatar" src="<?= $player['avatar'] ?>" alt=""></td>

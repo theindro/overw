@@ -7,6 +7,7 @@ global $wpdb;
 
 $battle_tag = $_POST['battle_tag'];
 $battle_tag_id = $_POST['battle_tag_id'];
+$encoded_battletag = urlencode($battle_tag);
 
 $result = $wpdb->get_results("SELECT * FROM wp_ranking where battle_tag = '$battle_tag'");
 
@@ -14,14 +15,10 @@ if (empty($result)) {
     exit('Battletag not found!');
 }
 
-$delete_user = $wpdb->query("DELETE FROM wp_ranking where battle_tag_id = $battle_tag_id");
-$delete_hero = $wpdb->query("DELETE FROM wp_heroes where battle_tag_id = $battle_tag_id");
-$delete_medals = $wpdb->query("DELETE FROM wp_medals where battle_tag_id = $battle_tag_id");
-$delete_hero_data = $wpdb->query("DELETE FROM wp_hero_avg_stats where battle_tag_id = $battle_tag_id");
 
 $options = array('http' => array('user_agent' => 'custom user agent string'));
 $context = stream_context_create($options);
-$response = @file_get_contents("https://owapi.net/api/v3/u/$battle_tag/blob", false, $context);
+$response = @file_get_contents("https://owapi.net/api/v3/u/$encoded_battletag/blob", false, $context);
 $parsed_json = json_decode($response);
 
 $overall_stats = $parsed_json->eu->stats->competitive->overall_stats;
@@ -35,6 +32,11 @@ $check = $parsed_json->eu;
 if (empty($check)) {
     exit('Battletag not found on API');
 }
+
+$delete_user = $wpdb->query("DELETE FROM wp_ranking where battle_tag = '$battle_tag'");
+$delete_hero = $wpdb->query("DELETE FROM wp_heroes where battle_tag_id = $battle_tag_id");
+$delete_medals = $wpdb->query("DELETE FROM wp_medals where battle_tag_id = $battle_tag_id");
+$delete_hero_data = $wpdb->query("DELETE FROM wp_hero_avg_stats where battle_tag_id = $battle_tag_id");
 
 preg_match("/(.*?)(?=[-])/", $battle_tag, $name);
 

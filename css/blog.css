@@ -664,10 +664,13 @@ html, body {
     display: block;
     margin-top: 10px;
     height: 128px;
-    background-image: url("../imgs/profilebanner.jpg");
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     z-index: 2;
     position: relative;
+}
+
+.userhead-background {
+    background-image: url("../imgs/deathwish-background.jpg")!important;
 }
 
 #hero_header {

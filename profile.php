@@ -152,8 +152,9 @@ $user = json_decode(json_encode($battle_tag_info), true);
 
 // Show red color for under 50% winrate and green for higher than 50%
 $color = "#000000";
-$winrate = number_format(($user[0]['wins'] / ($user[0]['played'] - $user[0]['ties'])) * 100, 1);
-
+if (!empty($user[0]['wins'] || $user[0]['played'])) {
+    $winrate = number_format(($user[0]['wins'] / ($user[0]['played'] - $user[0]['ties'])) * 100, 1);
+}
 if (($winrate >= 1) && ($winrate <= 49.99))
     $color = "#c60000";
 else if (($winrate >= 50) && ($winrate <= 100))
@@ -173,12 +174,21 @@ $max_avg = $wpdb->get_results("SELECT MAX(eliminations) AS eliminations,
                         MAX(objective_kills) AS objective_kills FROM wp_average_stats");
 $max_avg = json_decode(json_encode($max_avg), true);
 
+$bg = array('rotate1.jpg', 'rotate2.jpg', 'rotate3.jpg', 'rotate4.jpg'); // array of filenames
+
+$i = rand(0, count($bg)-1); // generate random number size of the array
+$selectedBg = "$bg[$i]"; // set variable equal to which random filename was chosen
 ?>
+<style type="text/css">
+    #userhead{
+        background: url("<?= get_site_url() ?>/wp-content/themes/ow/imgs/<?= $selectedBg; ?>") no-repeat;
+    }
+</style>
 <div id="hide">
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <div id="userhead">
+                <div id="userhead" <?if ($user[0]['battle_tag'] == 'deathwish-22634') :?> class="userhead-background"<?php endif;?>>
                     <img src="<?= $user[0]['avatar'] ?>" alt="">
 
                     <p><a href=""><?= $user[0]['battle_tag'] ?></a></p>
@@ -192,13 +202,13 @@ $max_avg = json_decode(json_encode($max_avg), true);
 
                     <button id="uuenda"
                         <?php if ($updated_time > date('Y-m-d H:i:s', current_time('timestamp', 0))) : ?>
-                             title="Profiil on uuendatud vähem kui 15 minutit tagasi." disabled="disabled"
+                            title="Profiil on uuendatud vähem kui 15 minutit tagasi." disabled="disabled"
                             style="cursor: not-allowed;">Uuendatud
                         <?php else: ?>
                             >Uuenda
                         <?php endif; ?>
 
-                    <div id="uuenda-loading" style="display:none;" ></div>
+                        <div id="uuenda-loading" style="display:none;"></div>
                     </button>
 
                 </div>
@@ -431,7 +441,7 @@ $max_avg = json_decode(json_encode($max_avg), true);
                                         <div>
                                             <progress class="pbar"
                                                       title="Your objective kills compared to other players on Overwatch.ee"
-                                                      max="<?php $max[0]['objective_kills_average'] ?>"
+                                                      max="<?= $max[0]['objective_kills_average'] ?>"
                                                       value="<?= $hero['objective_kills_average'] ?>"></progress>
                                         </div>
                                         <div>obj. kills</div>
