@@ -176,11 +176,11 @@ $max_avg = json_decode(json_encode($max_avg), true);
 
 $bg = array('rotate1.jpg', 'rotate2.jpg', 'rotate3.jpg', 'rotate4.jpg'); // array of filenames
 
-$i = rand(0, count($bg)-1); // generate random number size of the array
+$i = rand(0, count($bg) - 1); // generate random number size of the array
 $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chosen
 ?>
 <style type="text/css">
-    #userhead{
+    #userhead {
         background: url("<?= get_site_url() ?>/wp-content/themes/ow/imgs/<?= $selectedBg; ?>") no-repeat;
     }
 </style>
@@ -188,7 +188,8 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <div id="userhead" <?if ($user[0]['battle_tag'] == 'deathwish-22634') :?> class="userhead-background"<?php endif;?>>
+                <div
+                    id="userhead" <? if ($user[0]['battle_tag'] == 'deathwish-22634') : ?> class="userhead-background"<?php endif; ?>>
                     <img src="<?= $user[0]['avatar'] ?>" alt="">
 
                     <p><a href=""><?= $user[0]['battle_tag'] ?></a></p>
@@ -304,9 +305,11 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
                     <?php foreach ($herolist as $hero): ?>
                         <tr>
                             <td><img class="avs" src="<?= $hero['image'] ?>"></td>
-                            <td><p class="heronames"><a
+                            <td>
+                                <p class="heronames"><a
                                         href="../../heroes/hero/?id=<?= $hero['hero_id'] ?>"><?= $hero['hero_name'] ?></a>
-                                </p></td>
+                                </p>
+                            </td>
                             <td>
                                 <progress class="bar"
                                           title="You have played <?= $hero['playtime'] ?> hours with <?= $hero['hero_name'] ?>"
@@ -348,17 +351,52 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
                                                              MAX(objective_time_average) as objective_time_average
                                                              FROM wp_hero_avg_stats WHERE hero_name = '$name' AND games_played > 3");
                         $max = json_decode(json_encode($max), true);
+                        if ($hero['Role'] == 'Support') {
+                            $role_color = 'support';
+                        } elseif ($hero['Role'] == 'Defense') {
+                            $role_color = 'defense';
+                        } elseif ($hero['Role'] == 'Tank') {
+                            $role_color = 'tank';
+                        } else {
+                            $role_color = 'offense';
+                        }
                         ?>
                         <div class="herostats">
                             <div class="heropic">
-                                <img src="<?= $hero['image'] ?>" alt="">
+                                <img style="background: #ffffff;" src="<?= $hero['image'] ?>" alt="">
+                            </div>
+                            <div class="hero-main-row">
+                                <div>
+                                    <p class="hero-main-name"><?= $hero['hero_name'] ?>
+                                        <span class="hero-main-role"> - <?= $hero['Role'] ?></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="hero-main-support-row">
+                                <span style="font-size:12px; margin-top:5px; color:#cdcdcd;">
+                                    <?php if (!empty($hero['games_won']) && !empty($hero['games_played'])) {
+                                        echo number_format(($hero['games_won'] / ($hero['games_played'])) * 100, 1);
+                                    } else {
+                                        echo 'NaN';
+                                    } ?>
+                                    %
+                                </span>
+                                <progress class="wrate <?= $role_color ?>" max="<?= $hero['games_played'] ?>"
+                                          value="<?= $hero['games_won'] ?>"></progress>
+                                <p style="font-size:12px; margin-top:5px; color:#cdcdcd;">
+                                    <?= $hero['games_won'] ?>
+                                    <span style="color:#87d100; font-weight:bold;">W</span>
+                                    - <?= $hero['games_lost'] ?>
+                                    <span style="color:#de0100; font-weight:bold;">L</span>
+
+                                </p>
                             </div>
                             <div class="row1">
                                 <?php if (!empty($hero['weapon_accuracy'])): ?>
                                     <div class="mainstat">
                                         <div style="font-weight:bold;"><?= $hero['weapon_accuracy'] * 100 ?>%</div>
                                         <div>
-                                            <progress class="pbar"
+                                            <progress class="pbar <?= $role_color ?>"
                                                       title="Your accuracy compared to other players on Overwatch.ee"
                                                       max="<?= $max[0]['weapon_accuracy'] ?>"
                                                       value="<?= $hero['weapon_accuracy'] ?>"></progress>
@@ -369,7 +407,7 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
                                 <div class="mainstat">
                                     <div style="font-weight:bold;"><?= $hero['eliminations_per_life'] ?> </div>
                                     <div>
-                                        <progress class="pbar"
+                                        <progress class="pbar <?= $role_color ?>"
                                                   title="Your K/d ratio compared to other players on Overwatch.ee"
                                                   max="<?= $max[0]['eliminations_per_life']; ?>"
                                                   value="<?= $hero['eliminations_per_life'] ?>"></progress>
@@ -379,35 +417,20 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
                                 <div class="mainstat">
                                     <div style="font-weight:bold;"><?= $hero['damage_done_average'] ?> </div>
                                     <div>
-                                        <progress class="pbar"
+                                        <progress class="pbar <?= $role_color ?>"
                                                   title="Your Damage done compared to other players on Overwatch.ee"
                                                   max="<?= $max[0]['damage_done_average'] ?>"
                                                   value="<?= $hero['damage_done_average'] ?>"></progress>
                                     </div>
                                     <div>Damage done</div>
                                 </div>
-                                <div class="mainstat">
-                                    <div
-                                        style="font-weight:bold;"><?php if (!empty($hero['games_won']) && !empty($hero['games_played'])) {
-                                            echo number_format(($hero['games_won'] / ($hero['games_played'])) * 100, 1);
-                                        } else {
-                                            echo 'No info';
-                                        } ?>
-                                        %
-                                    </div>
-                                    <div>
-                                        <progress class="pbar" title="Your Winrate on scale of 100%"
-                                                  max="<?= $hero['games_played'] ?>"
-                                                  value="<?= $hero['games_won'] ?>"></progress>
-                                    </div>
-                                    <div>Winrate</div>
-                                </div>
+
                             </div>
                             <div class="row1">
                                 <div class="mainstat">
                                     <div style="font-weight:bold;"><?= $hero['final_blows_average'] ?></div>
                                     <div>
-                                        <progress class="pbar"
+                                        <progress class="pbar <?= $role_color ?>"
                                                   title="Your final blows compared to other players on Overwatch.ee"
                                                   max="<?= $max[0]['final_blows_average']; ?>"
                                                   value="<?= $hero['final_blows_average'] ?>"></progress>
@@ -418,7 +441,7 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
                                     <?php if ($hero['Role'] == 'Support'): ?>
                                         <div style="font-weight:bold;"><?= $hero['healing_done_average'] ?></div>
                                         <div>
-                                            <progress class="pbar"
+                                            <progress class="pbar <?= $role_color ?>"
                                                       title="Your healing done compared to other players on Overwatch.ee"
                                                       max="<?= $max[0]['healing_done_average'] ?>"
                                                       value="<?= $hero['healing_done_average'] ?>"></progress>
@@ -427,7 +450,7 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
                                     <?php else: ?>
                                         <div style="font-weight:bold;"><?= $hero['solo_kills_average'] ?></div>
                                         <div>
-                                            <progress class="pbar"
+                                            <progress class="pbar <?= $role_color ?>"
                                                       title="Your solo kills compared to other players on Overwatch.ee"
                                                       max="<?= $max[0]['solo_kills_average'] ?>"
                                                       value="<?= $hero['solo_kills_average'] ?>"></progress>
@@ -439,7 +462,7 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
                                     <div class="mainstat">
                                         <div style="font-weight:bold;"><?= $hero['objective_kills_average'] ?></div>
                                         <div>
-                                            <progress class="pbar"
+                                            <progress class="pbar <?= $role_color ?>"
                                                       title="Your objective kills compared to other players on Overwatch.ee"
                                                       max="<?= $max[0]['objective_kills_average'] ?>"
                                                       value="<?= $hero['objective_kills_average'] ?>"></progress>
@@ -451,7 +474,7 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
                                     <div
                                         style="font-weight:bold;"><?= gmdate('H:i:s', floor($hero['objective_time_average'] * 3600)); ?></div>
                                     <div>
-                                        <progress class="pbar"
+                                        <progress class="pbar <?= $role_color ?>"
                                                   title="Your objective time compared to other players on Overwatch.ee"
                                                   max="<?= $max[0]['objective_time_average'] ?>"
                                                   value="<?= $hero['objective_time_average'] ?>"></progress>
@@ -473,7 +496,6 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
 
     $(document).ready(function () {
         $('#uuenda').on('click', function () {
-            console.log('wat');
             $('#uuenda-loading').css("display", "inline-block");
             $("#uuenda").attr("disabled", true);
             $.post("<?= get_site_url()?>/update/ ", {

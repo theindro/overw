@@ -214,16 +214,16 @@ html, body {
     text-transform: uppercase;
 }
 
-.heropic {
+
+.heropic img {
+    border-radius: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
     display: block;
-    width: 12%;
+    width: 10%;
     height: 100px;
     float: left;
     position: relative;
-}
-
-.heropic img {
-    border-radius: 6px;
 }
 
 .pbar {
@@ -243,11 +243,26 @@ html, body {
 
 .pbar::-webkit-progress-value {
     /* style rules */
-    background-color: rgb(0, 176, 255);
     border: 0;
     height: 8px;
     border-radius: 9px;
 }
+
+.offense::-webkit-progress-value {
+    background-color: #e52d00 !important;
+}
+
+.defense::-webkit-progress-value {
+    background-color: #ff9a3c!important;
+}
+.tank::-webkit-progress-value {
+    background-color: #a7df00 !important;
+}
+.support::-webkit-progress-value {
+    background-color: #337ab7!important;
+}
+
+
 
 .pbar::-moz-progress-bar {
     /* style rules */
@@ -293,10 +308,76 @@ html, body {
 
 .row1 {
     width: 88%;
-    height: 50px;
+    height: auto;
     color: white;
     position: relative;
     float: right;
+    padding-bottom:20px;
+}
+
+.hero-main-row {
+    width: 88%;
+    height: 55px;
+    color: white;
+    position: relative;
+    float: right;
+    margin-top: 15px;
+}
+
+.hero-main-support-row {
+    width: 88%;
+    height: auto;
+    color: white;
+    position: relative;
+    float: right;
+}
+
+.hero-main-role {
+    font-size:24px;
+    color:grey;
+}
+
+
+.wrate {
+    display:block;
+    background-color: white;
+    border: 0;
+    height: 8px;
+    border-radius: 9px;
+    width:90%;
+}
+
+.wrate::-webkit-progress-bar {
+    display:block;
+    background-color: white;
+    border: 0;
+    height: 8px;
+    border-radius: 9px;
+}
+
+.wrate::-webkit-progress-value {
+    display:block;
+    background-color: #87d100;
+    border: 0;
+    height: 8px;
+    border-radius: 9px;
+}
+
+.wrate::-moz-progress-bar {
+    display:block;
+    background-color: rgb(0, 176, 255);
+    border: 0;
+    height: 8px;
+    border-radius: 9px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+.hero-main-name {
+    font-family: overwatch!important;
+    font-size: 40px;
+    text-transform: uppercase;
+    color: white;
+    /* font-weight: bold; */
+    /* margin-bottom: -20px; */
 }
 
 .mainstat {
@@ -305,7 +386,7 @@ html, body {
     padding-top: 2px;
     padding-left: 10px;
     width: 23%;
-    height: 100%;
+    height: auto;
     position: relative;
     display: inline-block;
 }
@@ -314,10 +395,19 @@ html, body {
     display: block;
     background-color: #2d2d2d;
     border-radius: 6px;
-    height: 100px;
+    height: auto;
     width: 100%;
     margin-top: 20px;
+    position:relative;
+    font-family: 'Open Sans';
     margin-bottom: 20px;
+    box-shadow: 0 3px 5px 0 #a9a9a9;
+}
+
+.herostats::after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 #filter {
@@ -420,15 +510,13 @@ html, body {
 
 .avs {
     padding-top: 3px;
-    width: 50px;
-    border-radius: 4px;
+    width: 100%;
+    border-radius: 20px;
 }
 
 .heronames {
     padding-top: 15px;
-    font-size: 14px;
-    font-weight: bold;
-    padding-left: 5px;
+    text-align: -webkit-center;
     text-transform: capitalize;
 }
 
@@ -442,18 +530,18 @@ html, body {
 .bar {
     padding-top: 4px;
     border: 0;
-    height: 20px;
-    width: 100%;
-    border-radius: 15px;
+    height: 10px;
+    width: 95%;
+    border-radius: 4px;
 }
 
 .bar::-webkit-progress-bar {
     /* style rules */
     background-color: #e8e8e8;
     border: 0;
-    height: 20px;
-    width: 100%;
-    border-radius: 15px;
+    height: 10px;
+    width: 95%;
+    border-radius: 4px;
 
 }
 
@@ -461,16 +549,16 @@ html, body {
     /* style rules */
     background-color: rgb(0, 176, 255);
     border: 0;
-    height: 20px;
-    border-radius: 15px;
+    height: 10px;
+    border-radius: 4px;
 }
 
 .bar::-moz-progress-bar {
     /* style rules */
     background-color: rgb(0, 176, 255);
     border: 0;
-    height: 20px;
-    border-radius: 15px;
+    height: 10px;
+    border-radius: 4px;
 }
 
 #myChart {
@@ -623,9 +711,30 @@ html, body {
         margin-right: auto;
     }
 
-    .herostats {
+    .heropic {
         display: none;
     }
+
+    #userhead img {
+        display:none;
+    }
+
+    .mainstat {
+        display:block;
+        padding-bottom:20px;
+    }
+
+    .row1 {
+        width:45%;
+        padding-bottom:20px;
+    }
+
+    .overall_stats td {
+        padding-left:5px!important;
+        padding-right:5px;!important;
+    }
+
+
 
 }
 
@@ -651,11 +760,11 @@ html, body {
 #inputform {
     padding-top: 30px;
     display: block;
-    height: 150px;
     background: linear-gradient(#353535, #1f1f1f);
     margin-bottom: -20px;
     border-radius: 6px;
-
+    height: auto;
+    padding-bottom: 15px;
 }
 
 #userhead {
@@ -679,7 +788,7 @@ html, body {
     width: 100%;
     display: block;
     margin-top: 10px;
-    height: 100px;
+    height: auto;
     background-color: #252525;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     z-index: 2;
@@ -769,9 +878,10 @@ html, body {
     padding-left: 20px;
     padding-top: 8px;
     padding-bottom: 8px;
+    font-family: 'Open Sans';
     font-size: 12px;
-    font-weight: bold;
-    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 600;
 }
 
 .overall_stats th {
@@ -789,7 +899,7 @@ html, body {
 #userhead #div1 {
     color: white;
     padding-top: 40px;
-    font-family: "Open Sans", serif;
+    font-family: 'Open Sans';
     text-align: center;
     height: 128px;
     width: 128px;
@@ -809,8 +919,8 @@ html, body {
 
 #inputform p {
     color: #cecece;
-    font-size: 10px;
-    font-family: "Open Sans", serif;
+    font-size: 12px;
+    font-family: 'Open Sans';
 }
 
 #hero_list_container {
@@ -934,11 +1044,11 @@ ul.herolist li {
 
 #top3 table {
     width: 100%;
-    font-family: 'Open Sans', serif
+    font-family: 'Open Sans';
 }
 
 #top3 table th {
-    font-family: 'Open Sans', serif;
+    font-family: 'Open Sans';
     font-size: 16px;
     border: 0px;
     padding: 0px;
@@ -1107,6 +1217,8 @@ ul.herolist li {
     color: #999;
 }
 
+
+
 .dark-overlay {
     background-color: rgba(0, 0, 0, 0.30);
     border-radius: 6px;
@@ -1182,6 +1294,7 @@ ul.topnav li a {
     transition: all 500ms ease;
     margin-top: -20px;
     padding: 10px;
+    font-family: 'Open Sans'!important;
 }
 
 ul.topnav li a:hover {
@@ -1263,7 +1376,7 @@ ol, ul {
 }
 
 p {
-    font-family: Roboto, sans-serif;
+    font-family: 'Open Sans';
 }
 
 /*FRONT PAGE SEARCH*/

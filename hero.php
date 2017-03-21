@@ -43,7 +43,7 @@ $players = json_decode(json_encode($players), true);
 <div class="container">
     <a href="">
         <div id="hero_header">
-            <div style="display:inline-block; float:left;"><img id="hero-image" src="<?= $hero[0]['image'] ?>" alt="">
+            <div style="display:inline-block;"><img id="hero-image" src="<?= $hero[0]['image'] ?>" alt="">
             </div>
             <h3 class="hero-page-header-text"
                 style="display:inline-block;"> <?= $hero[0]['hero_name'] ?>
@@ -51,7 +51,7 @@ $players = json_decode(json_encode($players), true);
             </h3>
         </div>
     </a>
-    <table id="single_hero_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <table id="single_hero_table" style="font-family:'Roboto';" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
         <tr style="font-size:12px;">
             <th class="hidden">Avatar</th>
@@ -100,7 +100,7 @@ $players = json_decode(json_encode($players), true);
             <tr>
                 <td class="hidden"><?= round($player_hero['hero_time_played'],1) ?></td>
                 <td style="padding:0!important"><img class="avatar" src="<?= $player_hero['avatar'] ?>" alt=""></td>
-                <td style="padding-top:20px;"><a
+                <td style="padding-top:20px;"><a style="font-size:16px;"
                         href="../../profiil/<?= $player_hero['battle_tag'] ?>"><?= $player_hero['name'] ?></a></td>
                 <td style="padding-top:20px;"><?= $player_hero['rank'] ?></td>
                 <td style="padding-top:20px;"><?= round($player_hero['hero_time_played'],1) ?> hours</td>

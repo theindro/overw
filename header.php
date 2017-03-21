@@ -17,6 +17,8 @@
     <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+    <link href='//fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 
     <title>
         <?php wp_title('|', true, 'right'); ?>

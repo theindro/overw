@@ -39,7 +39,7 @@ $players = json_decode(json_encode($players), true);
         -->
     </div>
 
-    <table id="ranking_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <table id="ranking_table" style="font-family: 'Roboto';" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
         <tr>
             <th style="width:10px;">#</th>
@@ -59,7 +59,7 @@ $players = json_decode(json_encode($players), true);
             <tr>
                 <td style="padding-top:20px;"><?= $i++; ?></td>
                 <td style="padding:0!important"><img class="avatar" src="<?= $player['avatar'] ?>" alt=""></td>
-                <td style="padding-top:20px;"><a
+                <td style="padding-top:20px;"><a style="font-size:16px;"
                         href="../profiil/<?= $player['battle_tag'] ?>"><?= $player['name'] ?></a></td>
                 <td style="padding-top:20px;"><?= $kda ?></td>
                 <td style="padding-top:20px;"><?= $player['lvl'] ?></td>

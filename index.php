@@ -3,10 +3,10 @@
     <div class="lisa">
         <section class="webdesigntuts-workshop">
             <form action="<?php get_site_url(); ?>/profiil/" method="GET" id="inputform">
-				<span style="font-size: 12px;display: block;color: #d0d0d0;">Sisesta oma battletag, et näha ennast edetabelis ning oma profiili statistikat</span>
+				<span style="font-size: 12px;display: block;color: #d0d0d0; font-family: 'Open Sans';">Sisesta oma battletag, et näha ennast edetabelis ning oma profiili statistikat</span>
                 <input type="search" placeholder="BattleTag-2413" name="battletag">
                 <input type="submit" name="submit" class="button" value="Esita">
-                <p>Loevad ka suured ja väiksed tähed ning kasutage '#' asemel '-'</p>
+                <p style="padding-top: 5px;">Loevad ka suured ja väiksed tähed ning kasutage '#' asemel '-'</p>
             </form>
         </section>
     </div>
