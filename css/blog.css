@@ -455,7 +455,8 @@ img#hero-image {
 #main-page-header,
 #heroes-page-header,
 #ranking-page-header,
-#tournament-page-header {
+#tournament-page-header,
+#teams-page-header {
     width: 100%;
     min-height: 350px;
     height: auto;
@@ -478,6 +479,11 @@ img#hero-image {
 #tournament-page-header {
     background: url("../imgs/tournament-page-head.jpg") no-repeat center;
 }
+
+#teams-page-header {
+    background: url("../imgs/teams-page-header.jpg") no-repeat center;
+}
+
 
 .contain-main-info {
     margin-top: 100px;

@@ -64,7 +64,7 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
     <div class="container">
         <div class="contain-main-info row">
             <div class="col-sm-2">
-                <img style="width:auto; border:solid 1px rgba(255, 255, 255, 0.50);" src="<?= $user[0]['avatar'] ?>"
+                <img style="width:auto; height: 128px; border:solid 1px rgba(255, 255, 255, 0.50);" src="<?= $user[0]['avatar'] ?>"
                      alt="">
             </div>
             <div class="col-sm-6">
