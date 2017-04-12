@@ -1,12 +1,44 @@
-<div class="col-sm-4 blog-sidebar" style="margin-top: 20px;">
+<style>
+    .sidebar-main-btn {
+        font-family: overwatch;
+        font-size: 30px;
+        width: 100%;
+        border: none;
+        transition: all 0.15s ease-in-out;
+        background-color: #0090e6;
+    }
 
+    .sidebar-main-btn:hover {
+        background-color: rgb(54, 177, 237);
+        transition: all 0.15s ease-in-out;
+    }
+
+    .sidebar-reddit-btn {
+        background-color: #8ad600;
+    }
+
+    .sidebar-reddit-btn:hover {
+        background-color: #b4e600;
+    }
+
+
+    .sidebar-top-btn {
+        background-color: #323232;
+    }
+
+    .sidebar-top-btn:hover {
+        background-color: #4d4d4d;
+    }
+</style>
+
+<div class="col-sm-4 blog-sidebar" style="margin-top: 20px;">
     <div class="sidebar-module">
         <div id="top3">
             <a href="/eesti-ranking">
-                <div id="sidebar-top3-image"></div>
+                <input type="button" class="btn btn-primary sidebar-top-btn sidebar-main-btn" value="eesti Top 5">
             </a>
             <?php global $wpdb;
-            $toplist = $wpdb->get_results("SELECT * FROM wp_ranking LEFT JOIN wp_ranks USING (tier) ORDER BY rank DESC LIMIT 3");
+            $toplist = $wpdb->get_results("SELECT * FROM wp_ranking LEFT JOIN wp_ranks USING (tier) ORDER BY rank DESC LIMIT 5");
             $i = 1;
             ?>
             <table>
@@ -23,10 +55,10 @@
             </p>
         </div>
         <a href="/heroes">
-            <div id="sidebar-heroes"></div>
+            <input type="button" class="btn btn-primary sidebar-main-btn" value="Heroes">
         </a>
         <a href="https://www.reddit.com/r/Overwatch/">
-            <div id="sidebar-reddit"></div>
+            <button style="margin-top:15px;" type="button" class="btn btn-success sidebar-reddit-btn sidebar-main-btn">Reddit</button>
         </a>
         <?php if (is_active_sidebar('home_right_1')) : ?>
             <div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">

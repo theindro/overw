@@ -1,16 +1,27 @@
 <?php get_header(); ?>
-<div class="container">
-    <div class="lisa">
-        <section class="webdesigntuts-workshop">
-            <form action="<?php get_site_url(); ?>/profiil/" method="GET" id="inputform">
-				<span style="font-size: 12px;display: block;color: #d0d0d0; font-family: 'Open Sans';">Sisesta oma battletag, et näha ennast edetabelis ning oma profiili statistikat</span>
-                <input type="search" placeholder="BattleTag-2413" name="battletag">
-                <input type="submit" name="submit" class="button" value="Esita">
-                <p style="padding-top: 5px;">Loevad ka suured ja väiksed tähed ning kasutage '#' asemel '-'</p>
-            </form>
-        </section>
+
+
+<div id="main-page-header">
+    <div class="container">
+        <div class="lisa">
+            <div id="inputform">
+                <span
+                    style="font-size: 12px;display: block;color: #d0d0d0; font-family: 'Open Sans'; margin-bottom:15px;">Sisesta oma battletag, et näha ennast edetabelis ning oma profiili statistikat</span>
+                <input type="search" placeholder="BattleTag-2413" name="battletag" class="form-control input-tag">
+                <button class="btn btn-primary btn-esita">Otsi
+                    <div id="uuenda-loading" style="display:none;"></div>
+                </button>
+                <p style="padding-top: 10px;">Loevad ka suured ja väiksed tähed ning kasutage '#' asemel
+                    '-'</p>
+                <div id="ajax_call_return" style="display:none;">
+                    <!-- Display Name Error Here  -->
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+
 <div class="container">
     <div class="row">
         <div class="col-sm-8 blog-main">

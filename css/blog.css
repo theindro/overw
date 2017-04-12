@@ -14,6 +14,7 @@
 body {
     font-family: Georgia, "Times New Roman", Times, serif;
     color: #555;
+    background: #f1f1f1;
 }
 
 h1, .h1,
@@ -35,6 +36,7 @@ h6, .h6 {
 html, body {
     font-family: "fira-sans-2", sans-serif;
     color: #333;
+    height: 100%;
 }
 
 /*profiili stats css*/
@@ -154,18 +156,19 @@ html, body {
  */
 
 #navimg {
-    transition: transform .8s ease-in-out;
+    filter: opacity(80%);
+    transition: all 0.15s ease-in-out;
 }
 
 #navimg:hover {
-    transform: rotate(360deg);
+    filter: opacity(100%);
 }
 
 #navfb {
     transition: 500ms filter ease;
     height: 55px;
     float: right;
-    filter: opacity(50%);
+    filter: opacity(20%);
 }
 
 #navfb:hover {
@@ -175,7 +178,7 @@ html, body {
 
 .blog-masthead {
     /* top: 0; */
-    position: fixed;
+    /*position: fixed;*/
     z-index: 3;
     display: block;
     background: #1f1f1f;
@@ -198,13 +201,12 @@ html, body {
 }
 
 .hero-page-header-text {
-    margin-left: 20px;
-    margin-top: 25px;
     font-family: overwatch2;
-    font-size: 46px;
+    font-size: 80px;
     text-transform: uppercase;
     color: #ffffff;
-    border-radius: 4px;
+    margin-top: -10px;
+    margin-left: -30px;
 }
 
 .hero-header-text {
@@ -214,14 +216,19 @@ html, body {
     text-transform: uppercase;
 }
 
+img#hero-image {
+    background-color: rgba(224, 224, 224, 0.11);
+    border: solid 1px rgba(128, 128, 128, 0.11);
+    border-radius: 6px;
+}
 
 .heropic img {
     border-radius: 20px;
     margin-top: 10px;
     margin-left: 10px;
     display: block;
-    width: 10%;
-    height: 100px;
+    width: 14%;
+    height: 100%;
     float: left;
     position: relative;
 }
@@ -231,6 +238,8 @@ html, body {
     border: 0;
     height: 8px;
     border-radius: 9px;
+    width: 100%;
+    min-width: 100px;
 }
 
 .pbar::-webkit-progress-bar {
@@ -253,16 +262,16 @@ html, body {
 }
 
 .defense::-webkit-progress-value {
-    background-color: #ff9a3c!important;
+    background-color: #ff9a3c !important;
 }
+
 .tank::-webkit-progress-value {
     background-color: #a7df00 !important;
 }
+
 .support::-webkit-progress-value {
-    background-color: #337ab7!important;
+    background-color: #337ab7 !important;
 }
-
-
 
 .pbar::-moz-progress-bar {
     /* style rules */
@@ -274,23 +283,25 @@ html, body {
 }
 
 .avgbar {
-    display:block;
+    display: block;
     background-color: white;
     border: 0;
     height: 8px;
+    width: 100%;
     border-radius: 9px;
 }
 
 .avgbar::-webkit-progress-bar {
-    display:block;
+    display: block;
     background-color: white;
     border: 0;
     height: 8px;
+    width: 100%;
     border-radius: 9px;
 }
 
 .avgbar::-webkit-progress-value {
-    display:block;
+    display: block;
     background-color: rgb(0, 176, 255);
     border: 0;
     height: 8px;
@@ -298,7 +309,7 @@ html, body {
 }
 
 .avgbar::-moz-progress-bar {
-    display:block;
+    display: block;
     background-color: rgb(0, 176, 255);
     border: 0;
     height: 8px;
@@ -306,49 +317,86 @@ html, body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
+
 .row1 {
-    width: 88%;
+    width: 100%;
     height: auto;
     color: white;
     position: relative;
     float: right;
-    padding-bottom:20px;
+    padding-bottom: 4px;
 }
 
+.winratebar {
+    display: block;
+    background-color: white;
+    border: 0;
+    height: 8px;
+    width: 100%;
+    border-radius: 9px;
+}
+
+.winratebar::-webkit-progress-bar {
+    display: block;
+    background-color: #dd1029;
+    border: 0;
+    height: 8px;
+    width: 100%;
+    border-radius: 9px;
+}
+
+.winratebar::-webkit-progress-value {
+    display: block;
+    background-color: rgb(129, 255, 0);
+    border: 0;
+    height: 8px;
+    border-radius: 9px;
+}
+
+.winratebar::-moz-progress-bar {
+    display: block;
+    background-color: rgb(129, 255, 0);
+    border: 0;
+    height: 8px;
+    border-radius: 9px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+
 .hero-main-row {
-    width: 88%;
+    width: 83%;
     height: 55px;
     color: white;
     position: relative;
     float: right;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 .hero-main-support-row {
-    width: 88%;
+    width: 83%;
     height: auto;
     color: white;
+    margin-top: -15px;
     position: relative;
     float: right;
 }
 
 .hero-main-role {
-    font-size:24px;
-    color:grey;
+    font-size: 24px;
+    color: grey;
 }
 
-
 .wrate {
-    display:block;
+    display: block;
     background-color: white;
     border: 0;
     height: 8px;
     border-radius: 9px;
-    width:90%;
+    width: 90%;
 }
 
 .wrate::-webkit-progress-bar {
-    display:block;
+    display: block;
     background-color: white;
     border: 0;
     height: 8px;
@@ -356,7 +404,7 @@ html, body {
 }
 
 .wrate::-webkit-progress-value {
-    display:block;
+    display: block;
     background-color: #87d100;
     border: 0;
     height: 8px;
@@ -364,16 +412,17 @@ html, body {
 }
 
 .wrate::-moz-progress-bar {
-    display:block;
+    display: block;
     background-color: rgb(0, 176, 255);
     border: 0;
     height: 8px;
     border-radius: 9px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
+
 .hero-main-name {
-    font-family: overwatch!important;
-    font-size: 40px;
+    font-family: overwatch !important;
+    font-size: 30px;
     text-transform: uppercase;
     color: white;
     /* font-weight: bold; */
@@ -381,9 +430,8 @@ html, body {
 }
 
 .mainstat {
-    font-size: 10px;
+    font-size: 12px;
     text-transform: uppercase;
-    padding-top: 2px;
     padding-left: 10px;
     width: 23%;
     height: auto;
@@ -397,11 +445,124 @@ html, body {
     border-radius: 6px;
     height: auto;
     width: 100%;
-    margin-top: 20px;
-    position:relative;
+    position: relative;
     font-family: 'Open Sans';
     margin-bottom: 20px;
     box-shadow: 0 3px 5px 0 #a9a9a9;
+}
+
+#profile-header,
+#main-page-header,
+#heroes-page-header,
+#ranking-page-header,
+#tournament-page-header {
+    width: 100%;
+    min-height: 350px;
+    height: auto;
+    background-color: #1f1f1f;
+}
+
+#main-page-header {
+    background: url("../imgs/banneruus5.jpg") no-repeat center;
+    background-position: 20% 30%;
+}
+
+#heroes-page-header {
+    background: url("../imgs/banneruus5.jpg") no-repeat center;
+}
+
+#ranking-page-header {
+    background: url("../imgs/ranking-header.jpg") no-repeat center;
+}
+
+#tournament-page-header {
+    background: url("../imgs/tournament-page-head.jpg") no-repeat center;
+}
+
+.contain-main-info {
+    margin-top: 100px;
+    color: white;
+}
+
+.rank-image {
+    width: 100%;
+}
+
+.main-info-tag {
+    font-family: overwatch;
+    color: white;
+    font-size: 60px;
+}
+
+.main-info-tag:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.main-info-level {
+    font-family: overwatch;
+    font-size: 30px;
+    padding-top: 20px;
+}
+
+.main-info-games {
+    font-family: overwatch;
+    font-size: 20px;
+}
+
+.main-info-rating {
+    font-family: overwatch;
+    font-size: 40px;
+}
+
+.average-stats .col-sm-4 {
+    padding-top: 10px;
+}
+
+.main-winrate-bar {
+
+}
+
+.main-winrate-bar {
+    display: block;
+    background-color: white;
+    border: 0;
+    height: 8px;
+    width: 100%;
+    border-radius: 9px;
+}
+
+.main-winrate-bar::-webkit-progress-bar {
+    display: block;
+    background-color: white;
+    border: 0;
+    height: 8px;
+    width: 100%;
+    border-radius: 9px;
+}
+
+.main-winrate-bar::-webkit-progress-value {
+    display: block;
+    background-color: rgb(0, 176, 255);
+    border: 0;
+    height: 8px;
+    border-radius: 9px;
+}
+
+.main-winrate-bar::-moz-progress-bar {
+    display: block;
+    background-color: rgb(0, 176, 255);
+    border: 0;
+    height: 8px;
+    border-radius: 9px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+.sidebar-text {
+    font-size: 12px;
+    font-family: 'Roboto';
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .herostats::after {
@@ -415,23 +576,20 @@ html, body {
 }
 
 #uuenda {
-    margin-top: 85px;
-    margin-left: 140px;
-    position: absolute;
     display: block;
     background: #0090e6;
-    box-sizing: content-box;
     border: 1px solid #444;
     border-radius: 3px;
     color: #fff;
-    font-family: 'Cabin', helvetica, arial, sans-serif;
-    font-size: 13px;
+    font-family: 'Roboto';
     font-weight: 400;
-    height: 30px;
-    line-height: 30px;
+    font-size: 14px;
+    height: 40px;
+    /* line-height: initial; */
     text-shadow: 0 -1px 0 #000;
-    width: auto;
-    transition: background-color 0.3s ease;
+    width: 130px;
+    transition: all 0.15s ease-in-out;
+
 }
 
 #uuenda:hover,
@@ -467,7 +625,6 @@ html, body {
 
 #hero_playtime {
     margin-top: -10px;
-    background: linear-gradient(#eaeaea, #ffffff);
     color: #1f1f1f;
     width: 95%;
     margin-left: auto;
@@ -485,8 +642,12 @@ html, body {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 #avatars {
@@ -511,7 +672,8 @@ html, body {
 .avs {
     padding-top: 3px;
     width: 100%;
-    border-radius: 20px;
+    max-width: 60px;
+    border-radius: 50%;
 }
 
 .heronames {
@@ -521,17 +683,16 @@ html, body {
 }
 
 .heroplaytime {
-    padding-top: 15px;
-    font-size: 14px;
-    padding-left: 5px;
+    font-size: 12px;
     text-transform: capitalize;
+    padding-top: 10px;
 }
 
 .bar {
-    padding-top: 4px;
+    padding-top: 16px;
     border: 0;
     height: 10px;
-    width: 95%;
+    width: 100%;
     border-radius: 4px;
 }
 
@@ -657,6 +818,19 @@ html, body {
     width: 100%;
 }
 
+#ajax_call_alert {
+    transition: all 1s ease-in-out;
+    background-color: #ef9700;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    height:auto;
+    padding:10px;
+    border-radius:4px;
+    transform: skew(-0.2rad);
+    color:white!important;
+}
+
 @media (max-width: 768px) {
 
     #message2 {
@@ -664,8 +838,8 @@ html, body {
     }
 
     td::before {
-        margin-top:-7px;
-        margin-left:-3px;
+        margin-top: -7px;
+        margin-left: -3px;
     }
 
     #div1 {
@@ -676,8 +850,14 @@ html, body {
         display: none;
     }
 
-    .avgbar {
-        display:none;
+    #uuenda {
+        width:100%;
+    }
+
+    .contain-main-info {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .logo {
@@ -711,36 +891,54 @@ html, body {
         margin-right: auto;
     }
 
+    #navimg {
+        margin-top: 10px;
+    }
+
     .heropic {
         display: none;
     }
 
     #userhead img {
-        display:none;
+        display: none;
+    }
+
+    a:-webkit-any-link {
+        text-decoration: none;
+    }
+
+    .post-text-container {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    .dark-overlay {
+        background-color: rgba(0, 0, 0, 0) !important;
+
     }
 
     .mainstat {
-        display:block;
-        padding-bottom:20px;
+        display: block;
+        padding-bottom: 20px;
     }
 
     .row1 {
-        width:45%;
-        padding-bottom:20px;
+        width: 45%;
+        padding-bottom: 20px;
     }
 
     .overall_stats td {
-        padding-left:5px!important;
-        padding-right:5px;!important;
+        padding-left: 5px !important;
+        padding-right: 5px;
+    !important;
     }
-
-
 
 }
 
 .lisa {
     text-align: center;
-    padding-top: 20px;
+    margin-top: 80px;
 }
 
 .nupplisa {
@@ -760,7 +958,6 @@ html, body {
 #inputform {
     padding-top: 30px;
     display: block;
-    background: linear-gradient(#353535, #1f1f1f);
     margin-bottom: -20px;
     border-radius: 6px;
     height: auto;
@@ -779,7 +976,7 @@ html, body {
 }
 
 .userhead-background {
-    background-image: url("../imgs/deathwish-background.jpg")!important;
+    background-image: url("../imgs/deathwish-background.jpg") !important;
 }
 
 #hero_header {
@@ -840,6 +1037,42 @@ html, body {
     display: inline-block;
 }
 
+
+.input-tag {
+    background: #fff;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    color: #888;
+    font-family: 'Roboto';
+    font-size: 13px;
+    font-weight: 400;
+    height: 40px;
+    margin: 0;
+    padding: 0 10px;
+    width: 200px;
+    transform: skew(-0.2rad);
+    display: inline-block;
+}
+
+
+.btn-esita {
+    background-color: #0090e6;
+    box-sizing: content-box;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: 'Roboto';
+    font-size: 13px;
+    font-weight: 400;
+    height: 40px;
+    line-height: 40px;
+    padding: 0;
+    position: relative;
+    text-shadow: 0 -1px 0 #000;
+    width: 80px;
+    margin-left: 3px;
+    transform: skew(-0.2rad);
+}
+
 .compstats {
     padding-left: 10px;
     font-family: "Open Sans", serif;
@@ -866,36 +1099,6 @@ html, body {
     font-weight: normal;
 }
 
-.overall_stats {
-    background: linear-gradient(#eaeaea, #ffffff);
-    color: #1f1f1f;
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.overall_stats td {
-    padding-left: 20px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    font-family: 'Open Sans';
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 600;
-}
-
-.overall_stats th {
-    font-family: overwatch;
-    font-size: 26px;
-    font-weight: normal;
-}
-
-.overall_stats th {
-    border: none;
-    padding-left: 5px;
-    padding-top: 10px;
-}
-
 #userhead #div1 {
     color: white;
     padding-top: 40px;
@@ -906,6 +1109,31 @@ html, body {
     float: right;
     display: inline-block;
 
+}
+
+.overall-stats {
+}
+
+.average-stats,
+.average-medals {
+    display: block;
+    background-color: #2d2d2d;
+    border-radius: 6px;
+    height: auto;
+    width: 100%;
+    color: white;
+    padding-bottom: 10px;
+    position: relative;
+    font-family: 'Open Sans';
+    box-shadow: 0 3px 5px 0 #a9a9a9;
+}
+
+.average-medals {
+    font-family: 'Open Sans';
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    padding-top: 10px;
 }
 
 #userhead a {
@@ -1056,8 +1284,8 @@ ul.herolist li {
 
 }
 
-.btn:hover {
-    transition: background-color 0.3s ease;
+.btn-esita:hover {
+    transition: background-color 0.15s ease-in-out;
     background-color: #00b0e6;
     text-decoration: none;
     color: white;
@@ -1217,13 +1445,11 @@ ul.herolist li {
     color: #999;
 }
 
-
-
 .dark-overlay {
     background-color: rgba(0, 0, 0, 0.30);
     border-radius: 6px;
     position: relative;
-    transition: background-color 0.5s ease;
+    transition: all 0.15s ease-in-out;
 }
 
 .dark-overlay:hover {
@@ -1274,12 +1500,11 @@ ul.topnav li {
     font-weight: 500;
     height: 55px;
     padding-top: 18px;
-    transition: all 500ms ease;
+    transition: all 0.15s ease-in-out;
 }
 
 ul.topnav li:hover {
-    background-color: rgba(128, 128, 128, 0.2);
-    transition: background-color 0.5s ease;
+
 }
 
 ul.topnav li a {
@@ -1291,16 +1516,16 @@ ul.topnav li a {
     line-height: 35px;
     text-decoration: none;
     text-transform: uppercase;
-    transition: all 500ms ease;
+    transition: all 0.15s ease-in-out;
     margin-top: -20px;
     padding: 10px;
-    font-family: 'Open Sans'!important;
+    font-family: 'Open Sans' !important;
 }
 
 ul.topnav li a:hover {
     color: white;
     text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.9);
-    transition: all 500ms ease;
+    transition: all 0.15s ease-in-out;
 }
 
 ul.topnav li.icon {
@@ -1319,7 +1544,7 @@ ul.topnav li.icon {
     }
 
     #wpadminbar {
-        position:fixed;
+        position: fixed;
     }
 }
 
@@ -1381,106 +1606,11 @@ p {
 
 /*FRONT PAGE SEARCH*/
 
-@import url(http://fonts.googleapis.com/css?family=Cabin:400);
-
-.webdesigntuts-workshop input {
-    background: #222;
-    background: linear-gradient(#fff, #e6e6e6);
-    border: 1px solid #fff;
-    border-radius: 3px;
-    color: #888;
-
-    font-family: 'Cabin', helvetica, arial, sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    height: 40px;
-    margin: 0;
-    padding: 0 10px;
-    width: 200px;
-    transform: skew(-0.2rad);
-}
-
-.ie .webdesigntuts-workshop input {
-    line-height: 40px;
-}
-
-.webdesigntuts-workshop input::-webkit-input-placeholder {
-    color: #888;
-}
-
-.webdesigntuts-workshop input:-moz-placeholder {
-    color: #888;
-}
-
-.webdesigntuts-workshop input:focus {
-    animation: glow 800ms ease-out infinite alternate;
-    background: linear-gradient(#fff, #e6e6e6);
-    border: 1px solid #fff;
-    border-radius: 3px;
-    box-shadow: 0 0 5px rgba(255, 173, 38, 0.2), inset 0 0 5px rgba(255, 162, 50, 0.1), 0 2px 0 #000;
-    color: black;
-    outline: none;
-}
-
-.webdesigntuts-workshop input:focus::-webkit-input-placeholder {
-    color: grey;
-}
-
-.webdesigntuts-workshop input:focus:-moz-placeholder {
-    color: grey;
-}
-
-.webdesigntuts-workshop input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    -webkit-transition-delay: 9999s;
-    -webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
-}
-
 p.viga {
     margin-top: 100px;
     font-size: 30px;
     color: red;
     text-align: center;
-}
-
-.webdesigntuts-workshop .button {
-    background: #222;
-    background: linear-gradient(#333, #222);
-    box-sizing: content-box;
-    border: 1px solid #444;
-    border-radius: 3px;
-    box-shadow: 0 2px 0 #000;
-    color: #fff;
-    font-family: 'Cabin', helvetica, arial, sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    height: 39px;
-    line-height: 39px;
-    margin-top: 20px;
-    padding: 0;
-    position: relative;
-    text-shadow: 0 -1px 0 #000;
-    width: 80px;
-    margin-left: 3px;
-    transform: skew(-0.2rad);
-}
-
-.webdesigntuts-workshop .button:hover,
-.webdesigntuts-workshop .button:focus {
-    background: #292929;
-    background: linear-gradient(#393939, #292929);
-    color: #ffac41;
-    outline: none;
-    border-radius: 3px;
-}
-
-.webdesigntuts-workshop .button:active {
-    background: #292929;
-    background: linear-gradient(#393939, #292929);
-    box-shadow: 0 1px 0 #000, inset 1px 0 1px #222;
-    top: 1px;
 }
 
 .hr {
@@ -1499,30 +1629,22 @@ hr {
     height: 0;
 }
 
-#profileline #esimene {
-    padding-left: 10px;
-    margin-top: 20px;
+.stats-header-bar {
     font-family: overwatch;
-    font-size: 40px;
-    text-transform: uppercase;
-    color: white;
-    /* font-weight: bold; */
-    /* margin-bottom: -20px; */
-    background: linear-gradient(#353535, #1f1f1f);
-    border-radius: 4px;
 }
 
-#teine {
+.profileline {
     padding-left: 10px;
     margin-top: 20px;
     font-family: overwatch;
-    font-size: 40px;
+    font-size: 24px;
     text-transform: uppercase;
     color: white;
     /* font-weight: bold; */
     /* margin-bottom: -20px; */
     background: linear-gradient(#353535, #1f1f1f);
     border-radius: 6px;
+    clear: both;
 }
 
 #cards {

@@ -20,6 +20,14 @@ if (empty($_GET['id'])) {
 $current_tournament = $wpdb->get_results("SELECT * FROM wp_tournaments where tournament_id = $tournament_id");
 $current_tournament = json_decode(json_encode($current_tournament), true);
 ?>
+<div id="tournament-page-header">
+    <div class="container">
+        <div class="col-sm-12" style="margin-top:100px;">
+            <h1 style="font-family:overwatch; color:white; font-size:60px;">Tournaments</h1>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <?php if ($current_user->roles[0] == 'administrator') : ?>
         <div class="AdminBox">
@@ -61,12 +69,22 @@ $current_tournament = json_decode(json_encode($current_tournament), true);
 
     <script>
         $(document).ready(function () {
+
+
             $('.add-tournament').on('click', function () {
-                $.post("<?= get_site_url()?>/admin ", {
-                    tournament_name: $('.t-name').val(),
-                    tournament_link: $('.t-link').val()
+
+                var tournament_name = $('.t-name').val();
+                var tournament_link = $('.t-link').val();
+
+                $.post(ajaxurl, {
+                    action: 'add_new_tournament',
+                    data: {tournament_name: tournament_name, tournament_link: tournament_link}
                 }, function (res) {
-                    location.reload();
+                    if (res == 'Ok') {
+                        location.reload();
+                    } else {
+                        alert("Turniiri lisamine ebaõnnestus");
+                    }
                 });
             });
 

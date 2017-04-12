@@ -15,6 +15,7 @@ $players = json_decode(json_encode($players), true);
 
 <style>
 
+
     #ranking-table td {
         height: 60px !important;
     }
@@ -26,20 +27,29 @@ $players = json_decode(json_encode($players), true);
         float: right;
         margin-top: 20px;
     }
+
+    .dataTables_filter {
+        margin-top:20px;
+    }
+
+    #ranking_table_info {
+        min-height:250px;
+    }
+
 </style>
+
+<div id="ranking-page-header">
+    <div class="container">
+        <div class="col-sm-12" style="margin-top:100px;">
+            <h1 style="font-family:overwatch; color:white; font-size:60px;">Eesti ranking</h1>
+        </div>
+    </div>
+</div>
 
 <div class="container">
 
-    <div style="width: 100%; display:inline-block;">
-        <h3 class="page-header-text" style="float:left; display:inline-block;">Eesti Ranking</h3>
-        <!--
-        <a href="season/3"><input type="button" class="btn btn-primary btn-season" value="Season 3"></a>
-        <a href="season/2"><input type="button" class="btn btn-primary btn-season" value="Season 2"></a>
-        <a href="season/1"><input type="button" class="btn btn-primary btn-season" value="Season 1"></a>
-        -->
-    </div>
 
-    <table id="ranking_table" style="font-family: 'Roboto';" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <table id="ranking_table" style="font-family: 'Roboto'; background-color:white;" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
         <tr>
             <th style="width:10px;">#</th>
@@ -77,6 +87,8 @@ $players = json_decode(json_encode($players), true);
 
 <script>
     $(document).ready(function () {
+
+
         $('#ranking_table').dataTable({
             responsive: true,
             "bPaginate": false,
@@ -84,5 +96,7 @@ $players = json_decode(json_encode($players), true);
                 { "orderable": false, "targets": [1,6] }
             ]
         });
+
+        $('.dataTables_filter input').addClass("form-control");
     });
 </script>

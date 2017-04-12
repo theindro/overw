@@ -31,91 +31,101 @@ $players = json_decode(json_encode($players), true);
 ?>
 
 <style>
-    #single_hero_table_filter {
-        display: none;
-    }
+
 
     #single_hero_table_wrapper {
-        padding-bottom:100px;
+        padding-bottom: 100px;
+        margin-top:10px;
+    }
+
+    #single_hero_table_info {
+        min-height:200px;
     }
 </style>
 
-<div class="container">
-    <a href="">
-        <div id="hero_header">
-            <div style="display:inline-block;"><img id="hero-image" src="<?= $hero[0]['image'] ?>" alt="">
+<div id="heroes-page-header">
+    <div class="container">
+        <div class="col-sm-12" style="margin-top:100px;">
+            <div class="col-sm-2">
+                <img id="hero-image" src="<?= $hero[0]['image'] ?>" alt="">
             </div>
-            <h3 class="hero-page-header-text"
-                style="display:inline-block;"> <?= $hero[0]['hero_name'] ?>
-                <span style="font-size:20px; color:grey;"> <?= $hero[0]['Role'] ?> </span>
-            </h3>
+            <div class="hero-page-header-text col-sm-10">
+                <?= $hero[0]['hero_name'] ?>
+                <span style="font-size:30px; color:grey;">
+                    <?= $hero[0]['Role'] ?>
+                </span>
+            </div>
         </div>
-    </a>
-    <table id="single_hero_table" style="font-family:'Roboto';" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    </div>
+</div>
+
+
+<div class="container">
+
+    <table id="single_hero_table" style="font-family:'Roboto'; background-color:white;"
+           class="table" cellspacing="0" width="100%">
         <thead>
         <tr style="font-size:12px;">
             <th class="hidden">Avatar</th>
-            <th style="width:10px;">Avatar</th>
-            <th>Nimi</th>
-            <th style="width:10px;">Rank</th>
-            <th style="width:10px;">Playtime</th>
-            <th style="width:10px;">Accuracy</th>
-            <th style="width:10px;">Average eliminations</th>
-            <th style="width:10px;">Average deaths</th>
-            <th style="width:10px;">Average damage done</th>
+            <th>Avatar</th>
+            <th>Name</th>
+            <th>Playtime</th>
+            <th>Accuracy</th>
+            <th>Average eliminations</th>
+            <th>Average deaths</th>
+            <th>Average damage done</th>
             <?php if ($hero[0]['Role'] == 'Support'): ?>
-                <th style="width:10px;">Healing done</th>
+                <th>Healing done</th>
             <?php else: ?>
-                <th style="width:10px;">Average solo kills</th>
+                <th>Average solo kills</th>
             <?php endif; ?>
-            <th style="width:10px;">Winrate</th>
+            <th>Winrate</th>
         </tr>
         </thead>
         <tbody style="font-size: 12px;">
-
         <?php foreach ($players as $player_hero): ?>
-        <?php if(!empty($player_hero['battle_tag'])): ?>
-            <?php
-            // Show red color for under 50% winrate and green for higher than 50%
-            $color = "#000000";
-            $won = $player_hero['games_won'];
-            $lost = $player_hero['games_lost'];
-            $games_played = ($won + $lost);
+            <?php if (!empty($player_hero['battle_tag'])): ?>
+                <?php
+                // Show red color for under 50% winrate and green for higher than 50%
+                $color = "#000000";
+                $won = $player_hero['games_won'];
+                $lost = $player_hero['games_lost'];
+                $games_played = ($won + $lost);
 
-            if (empty($lost)) {
-                $winrate = '100';
-            } elseif (empty($won)) {
-                $winrate = '0';
-            } else {
-                $winrate = number_format(($won / $games_played) * 100, 1);
-            }
+                if (empty($lost)) {
+                    $winrate = '100';
+                } elseif (empty($won)) {
+                    $winrate = '0';
+                } else {
+                    $winrate = number_format(($won / $games_played) * 100, 1);
+                }
 
-            if (($winrate >= 1) && ($winrate <= 49.99))
-                $color = "#c60000";
-            else if (($winrate >= 50) && ($winrate <= 100))
-                $color = "#009c06;";
-            else
-                $color = "grey";
-            ?>
-            <tr>
-                <td class="hidden"><?= round($player_hero['hero_time_played'],1) ?></td>
-                <td style="padding:0!important"><img class="avatar" src="<?= $player_hero['avatar'] ?>" alt=""></td>
-                <td style="padding-top:20px;"><a style="font-size:16px;"
-                        href="../../profiil/<?= $player_hero['battle_tag'] ?>"><?= $player_hero['name'] ?></a></td>
-                <td style="padding-top:20px;"><?= $player_hero['rank'] ?></td>
-                <td style="padding-top:20px;"><?= round($player_hero['hero_time_played'],1) ?> hours</td>
-                <td style="padding-top:20px;"><?= $player_hero['weapon_accuracy'] * 100 ?>%</td>
-                <td style="padding-top:20px;"><?= $player_hero['eliminations_average'] ?></td>
-                <td style="padding-top:20px;"><?= $player_hero['deaths_average'] ?></td>
-                <td style="padding-top:20px;"><?= $player_hero['damage_done_average'] ?></td>
-                <?php if ($player_hero['Role'] == 'Support') : ?>
-                    <td style="padding-top:20px;"><?= $player_hero['healing_done_average'] ?></td>
-                <?php else: ?>
-                    <td style="padding-top:20px;"><?= $player_hero['solo_kills_average'] ?></td>
-                <?php endif; ?>
-                <td style="padding-top:20px;"><span style="color:<?= $color ?>; font-weight:bold;"><?= $winrate ?>
-                        %</span></td>
-            </tr>
+                if (($winrate >= 1) && ($winrate <= 49.99))
+                    $color = "#c60000";
+                else if (($winrate >= 50) && ($winrate <= 100))
+                    $color = "#009c06;";
+                else
+                    $color = "grey";
+                ?>
+                <tr>
+                    <td class="hidden"><?= round($player_hero['hero_time_played'], 1) ?></td>
+                    <td style="padding:0!important"><img class="avatar" src="<?= $player_hero['avatar'] ?>" alt=""></td>
+                    <td style="padding-top:20px;"><a style="font-size:16px;"
+                                                     href="../../profiil/<?= $player_hero['battle_tag'] ?>"><?= $player_hero['name'] ?></a>
+                    </td>
+                    <td style="padding-top:20px;"><?= round($player_hero['hero_time_played'], 1) ?> hours</td>
+                    <td style="padding-top:20px;"><?= $player_hero['weapon_accuracy'] * 100 ?>%</td>
+                    <td style="padding-top:20px;"><?= $player_hero['eliminations_average'] ?></td>
+                    <td style="padding-top:20px;"><?= $player_hero['deaths_average'] ?></td>
+                    <td style="padding-top:20px;"><?= $player_hero['damage_done_average'] ?></td>
+                    <?php if ($player_hero['Role'] == 'Support') : ?>
+                        <td style="padding-top:20px;"><?= $player_hero['healing_done_average'] ?></td>
+                    <?php else: ?>
+                        <td style="padding-top:20px;"><?= $player_hero['solo_kills_average'] ?></td>
+                    <?php endif; ?>
+                    <td style="padding-top:20px;"><span style="color:<?= $color ?>; font-weight:bold;"><?= $winrate ?>
+                            %</span> <progress max="100" value="<?= $winrate ?>" class="winratebar"></progress></td>
+                </tr>
             <?php endif; ?>
         <?php endforeach ?>
         </tbody>
@@ -136,6 +146,8 @@ $players = json_decode(json_encode($players), true);
                 {"orderable": false, "targets": [1]}
             ]
         });
+
+        $('.dataTables_filter input').addClass("form-control");
     });
 </script>
 
