@@ -347,7 +347,7 @@ img#hero-image {
 
 .winratebar::-webkit-progress-value {
     display: block;
-    background-color: rgb(129, 255, 0);
+    background-color: #87d100;
     border: 0;
     height: 8px;
     border-radius: 9px;
@@ -355,7 +355,7 @@ img#hero-image {
 
 .winratebar::-moz-progress-bar {
     display: block;
-    background-color: rgb(129, 255, 0);
+    background-color: #87d100;
     border: 0;
     height: 8px;
     border-radius: 9px;

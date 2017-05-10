@@ -69,7 +69,7 @@ $players = json_decode(json_encode($players), true);
             <th class="hidden">Avatar</th>
             <th>Avatar</th>
             <th>Name</th>
-            <th>Playtime</th>
+            <th>Playtime (hours)</th>
             <th>Accuracy</th>
             <th>Average eliminations</th>
             <th>Average deaths</th>
@@ -113,7 +113,7 @@ $players = json_decode(json_encode($players), true);
                     <td style="padding-top:20px;"><a style="font-size:16px;"
                                                      href="../../profiil/<?= $player_hero['battle_tag'] ?>"><?= $player_hero['name'] ?></a>
                     </td>
-                    <td style="padding-top:20px;"><?= round($player_hero['hero_time_played'], 1) ?> hours</td>
+                    <td style="padding-top:20px;"><?= round($player_hero['hero_time_played'], 1) ?></td>
                     <td style="padding-top:20px;"><?= $player_hero['weapon_accuracy'] * 100 ?>%</td>
                     <td style="padding-top:20px;"><?= $player_hero['eliminations_average'] ?></td>
                     <td style="padding-top:20px;"><?= $player_hero['deaths_average'] ?></td>
