@@ -20,6 +20,7 @@ $battle_tag_info = $wpdb->get_results("SELECT * FROM wp_ranking
                                               LEFT JOIN wp_average_stats USING (battle_tag_id)
                                               LEFT JOIN wp_medals USING (battle_tag_id)
                                               LEFT JOIN wp_ranks USING (tier)
+                                              LEFT JOIN wp_teams USING (team_id)
                                               where battle_tag = '$input_battle_tag'");
 $user = json_decode(json_encode($battle_tag_info), true);
 
@@ -70,6 +71,9 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
             <div class="col-sm-6">
                 <a href="" class="main-info-tag"
                    data-battletag_id="<?= $user[0]['battle_tag_id'] ?>"><?= $user[0]['battle_tag'] ?></a>
+                <?php if(!empty($user[0]['team_logo'])):?>
+                    <img style="margin-bottom:40px;" width="60" src="<?= $user[0]['team_logo'] ?>" alt="">
+                <?php endif;?>
                 <br>
                 <span class="main-info-level">Level <?= $user[0]['lvl'] ?></span>
             </div>
@@ -373,6 +377,14 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
                             style="color:<?= $color ?>; font-weight: bold;"><?= $winrate ?>%</span></p></div>
                 <div class="col-sm-12"><p class="sidebar-text"> Playtime: <strong><?= round($total_playtime, 2) ?>
                             Hours</strong></p>
+                </div>
+                <div class="col-sm-12">
+                    <?php if(!empty($user[0]['team_logo'])):?>
+                        <p class="sidebar-text"> Team: <strong><?= $user[0]['team_name'] ?></strong>
+                            <img style="margin-bottom:10px;" width="25" src="<?= $user[0]['team_logo'] ?>" alt="">
+                        </p>
+
+                    <?php endif;?>
                 </div>
             </div>
             <div class=" profileline">
