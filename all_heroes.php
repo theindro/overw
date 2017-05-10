@@ -42,7 +42,7 @@ $all_heroes_max_playtime = $wpdb->get_var("SELECT sum(playtime) AS hero_total_pl
             <th style="width:10px;">Image</th>
             <th style="width:10px;">Hero name</th>
             <th>Popularity</th>
-            <th style="width:100px;">Playtime</th>
+            <th style="width:100px;">Playtime (hours)</th>
             <th style="width:10px;">Role</th>
         </tr>
         </thead>
@@ -59,7 +59,7 @@ $all_heroes_max_playtime = $wpdb->get_var("SELECT sum(playtime) AS hero_total_pl
                     <progress title="This hero popularity compared to other heroes." style="margin-top:5px;" class="main-winrate-bar" max="<?= $all_heroes_max_playtime ?>"
                               value="<?= $hero->hero_total_playtime ?>"></progress>
                 </td>
-                <td style="padding-top:20px;"><?= round($hero->hero_total_playtime, 1) ?> hours</td>
+                <td style="padding-top:20px;"><?= round($hero->hero_total_playtime, 1) ?></td>
                 <td style="padding-top:20px;"><?= $hero->Role ?></td>
             </tr>
         <?php endforeach ?>
