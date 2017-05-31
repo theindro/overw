@@ -38,7 +38,9 @@
                 <input type="button" class="btn btn-primary sidebar-top-btn sidebar-main-btn" value="eesti Top 5">
             </a>
             <?php global $wpdb;
-            $toplist = $wpdb->get_results("SELECT * FROM wp_ranking LEFT JOIN wp_ranks USING (tier) ORDER BY rank DESC LIMIT 5");
+
+            $current_season = 5;
+            $toplist = $wpdb->get_results("SELECT * FROM wp_ranking LEFT JOIN wp_ranks USING (tier) WHERE season = $current_season ORDER BY rank DESC LIMIT 5");
             $i = 1;
             ?>
             <table>

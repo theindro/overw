@@ -90,6 +90,7 @@ ORDER BY rank DESC");
         <?php if ($current_user->roles[0] == 'administrator') : ?>
             <input type="button" class="btn btn-success open_modal" data-team_id="<?= $team->team_id ?>"
                    style="margin-bottom:10px;" value="Add player to this team">
+
         <?php endif; ?>
         <div class="row">
             <div class="col-sm-12 ">

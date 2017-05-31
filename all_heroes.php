@@ -18,8 +18,26 @@ Template Name: All heroes list
 <?php
 global $wpdb;
 $i = 0;
-$all_heroes = $wpdb->get_results("SELECT *, sum(playtime) AS hero_total_playtime FROM wp_heroesall LEFT JOIN wp_heroes USING (hero_name) GROUP BY hero_name ORDER BY hero_total_playtime DESC;");
-$all_heroes_max_playtime = $wpdb->get_var("SELECT sum(playtime) AS hero_total_playtime FROM wp_heroesall LEFT JOIN wp_heroes USING (hero_name) GROUP BY hero_name ORDER BY hero_total_playtime DESC LIMIT 1;");
+
+$season = $_GET['season'];
+if (empty($season)) {
+    $season = '5';
+}
+
+
+$all_heroes = $wpdb->get_results("SELECT *, sum(wp_heroes.playtime) AS hero_total_playtime
+FROM wp_heroesall
+  LEFT JOIN wp_heroes USING (hero_name)
+  LEFT JOIN wp_ranking USING (battle_tag_id)
+  WHERE season = $season
+GROUP BY hero_name
+ORDER BY hero_total_playtime DESC");
+
+$all_heroes_max_playtime = $wpdb->get_var("SELECT sum(playtime) AS hero_total_playtime FROM wp_heroesall 
+LEFT JOIN wp_heroes USING (hero_name) 
+GROUP BY hero_name 
+ORDER BY hero_total_playtime DESC LIMIT 1;");
+
 ?>
 
 <div id="heroes-page-header">
@@ -32,7 +50,22 @@ $all_heroes_max_playtime = $wpdb->get_var("SELECT sum(playtime) AS hero_total_pl
 
 
 <div class="container">
-
+    <div style="float:left; margin-top:5px;">
+        <label style="display:inline-block; font-weight:normal" for="season-select">Vali hooaeg:</label>
+        <select class="form-control season-select" name="" id=""
+                style="margin-top:15px; margin-bottom:10px; width:auto; display:inline-block">
+            <?php if ($season == '4'): ?>
+                <option selected="selected" value="4">Season 4</option>
+            <?php else: ?>
+                <option value="4">Season 4</option>
+            <?php endif; ?>
+            <?php if ($season == '5'): ?>
+                <option selected="selected" value="5">Season 5</option>
+            <?php else: ?>
+                <option value="5">Season 5</option>
+            <?php endif; ?>
+        </select>
+    </div>
 
     <table id="hero_ranking_table" style="font-family: 'Roboto'; background-color:white;"
            class="table" cellspacing="0" width="100%">
@@ -79,6 +112,11 @@ $all_heroes_max_playtime = $wpdb->get_var("SELECT sum(playtime) AS hero_total_pl
         });
 
         $('.dataTables_filter input').addClass("form-control");
+
+        $('select').on('change', function (e) {
+            var tournament_id = $(".season-select").val();
+            window.location.replace('?season=' + tournament_id);
+        });
     });
 </script>
 

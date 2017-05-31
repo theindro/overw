@@ -12,8 +12,14 @@ global $wpdb;
 $input_battle_tag = trim($_GET['battletag']);
 $encoded_battletag = urlencode($input_battle_tag);
 
+$season = $_GET['season'];
+$current_season = 5;
+if (empty($season)) {
+    $season = $current_season;
+}
+
 // Get current user id
-$battle_tag_id = $wpdb->get_var("SELECT battle_tag_id FROM wp_ranking WHERE battle_tag = '$input_battle_tag'");
+$battle_tag_id = $wpdb->get_var("SELECT battle_tag_id FROM wp_ranking WHERE battle_tag = '$input_battle_tag' AND season = $season");
 
 // Show data from database to given battle tag.
 $battle_tag_info = $wpdb->get_results("SELECT * FROM wp_ranking 
@@ -21,8 +27,11 @@ $battle_tag_info = $wpdb->get_results("SELECT * FROM wp_ranking
                                               LEFT JOIN wp_medals USING (battle_tag_id)
                                               LEFT JOIN wp_ranks USING (tier)
                                               LEFT JOIN wp_teams USING (team_id)
-                                              where battle_tag = '$input_battle_tag'");
+                                              where battle_tag_id = '$battle_tag_id'");
 $user = json_decode(json_encode($battle_tag_info), true);
+
+
+$this_user_season = $user[0]['season'];
 
 // Show red color for under 50% winrate and green for higher than 50%
 $color = "#000000";
@@ -60,40 +69,75 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
         background-color: #161616;
     }
 
+    .last-season {
+        background-color:#006fa0;
+        width: 128px !important;
+        border-radius: 4px;
+        transform: skew(-0.2rad);
+        color: white !important;
+        display: block;
+        text-align: center;
+        padding-top: 10px;
+        /* font-weight: bold; */
+        font-family: 'Open Sans';
+        padding-bottom: 10px;
+    }
+
+    .last-season-warning {
+        margin-top: 20px;
+        background-color: #ef9700;
+        border-radius: 4px;
+        transform: skew(-0.2rad);
+        color: white !important;
+        display: block;
+        text-align: center;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
 </style>
 <div id="profile-header">
     <div class="container">
         <div class="contain-main-info row">
             <div class="col-sm-2">
-                <img style="width:auto; height: 128px; border:solid 1px rgba(255, 255, 255, 0.50);" src="<?= $user[0]['avatar'] ?>"
-                     alt="">
+                <?php if (!empty($user[0]['rank_image'])): ?>
+                    <img style="width:auto; height: 128px; border:solid 1px rgba(255, 255, 255, 0.50);"
+                         src="<?= $user[0]['avatar'] ?>"
+                         alt="">
+                <?php endif; ?>
             </div>
             <div class="col-sm-6">
                 <a href="" class="main-info-tag"
-                   data-battletag_id="<?= $user[0]['battle_tag_id'] ?>"><?= $user[0]['battle_tag'] ?></a>
-                <?php if(!empty($user[0]['team_logo'])):?>
+                   data-battletag_id="<?= $user[0]['battle_tag_id'] ?>"><?= $input_battle_tag ?></a>
+                <?php if (!empty($user[0]['team_logo'])): ?>
                     <img style="margin-bottom:40px;" width="60" src="<?= $user[0]['team_logo'] ?>" alt="">
-                <?php endif;?>
+                <?php endif; ?>
                 <br>
                 <span class="main-info-level">Level <?= $user[0]['lvl'] ?></span>
             </div>
             <div class="col-sm-2 main-info-tag" style="margin-top:20px; text-align:right"><?= $user[0]['rank'] ?><br>
                 <p style="font-size:24px; font-family:overwatch; margin-top:-20px;">Skill Rating</p></div>
             <div class="col-sm-2">
-                <img class="rank-image" src="<?= $user[0]['rank_image'] ?>" alt="">
+                <?php if (!empty($user[0]['rank_image'])): ?>
+                    <img class="rank-image" src="<?= $user[0]['rank_image'] ?>" alt="">
+                <?php endif; ?>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2" style="margin-top:9px;">
-                <button id="uuenda"
-                    <?php if ($updated_time > date('Y-m-d H:i:s', current_time('timestamp', 0))) : ?>
-                        title="Profiil on uuendatud vähem kui 15 minutit tagasi." disabled="disabled"
-                        style="cursor: not-allowed;">Uuendatud
-                    <?php else: ?>
-                        >Uuenda
-                    <?php endif; ?>
-                    <div id="uuenda-loading" style="display:none;"></div>
-                </button>
+                <?php if ($this_user_season == '5'): ?>
+                    <button id="uuenda"
+                        <?php if ($updated_time > date('Y-m-d H:i:s', current_time('timestamp', 0)) || empty($battle_tag_id)) : ?>
+                            title="Profiil on uuendatud vähem kui 15 minutit tagasi." disabled="disabled"
+                            style="cursor: not-allowed;">Uuendatud
+                        <?php else: ?>
+                            >Uuenda
+                        <?php endif; ?>
+                        <div id="uuenda-loading" style="display:none;"></div>
+                    </button>
+                <?php elseif (!empty($battle_tag_id)): ?>
+                    <span class="last-season">Season <?= $this_user_season ?> stats</span>
+                <?php endif; ?>
             </div>
             <div class="col-sm-10">
                 <span style="color: #cdcdcd; font-size:12px; font-family:'Open Sans';"><?= $winrate ?>%</span>
@@ -116,6 +160,12 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
 </div>
 
 <div class="container">
+    <?php
+    if (empty($battle_tag_id)) : ?>
+        <span class="last-season-warning">Season 5 andmete uuendamine <div id="uuenda-season5"
+                                                                           style="display:none;"></div></span>
+    <?php endif; ?>
+
     <div class="row">
         <div class="col-sm-8">
 
@@ -351,6 +401,29 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
         <div class="col-sm-4">
 
             <div class=" profileline">
+                <p class="stats-header-bar">Season</p>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="col-sm-12">
+                    <select class="form-control season-select" name="" id=""
+                            style="margin-bottom:10px; display:inline-block">
+                        <?php if ($season == '4'): ?>
+                            <option selected="selected" value="4">Season 4</option>
+                        <?php else: ?>
+                            <option value="4">Season 4</option>
+                        <?php endif; ?>
+                        <?php if ($season == '5'): ?>
+                            <option selected="selected" value="5">Season 5</option>
+                        <?php else: ?>
+                            <option value="5">Season 5</option>
+                        <?php endif; ?>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class=" profileline">
                 <p class="stats-header-bar">Ranking</p>
             </div>
 
@@ -379,12 +452,12 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
                             Hours</strong></p>
                 </div>
                 <div class="col-sm-12">
-                    <?php if(!empty($user[0]['team_logo'])):?>
+                    <?php if (!empty($user[0]['team_logo'])): ?>
                         <p class="sidebar-text"> Team: <strong><?= $user[0]['team_name'] ?></strong>
                             <img style="margin-bottom:10px;" width="25" src="<?= $user[0]['team_logo'] ?>" alt="">
                         </p>
 
-                    <?php endif;?>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class=" profileline">
@@ -438,11 +511,38 @@ $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chos
     <?php get_footer(); ?>
 </div>
 
-
-<?php if ($last_updated_day < date('Y-m-d H:i:s', current_time('timestamp', 0))): ?>
+<?php if ($last_updated_day < date('Y-m-d H:i:s', current_time('timestamp', 0)) && !empty($battle_tag_id) && $this_user_season == '5'): ?>
     <script>
         $(function () {
             $("#uuenda").trigger("click");
         });
     </script>
 <?php endif; ?>
+
+<?php if (empty($battle_tag_id) && $season == '5'): ?>
+    <script>
+        var battletag = $('.main-info-tag').html();
+        $('#uuenda-season5').css("display", "inline-block");
+        $.post(ajaxurl, {
+            action: 'battletag_from_api_to_database',
+            data: {battle_tag: battletag}
+        }, function (res) {
+            if (res == 'Ok') {
+                location.reload();
+            } else {
+                alert("ERROR:" + res);
+            }
+        });
+    </script>
+<?php endif; ?>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('select').on('change', function (e) {
+            var season = $(".season-select").val();
+            window.location.replace('?season=' + season);
+        });
+    });
+</script>

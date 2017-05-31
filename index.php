@@ -1,5 +1,14 @@
 <?php get_header(); ?>
 
+<style>
+    .adsbygoogle {
+        display: block;
+        background: #ddd;
+        border-radius: 3px;
+        width: 100%;
+        margin: 10px 0 -20px 0;
+    }
+</style>
 
 <div id="main-page-header">
     <div class="container">
@@ -40,6 +49,7 @@
         </div>    <!-- /.blog-main -->
         <?php get_sidebar(); ?>
     </div>    <!-- /.row -->
+
 </div>
 <?php get_footer(); ?>
 

@@ -15,6 +15,12 @@ if (empty($_GET['id'])) {
     $hero_id = 8;
 }
 
+$season = $_GET['season'];
+if (empty($season)) {
+    $season = '5';
+}
+
+
 $hero = $wpdb->get_results("SELECT * FROM wp_heroesall where hero_id = $hero_id");
 $hero = json_decode(json_encode($hero), true);
 $players = $wpdb->get_results("SELECT *,wp_heroes.playtime as hero_time_played FROM wp_heroesall
@@ -24,7 +30,8 @@ $players = $wpdb->get_results("SELECT *,wp_heroes.playtime as hero_time_played F
                                 where hero_id = $hero_id 
                                 AND battle_tag_id != 0 
                                 AND damage_done_average != 0
-                                AND wp_heroes.playtime > 0.2
+                                AND wp_heroes.playtime > 1
+                                AND season = $season
                                  ORDER BY hero_time_played DESC");
 
 $players = json_decode(json_encode($players), true);
@@ -61,7 +68,22 @@ $players = json_decode(json_encode($players), true);
 
 
 <div class="container">
-
+    <div style="float:left; margin-top:5px;">
+        <label style="display:inline-block; font-weight:normal" for="season-select">Vali hooaeg:</label>
+        <select class="form-control season-select" name="" id=""
+                style="margin-top:15px; margin-bottom:10px; width:auto; display:inline-block">
+            <?php if ($season == '4'): ?>
+                <option selected="selected" value="4">Season 4</option>
+            <?php else: ?>
+                <option value="4">Season 4</option>
+            <?php endif; ?>
+            <?php if ($season == '5'): ?>
+                <option selected="selected" value="5">Season 5</option>
+            <?php else: ?>
+                <option value="5">Season 5</option>
+            <?php endif; ?>
+        </select>
+    </div>
     <table id="single_hero_table" style="font-family:'Roboto'; background-color:white;"
            class="table" cellspacing="0" width="100%">
         <thead>
@@ -79,6 +101,8 @@ $players = json_decode(json_encode($players), true);
             <?php else: ?>
                 <th>Average solo kills</th>
             <?php endif; ?>
+            <th>Wins</th>
+            <th>Losses</th>
             <th>Winrate</th>
         </tr>
         </thead>
@@ -123,6 +147,8 @@ $players = json_decode(json_encode($players), true);
                     <?php else: ?>
                         <td style="padding-top:20px;"><?= $player_hero['solo_kills_average'] ?></td>
                     <?php endif; ?>
+                    <td style="padding-top:20px;"><?= $player_hero['games_won'] ?></td>
+                    <td style="padding-top:20px;"><?= $player_hero['games_lost'] ?></td>
                     <td style="padding-top:20px;"><span style="color:<?= $color ?>; font-weight:bold;"><?= $winrate ?>
                             %</span> <progress max="100" value="<?= $winrate ?>" class="winratebar"></progress></td>
                 </tr>
@@ -148,6 +174,11 @@ $players = json_decode(json_encode($players), true);
         });
 
         $('.dataTables_filter input').addClass("form-control");
+
+        $('select').on('change', function (e) {
+            var season = $(".season-select").val();
+            window.location.replace('?id=<?= $hero_id ?>&season=' + season);
+        });
     });
 </script>
 

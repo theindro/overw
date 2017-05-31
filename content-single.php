@@ -11,7 +11,7 @@
         border-radius: 6px;
         position: relative;
         transition: all 0.15s ease-in-out;
-        min-height:350px;
+        min-height: 350px;
     }
 
 
@@ -32,7 +32,11 @@ echo '<div id="single-post-header" style="background: url(' . $url . ') no-repea
 
 
 <div class="container">
-    <div class="blog-post" style="padding-bottom: 200px;">
+    <div class="blog-post" style="    padding-top:30px;
+    line-height: 1.9;
+    word-wrap: break-word;
+    padding-bottom: 200px;
+    font-family: 'Open Sans';">
         <?php the_content(); ?>
     </div><!-- /.blog-post -->
 </div>

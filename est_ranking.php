@@ -5,14 +5,26 @@ Template Name: Est players leaderboard
 get_header();
 
 global $wpdb;
+
+
+$season = $_GET['season'];
+if (empty($season)) {
+    $season = '5';
+}
+
 $i = 1;
 $players = $wpdb->get_results("SELECT * FROM wp_ranking
   LEFT JOIN wp_ranks USING (tier)
   LEFT JOIN wp_teams USING (team_id)
-  LEFT JOIN wp_average_stats USING (battle_tag_id) ORDER BY rank DESC
+  LEFT JOIN wp_average_stats USING (battle_tag_id)
+   WHERE season = $season
+   ORDER BY rank DESC
+  
 ;");
 $players = json_decode(json_encode($players), true);
+
 ?>
+
 
 <style>
 
@@ -47,9 +59,28 @@ $players = json_decode(json_encode($players), true);
     </div>
 </div>
 
+<?php if (!empty($_GET['season'])) {
+$oldseason = '?season=' . $_GET['season'];
+}
+?>
+
 <div class="container">
-
-
+    <div style="float:left; margin-top:5px;">
+        <label style="display:inline-block; font-weight:normal" for="season-select">Vali hooaeg:</label>
+        <select class="form-control season-select" name="" id=""
+                style="margin-top:15px; margin-bottom:10px; width:auto; display:inline-block">
+            <?php if ($season == '4'): ?>
+                <option selected="selected" value="4">Season 4</option>
+            <?php else: ?>
+                <option value="4">Season 4</option>
+            <?php endif; ?>
+            <?php if ($season == '5'): ?>
+                <option selected="selected" value="5">Season 5</option>
+            <?php else: ?>
+                <option value="5">Season 5</option>
+            <?php endif; ?>
+        </select>
+    </div>
     <table id="ranking_table" style="font-family: 'Roboto'; background-color:white;"
            class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
@@ -72,10 +103,12 @@ $players = json_decode(json_encode($players), true);
                 <td style="padding-top:20px;"><?= $i++; ?></td>
                 <td style="padding:0!important"><img class="avatar" src="<?= $player['avatar'] ?>" alt=""></td>
                 <td style="padding-top:20px;">
-                    <?php if(!empty($player['team_logo'])):?>
-                    <img width="25" src="<?= $player['team_logo'] ?>" alt="">
-                    <?php endif;?>
-                    <a style="font-size:16px;" href="../profiil/<?= $player['battle_tag'] ?>"><?= $player['name'] ?></a>
+                    <?php if (!empty($player['team_logo'])): ?>
+                        <img width="25" src="<?= $player['team_logo'] ?>" alt="">
+                    <?php endif; ?>
+                    <a style="font-size:16px;" href="../profiil/<?= $player['battle_tag'] ?>/<?= $oldseason ?>">
+                        <?= $player['name'] ?>
+                    </a>
                 </td>
                 <td style="padding-top:20px;"><?= $kda ?></td>
                 <td style="padding-top:20px;"><?= $player['lvl'] ?></td>
@@ -104,5 +137,10 @@ $players = json_decode(json_encode($players), true);
         });
 
         $('.dataTables_filter input').addClass("form-control");
+
+        $('select').on('change', function (e) {
+            var season = $(".season-select").val();
+            window.location.replace('?season=' + season);
+        });
     });
 </script>

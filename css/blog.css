@@ -200,6 +200,14 @@ html, body {
     border-radius: 4px;
 }
 
+.adsbygoogle {
+    display: block;
+    background: #ddd;
+    border-radius: 3px;
+    width: 100%;
+    margin: 10px 0 -20px 0;
+}
+
 .hero-page-header-text {
     font-family: overwatch2;
     font-size: 80px;
@@ -646,6 +654,17 @@ img#hero-image {
     animation: spin 2s linear infinite;
     margin-bottom: -5px;
 }
+
+#uuenda-season5 {
+    border: 3px solid #f3f3f3; /* Light grey */
+    border-top: 3px solid rgba(0, 0, 0, 0); /* Blue */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+    margin-bottom: -5px;
+}
+
 
 @keyframes spin {
     0% {

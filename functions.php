@@ -185,14 +185,24 @@ function battletagApiToDatabase()
 
     global $wpdb;
     $input_battle_tag = trim($_POST['battletag']);
-    $encoded_battletag = urlencode($input_battle_tag);
+
+    if (empty($input_battle_tag)) {
+        $input_battle_tag = trim($_POST['data']['battle_tag']);
+    }
 
     // Check if input is empty
     if (empty($input_battle_tag)) {
         exit('Palun sisesta battletag!');
     }
 
-    $battle_tag = $wpdb->get_results("SELECT * FROM wp_ranking where battle_tag = '$input_battle_tag'");
+    $encoded_battletag = urlencode($input_battle_tag);
+
+    $current_season = 5;
+    $battle_tag = $wpdb->get_results("SELECT * FROM wp_ranking where battle_tag = '$input_battle_tag' AND season = $current_season");
+    $last_season = $wpdb->get_results("SELECT * FROM wp_ranking where battle_tag = '$input_battle_tag' AND season = 4");
+    if (!empty($last_season)) {
+        $last_season_games = $last_season[0]->played;
+    }
 
     // Get data for battle tag from API if battletag does not exist in database
     if (empty($battle_tag)) {
@@ -209,8 +219,13 @@ function battletagApiToDatabase()
 
         // Check if battletag exists in API
         $check = $parsed_json->eu;
+
         if (empty($check)) {
             exit('Sellist battletagi ei eksisteeri: ' . $input_battle_tag);
+        }
+
+        if ($last_season_games == $overall_stats->games) {
+            exit('Ok');
         }
 
         preg_match("/(.*?)(?=[-])/", $input_battle_tag, $name);
@@ -230,7 +245,8 @@ function battletagApiToDatabase()
             'ties' => $overall_stats->ties,
             'played' => $overall_stats->games,
             'last_updated' => date('Y-m-d H:i:s', current_time('timestamp', 0)),
-            'ip_address' => $ip_address
+            'ip_address' => $ip_address,
+            'season' => $current_season
         );
 
         $insert_overall = $wpdb->insert('wp_ranking', $overall);
@@ -322,7 +338,7 @@ function updateProfile()
 
     $result = $wpdb->get_row("SELECT * FROM wp_ranking where battle_tag = '$battle_tag'");
 
-    if(!empty($result->team_id)) {
+    if (!empty($result->team_id)) {
         $team_id = $result->team_id;
     }
 
@@ -355,10 +371,10 @@ function updateProfile()
     preg_match("/(.*?)(?=[-])/", $battle_tag, $name);
 
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-    //check ip from share internet
+        //check ip from share internet
         $ip = $_SERVER['HTTP_CLIENT_IP'];
     } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    //to check ip is pass from proxy
+        //to check ip is pass from proxy
         $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
     } else {
         $ip = $_SERVER['REMOTE_ADDR'];
@@ -378,7 +394,7 @@ function updateProfile()
         'last_updated' => date('Y-m-d H:i:s', current_time('timestamp', 0)),
     );
 
-    $update_wp_ranking = $wpdb->update('wp_ranking', $overall, array('battle_tag_id'=>$battle_tag_id));
+    $update_wp_ranking = $wpdb->update('wp_ranking', $overall, array('battle_tag_id' => $battle_tag_id));
 
     $obj_time = gmdate('H:i:s', floor($average_stats->objective_time_avg * 3600));
     $timeonfire = gmdate('H:i:s', floor($average_stats->time_spent_on_fire_avg * 3600));
@@ -397,7 +413,7 @@ function updateProfile()
         'eliminations' => $average_stats->eliminations_avg
     );
 
-    $update_average_stats = $wpdb->update('wp_average_stats', $player_stats, array('battle_tag_id'=>$battle_tag_id));
+    $update_average_stats = $wpdb->update('wp_average_stats', $player_stats, array('battle_tag_id' => $battle_tag_id));
 
     $player_medals = array(
         'gold' => $game_stats->medals_gold,
@@ -405,13 +421,13 @@ function updateProfile()
         'bronze' => $game_stats->medals_bronze,
     );
 
-    $update_medals = $wpdb->update('wp_medals', $player_medals, array('battle_tag_id'=>$battle_tag_id));
+    $update_medals = $wpdb->update('wp_medals', $player_medals, array('battle_tag_id' => $battle_tag_id));
 
     // Add heroes playtime to database
     $all_heroes_playtime = $parsed_to_array['eu']['heroes']['playtime']['competitive'];
 
     foreach ($all_heroes_playtime as $hero_name => $playtime) {
-        $update_wp_heroes = $wpdb->update('wp_heroes', ['playtime' => $playtime], array('battle_tag_id'=>$battle_tag_id, 'hero_name' => $hero_name));
+        $update_wp_heroes = $wpdb->update('wp_heroes', ['playtime' => $playtime], array('battle_tag_id' => $battle_tag_id, 'hero_name' => $hero_name));
     }
 
     // Add heroes stats to database
@@ -433,7 +449,7 @@ function updateProfile()
             'games_won' => $hero_stats['general_stats']['games_won'],
             'games_lost' => $hero_stats['general_stats']['games_lost'],
         );
-        $update_wp_heroes_avg = $wpdb->update('wp_hero_avg_stats', $data, array('battle_tag_id'=>$battle_tag_id, 'hero_name' => $hero_name));
+        $update_wp_heroes_avg = $wpdb->update('wp_hero_avg_stats', $data, array('battle_tag_id' => $battle_tag_id, 'hero_name' => $hero_name));
     }
 
     exit('Ok');
@@ -459,13 +475,14 @@ function addTournament()
 
 add_action('wp_ajax_add_new_tournament', 'addTournament');
 
-function addPlayerToTeam(){
+function addPlayerToTeam()
+{
 
     global $wpdb;
 
-    $result = $wpdb->update('wp_ranking', array('team_id' => $_POST['data']['team_id']), array( 'battle_tag' => $_POST['data']['battletag'] ));
+    $result = $wpdb->update('wp_ranking', array('team_id' => $_POST['data']['team_id']), array('battle_tag' => $_POST['data']['battletag']));
 
-    if($result == '1'){
+    if ($result == '1') {
         exit('Ok');
     } else {
         exit('error');
@@ -475,12 +492,13 @@ function addPlayerToTeam(){
 add_action('wp_ajax_add_player_to_team', 'addPlayerToTeam');
 
 
-function removePlayerFromTeam() {
+function removePlayerFromTeam()
+{
     global $wpdb;
 
-    $result = $wpdb->update('wp_ranking', array('team_id' => null), array( 'battle_tag_id' => $_POST['battletag_id'] ));
+    $result = $wpdb->update('wp_ranking', array('team_id' => null), array('battle_tag_id' => $_POST['battletag_id']));
 
-    if($result == '1'){
+    if ($result == '1') {
         exit('Ok');
     } else {
         exit('error');
@@ -489,7 +507,8 @@ function removePlayerFromTeam() {
 
 add_action('wp_ajax_remove_player_from_team', 'removePlayerFromTeam');
 
-function addNewTeam() {
+function addNewTeam()
+{
 
     global $wpdb;
 
@@ -500,7 +519,7 @@ function addNewTeam() {
 
     $result = $wpdb->insert('wp_teams', $team);
 
-    if($result == '1'){
+    if ($result == '1') {
         exit('Ok');
     } else {
         exit('error');
